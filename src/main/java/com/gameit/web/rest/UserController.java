@@ -1,4 +1,4 @@
-package com.gameit.web;
+package com.gameit.web.rest;
 
 import org.springframework.web.bind.annotation.RestController;
 

@@ -62,7 +62,7 @@ public class OAuth2Configuration {
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                     .authorizeRequests()
-                    .antMatchers("/users/**").permitAll();
+                    .antMatchers("**").permitAll();
         }
     }
 
@@ -115,5 +115,4 @@ public class OAuth2Configuration {
         }
 
     }
-
 }

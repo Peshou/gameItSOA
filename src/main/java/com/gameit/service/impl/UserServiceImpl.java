@@ -33,10 +33,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getLoggedInUser() {
+        String username = null;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
-        String email = principal instanceof UserDetails ? ((UserDetails) principal).getUsername() : principal.toString();
-        return userRepository.findByEmail(email);
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        User user = userRepository.findByEmail(username);
+        return user;
     }
 
     @Override

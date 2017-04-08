@@ -1,11 +1,12 @@
 package com.gameit.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.Email;
+import com.gameit.security.Authorities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -14,6 +15,18 @@ import java.util.Set;
 @Entity
 @Table(name = "appuser") //user in POSTGRESQL is a reserved word
 public class User extends AbstractBaseEntity {
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @NotNull
+    @Column(nullable = false)
+    private String username;
 
     @NotNull
     @JsonIgnore
@@ -32,6 +45,15 @@ public class User extends AbstractBaseEntity {
             joinColumns = @JoinColumn(name = "username"),
             inverseJoinColumns = @JoinColumn(name = "authority"))
     private Set<Authority> authorities;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "userSeller", cascade = CascadeType.ALL)
+    private Set<Game> sellingGames;
+
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<UserGameOrder> userGameOrders = new HashSet<UserGameOrder>(0);
 
     public String getPassword() {
         return password;
@@ -57,6 +79,10 @@ public class User extends AbstractBaseEntity {
         this.authorities = authorities;
     }
 
+
+    private boolean isSeller() {
+        return this.authorities.stream().anyMatch(authority -> authority.getName().equals(Authorities.ROLE_SELLER.name()));
+    }
     @Override
     public String toString() {
         return "User{" +
@@ -64,5 +90,21 @@ public class User extends AbstractBaseEntity {
                 ", email='" + email + '\'' +
                 ", authorities=" + authorities +
                 '}';
+    }
+
+    public Set<Game> getSellingGames() {
+        return sellingGames;
+    }
+
+    public void setSellingGames(Set<Game> sellingGames) {
+        this.sellingGames = sellingGames;
+    }
+
+    public Set<UserGameOrder> getUserGameOrders() {
+        return userGameOrders;
+    }
+
+    public void setUserGameOrders(Set<UserGameOrder> userGameOrders) {
+        this.userGameOrders = userGameOrders;
     }
 }

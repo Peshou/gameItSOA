@@ -21,24 +21,32 @@ public class CustomLogoutSuccessHandler
         extends AbstractAuthenticationTargetUrlRequestHandler
         implements LogoutSuccessHandler {
 
+
     private static final String BEARER_AUTHENTICATION = "Bearer ";
-    private static final String HEADER_AUTHORIZATION = "Authorization";
+    private static final String HEADER_AUTHORIZATION = "authorization";
 
     @Autowired
     private TokenStore tokenStore;
 
     @Override
-    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onLogoutSuccess(HttpServletRequest request,
+                                HttpServletResponse response,
+                                Authentication authentication)
+            throws IOException, ServletException {
+
         String token = request.getHeader(HEADER_AUTHORIZATION);
 
-        if(token != null && token.startsWith(BEARER_AUTHENTICATION)) {
-            OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(token.split(" ")[1]);
+        if (token != null && token.startsWith(BEARER_AUTHENTICATION)) {
 
-            if(oAuth2AccessToken != null) {
+            OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(token.split(" ")[0]);
+
+            if (oAuth2AccessToken != null) {
                 tokenStore.removeAccessToken(oAuth2AccessToken);
             }
+
         }
 
         response.setStatus(HttpServletResponse.SC_OK);
+
     }
 }

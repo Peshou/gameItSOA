@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Created by Stefan on 06.4.2017.
  */
 public interface UserService {
-    User getLoggedInUser();
+    User  getLoggedInUser();
 
     User findByEmail(String email);
 

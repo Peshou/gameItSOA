@@ -24,3 +24,5 @@ nbdist/
 .nb-gradle/
 
 application-prod.properties
+
+upload-dir
