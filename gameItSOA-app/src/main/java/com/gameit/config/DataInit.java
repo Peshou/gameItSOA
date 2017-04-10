@@ -56,6 +56,7 @@ public class DataInit {
         User admin = userService.findByEmail("admin@example.com");
         if (admin == null) {
             admin = new User();
+            admin.setUsername("admin");
             admin.setPassword("admin");
             admin.setEmail("admin@example.com");
 
@@ -73,6 +74,7 @@ public class DataInit {
         if (user == null) {
             user = new User();
             user.setPassword("user");
+            user.setUsername("user");
             user.setEmail("user@example.com");
 
             ArrayList<Authority> roles = new ArrayList<>();
@@ -88,6 +90,7 @@ public class DataInit {
         User stefan = userService.findByEmail("stefan@example.com");
         if (stefan == null) {
             stefan = new User();
+            stefan.setUsername("stefan");
             stefan.setPassword("stefan");
             stefan.setEmail("stefan@example.com");
 
