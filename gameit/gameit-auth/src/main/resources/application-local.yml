@@ -1,0 +1,34 @@
+spring:
+  profiles: local
+
+# Make the application available at http://localhost:9090/auth
+server:
+  port: 9090
+  contextPath: /auth
+
+  # Our certificate settings for enabling JWT tokens
+jwt:
+  certificate:
+    store:
+      file: classpath:/certificate/my-auth-server.jks
+      password: storepassword
+    key:
+      alias: myauthserver
+      password: keypassword
+
+  # External OAuth2 provider configuration - Google
+google:
+  client:
+    clientId: 453576278946-ciajb5l2vahjte6o5e0u2htuukfktuu7.apps.googleusercontent.com
+    clientSecret: KvwhvtwOwLWTMssXiN1orjni
+    scope: email,profile
+    accessTokenUri: https://accounts.google.com/o/oauth2/token
+    userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://my-eureka:8761/eureka/
