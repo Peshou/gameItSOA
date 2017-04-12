@@ -50,18 +50,18 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
                 .withClient("myauthserver")
                 .secret("verysecretpassword")
                 // Only allow redirecting to 'http://localhost:8080/**' when logging in
-                .redirectUris("http://localhost:8080/")
+                .redirectUris("http://stefan-lenovo-700:8080","http://localhost:8080/")
                 // We only use the authorization_code grant type, with support for refresh tokens
                 .authorizedGrantTypes("authorization_code", "refresh_token")
                 // We can define our own scopes here
-                .scopes("myscope")
+                .scopes("read", "write")
                 // Auto approve the required scopes.
                 // If we do not auto approve, the user is asked upon login if (s)he approves
                 .autoApprove(true)
                 // Make the access tokens short-lived, to force token refreshing every 30 seconds
-                .accessTokenValiditySeconds(30)
+                .accessTokenValiditySeconds(1800)
                 // Allow refresh of the access tokens for 30 minutes (session duration)
-                .refreshTokenValiditySeconds(1800);
+                .refreshTokenValiditySeconds(3600);
     }
 
     @Override

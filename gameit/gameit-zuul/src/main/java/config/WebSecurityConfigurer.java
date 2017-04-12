@@ -14,11 +14,12 @@ import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResour
  * The Web Security configuration for My Website.
  */
 @Configuration
-@EnableOAuth2Sso
 public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        http.httpBasic().disable();
         http.authorizeRequests()
                 .antMatchers("/").permitAll()   // Allow navigating to index page,
                 .anyRequest().authenticated();  // but secure all the other URLs

@@ -1,24 +1,29 @@
 package com.gameit.security;
 
 public enum Authorities {
-    ROLE_ANONYMOUS {
+    ANONYMOUS {
         public String toString() {
-            return "ROLE_ANONYMOUS";
+            return "ANONYMOUS";
         }
     },
-    ROLE_ADMIN {
+    ADMIN {
         public String toString() {
-            return "ROLE_ADMIN";
+            return "ADMIN";
         }
     },
-    ROLE_SELLER {
+    SELLER {
         public String toString() {
-            return "ROLE_SELLER";
+            return "SELLER";
         }
     },
-    ROLE_BUYER {
+    BUYER {
         public String toString() {
-            return "ROLE_BUYER";
+            return "BUYER";
+        }
+    },
+    GOOGLE {
+        public String toString() {
+            return "GOOGLE";
         }
     }
 }

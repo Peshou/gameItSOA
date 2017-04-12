@@ -50,9 +50,9 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER")
+                .withUser("user").password("password").roles(Authorities.BUYER.name())
                 .and()
-                .withUser("admin").password("admin").roles("USER", "ADMIN");
+                .withUser("admin").password("admin").roles(Authorities.ADMIN.name());
     }
 
     @Override
@@ -87,7 +87,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
      * {@link org.springframework.boot.autoconfigure.security.oauth2.resource.FixedAuthoritiesExtractor}
      */
     private AuthoritiesExtractor googleAuthoritiesExtractor() {
-        return map -> AuthorityUtils.commaSeparatedStringToAuthorityList(Authorities.ROLE_GOOGLE.name());
+        return map -> AuthorityUtils.commaSeparatedStringToAuthorityList(Authorities.GOOGLE.name());
     }
 
     @Bean

@@ -78,7 +78,7 @@ public class User extends AbstractBaseEntity {
 
 
     private boolean isSeller() {
-        return this.authorities.stream().anyMatch(authority -> authority.getName().equals(Authorities.ROLE_SELLER.name()));
+        return this.authorities.stream().anyMatch(authority -> authority.getName().equals(Authorities.SELLER.name()));
     }
     @Override
     public String toString() {

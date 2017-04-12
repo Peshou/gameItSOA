@@ -13,7 +13,7 @@ public interface UserService {
 
     User findById(String id);
 
-    User create(User user, ArrayList<Authority> roles) throws EmailExistsException;
+    User  create(User user, ArrayList<Authority> roles) throws EmailExistsException;
 
     User update(User user);
 

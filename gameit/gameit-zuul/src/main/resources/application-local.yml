@@ -1,0 +1,44 @@
+server:
+  port: 8081
+
+---
+spring:
+  profiles: default
+
+---
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:sampletest;MODE=MySQL
+
+---
+spring:
+  profiles: test
+
+spring.jpa:
+  hibernate:
+    ddl-auto: create-drop
+
+---
+spring:
+  profiles: local
+
+eureka:
+  client:
+    service-url:
+     defaultZone: http://my-eureka:8761/eureka/
+
+zuul:
+  ignoredServices: '*'
+  routes:
+    my-app1: /my-app1/**
+    my-app2: /my-app2/**
+    my-gateway: /my-gateway/**
+    oauth2:
+      path: /uaa/**
+      serviceId: oauth2
+      stripPrefix: false
+
+management:
+  security:
+    enabled: false

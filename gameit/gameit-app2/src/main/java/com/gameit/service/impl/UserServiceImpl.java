@@ -25,9 +25,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private AuthorityRepository authorityRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @Override
     public User getLoggedInUser() {
         String username = null;
@@ -60,7 +57,6 @@ public class UserServiceImpl implements UserService {
             throw new EmailExistsException();
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setAuthorities(roles.stream()
                 .map(authority -> authorityRepository.findOne(authority.getName()))
                 .collect(Collectors.toSet()));
