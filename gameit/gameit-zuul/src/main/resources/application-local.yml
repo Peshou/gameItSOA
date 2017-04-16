@@ -1,25 +1,3 @@
-server:
-  port: 8081
-
----
-spring:
-  profiles: default
-
----
-spring:
-  datasource:
-    driverClassName: org.h2.Driver
-    url: jdbc:h2:mem:sampletest;MODE=MySQL
-
----
-spring:
-  profiles: test
-
-spring.jpa:
-  hibernate:
-    ddl-auto: create-drop
-
----
 spring:
   profiles: local
 
@@ -28,17 +6,44 @@ eureka:
     service-url:
      defaultZone: http://my-eureka:8761/eureka/
 
+# Configure the Authorization Server and User Info Resource Server details
+security:
+  oauth2:
+    sso:
+      home:
+        secure: true
+        path: /,/**/*.html
+    client:
+      accessTokenUri: http://my-auth/auth/oauth/token
+      userAuthorizationUri: http://my-auth/auth/oauth/authorize
+      clientId: myauthserver
+      clientSecret: verysecretpassword
+    resource:
+      loadBalanced: true
+      userInfoUri: http://my-auth/auth/user
+
 zuul:
   ignoredServices: '*'
   routes:
     my-app1: /my-app1/**
     my-app2: /my-app2/**
     my-gateway: /my-gateway/**
-    oauth2:
-      path: /uaa/**
+    my-auth:
+      path: /my-auth/**
       serviceId: oauth2
       stripPrefix: false
+
+# Make sure the OAuth2 token is only relayed when using the internal API,
+# do not pass any authentication to the external API
+proxy:
+  auth:
+    routes:
+      my-app1: my-auth
+      my-app2: my-auth
+      my-gateway: my-auth
 
 management:
   security:
     enabled: false
+logging:
+  level: debug

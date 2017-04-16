@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,14 +20,20 @@ public class Game extends AbstractBaseEntity {
     @Column(length = 4000)
     private String description;
 
-    @Column
+    @NotNull
+    @Column(nullable = false)
+    private String category;
+
+    @NotNull
+    @Column(nullable = false)
     private Double gamePrice;
 
     @ElementCollection
     @CollectionTable(name = "game_image_paths")
     private Set<String> imagePaths;
 
-    @Column
+    @NotNull
+    @Column(nullable = false)
     private Long itemsLeft;
 
     @Column
@@ -47,9 +52,12 @@ public class Game extends AbstractBaseEntity {
         imagePaths = new HashSet<>();
     }
 
+
+
     public Game(String name, Integer releaseYear, String description, Set<String> imagePaths, Long itemsLeft, Integer discountPercent) {
         this.name = name;
         this.releaseYear = releaseYear;
+
         this.description = description;
         this.imagePaths = imagePaths;
         this.itemsLeft = itemsLeft;
@@ -127,5 +135,12 @@ public class Game extends AbstractBaseEntity {
 
     public void setUserSeller(User userSeller) {
         this.userSeller = userSeller;
+    }
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

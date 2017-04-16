@@ -1,6 +1,7 @@
 package com.gameit.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gameit.security.Authorities;
 
 import javax.persistence.*;
@@ -22,11 +23,11 @@ public class User extends AbstractBaseEntity {
     }
 
     @NotNull
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @NotNull
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Size(min = 8, max = 500)
     @Column(nullable = false)
     private String password;

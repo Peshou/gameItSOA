@@ -1,7 +1,3 @@
-server:
-  port: 8080
-
----
 spring:
   profiles: default
 
@@ -14,12 +10,12 @@ eureka:
 security:
   oauth2:
     client:
-      accessTokenUri: http://localhost:9090/auth/oauth/token
-      userAuthorizationUri: http://localhost:9090/auth/oauth/authorize
+      accessTokenUri: http://localhost:9999/auth/oauth/token
+      userAuthorizationUri: http://localhost:9999/auth/oauth/authorize
       clientId: myauthserver
       clientSecret: verysecretpassword
     resource:
-      userInfoUri: http://localhost:9090/auth/user
+      userInfoUri: http://localhost:9999/auth/user
 
 zuul:
   ignoredServices: '*'

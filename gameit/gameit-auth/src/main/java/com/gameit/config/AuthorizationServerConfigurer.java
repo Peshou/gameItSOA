@@ -50,7 +50,7 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
                 .withClient("myauthserver")
                 .secret("verysecretpassword")
                 // Only allow redirecting to 'http://localhost:8080/**' when logging in
-                .redirectUris("http://stefan-lenovo-700:8080","http://localhost:8080/")
+                .redirectUris("http://192.168.99.100:8080","http://localhost:8080/")
                 // We only use the authorization_code grant type, with support for refresh tokens
                 .authorizedGrantTypes("authorization_code", "refresh_token")
                 // We can define our own scopes here

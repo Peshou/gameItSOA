@@ -27,18 +27,21 @@ import java.nio.file.Paths;
 
 @Service
 public class GameServiceImpl implements GameService {
-    @Autowired
-    private GameRepository gameRepository;
+    private final GameRepository gameRepository;
+
+    private final UserRepository userRepository;
 
     private final Path rootLocation;
 
     @Autowired
-    public GameServiceImpl(StorageProperties properties) {
+    public GameServiceImpl(StorageProperties properties, GameRepository gameRepository, UserRepository userRepository, UserService userService) {
         this.rootLocation = Paths.get(properties.getLocation());
+        this.gameRepository = gameRepository;
+        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @Override
     public Game findById(String id) {
@@ -53,7 +56,17 @@ public class GameServiceImpl implements GameService {
     @Override
     @Transactional
     public Game create(Game game) {
-        return gameRepository.save(game);
+        User seller = userService.getLoggedInUser();
+        game.setUserSeller(seller);
+
+        game = gameRepository.save(game);
+
+        if(seller != null) {
+            seller.getSellingGames().add(game);
+            userRepository.save(seller);
+        }
+
+        return game;
     }
 
     @Override
@@ -125,5 +138,14 @@ public class GameServiceImpl implements GameService {
     @Override
     public void deleteAllResources() {
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
+    }
+
+    @Override
+    public void initStorage() {
+        try {
+            Files.createDirectory(rootLocation);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

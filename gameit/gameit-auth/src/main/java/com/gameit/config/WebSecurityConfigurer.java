@@ -24,7 +24,6 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity
 @EnableOAuth2Client
 public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 

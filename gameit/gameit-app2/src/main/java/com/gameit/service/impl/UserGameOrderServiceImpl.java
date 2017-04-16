@@ -4,20 +4,18 @@ import com.gameit.model.Game;
 import com.gameit.model.User;
 import com.gameit.model.UserGameOrder;
 import com.gameit.repository.UserGameOrderRepository;
+import com.gameit.service.MailSender;
+import com.gameit.service.PaymentProcessorService;
 import com.gameit.service.UserGameOrderService;
 import com.gameit.service.UserService;
-import com.stripe.Stripe;
 import com.stripe.exception.*;
-import com.stripe.model.Charge;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.bind.RelaxedPropertyResolver;
-import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.mail.MessagingException;
 
 @Service
 public class UserGameOrderServiceImpl implements UserGameOrderService {
@@ -27,45 +25,33 @@ public class UserGameOrderServiceImpl implements UserGameOrderService {
     @Autowired
     private UserService userService;
 
-    private static final String STRIPE_KEY_PREFIX = "stripe.";
-    private static final String TEST_PRIVATE_KEY = "testpk";
 
     @Autowired
-    Environment environment;
+    private MailSender mailSender;
 
-    private RelaxedPropertyResolver stripeConfig;
-
-    public void initPropertyResolver() {
-        stripeConfig = new RelaxedPropertyResolver(environment, STRIPE_KEY_PREFIX);
-    }
+    @Autowired
+    private PaymentProcessorService paymentProcessorService;
 
     @Override
-    public UserGameOrder placeOrder(String stripeToken, Game game) {
-        initPropertyResolver();
-        Stripe.apiKey = stripeConfig.getProperty(TEST_PRIVATE_KEY);
+    @Transactional
+    public UserGameOrder placeOrder(String paymentToken, String buyerId, Game game) {
 
-        User buyer = userService.getLoggedInUser();
-
+        User buyer = userService.findById(buyerId);
         Double price = game.getGamePrice() * 100;
-
         try {
-            Map<String, Object> chargeParams = new HashMap<>();
-            chargeParams.put("amount", price.intValue()); // Amount in cents
-            chargeParams.put("currency", "usd");
-            chargeParams.put("source", stripeToken);
-            chargeParams.put("description", "Charge for game " + game.getName());
-
-            Charge charge = Charge.create(chargeParams);
+            String chargeId =  paymentProcessorService.createChargeRequest(paymentToken, price, game.getName());
 
             UserGameOrder userGameOrder = new UserGameOrder();
             userGameOrder.setUser(buyer);
             userGameOrder.setGame(game);
-            userGameOrder.setStripeOrderId(charge.getId());
+            userGameOrder.setPaymentProcessorChargeId(chargeId);
 
             userGameOrder = userGameOrderRepository.save(userGameOrder);
-
+            mailSender.sendOrderEmail(buyer, game, userGameOrder.getPaymentProcessorChargeId());
             return userGameOrder;
         } catch (APIConnectionException | InvalidRequestException | APIException | AuthenticationException | CardException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
             e.printStackTrace();
         }
 

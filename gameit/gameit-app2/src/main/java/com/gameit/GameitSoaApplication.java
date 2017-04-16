@@ -12,10 +12,10 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableConfigurationProperties(StorageProperties.class)
-public class Gameit2SoaApplication {
+public class GameitSoaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Gameit2SoaApplication.class, args);
+		SpringApplication.run(GameitSoaApplication.class, args);
 	}
 
 	@Bean

@@ -1,6 +1,7 @@
 package com.gameit.model;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,7 +19,11 @@ public class UserGameOrder extends AbstractBaseEntity {
     private Game game;
 
     @Column(nullable = false)
-    private String stripeOrderId;
+    private String paymentProcessorChargeId;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_order_id")
+    private DeliveryOrder deliveryOrder;
 
     public UserGameOrder() {
     }
@@ -39,11 +44,11 @@ public class UserGameOrder extends AbstractBaseEntity {
         this.game = game;
     }
 
-    public String getStripeOrderId() {
-        return stripeOrderId;
+    public String getPaymentProcessorChargeId() {
+        return paymentProcessorChargeId;
     }
 
-    public void setStripeOrderId(String stripeOrderId) {
-        this.stripeOrderId = stripeOrderId;
+    public void setPaymentProcessorChargeId(String paymentProcessorChargeId) {
+        this.paymentProcessorChargeId = paymentProcessorChargeId;
     }
 }

@@ -48,6 +48,30 @@ services:
     labels:
       - "traefik.enable=false"
 
+  my-auth:
+    image: peshou/gameit-auth
+    labels:
+      - "traefik.port=9999"
+      - "traefik.backend=my-auth"
+      - "traefik.frontend.rule=PathPrefixStrip:/my-auth"
+    links:
+      - my-mysql
+      - my-eureka
+      - my-zuul
+      - my-gateway
+    depends_on:
+      - my-mysql
+      - my-traefik
+      - my-eureka
+      - my-zuul
+      - my-gateway
+    environment:
+      - DATABASE_HOST=my-mysql
+      - DATABASE_USER=dbuser
+      - DATABASE_PASSWORD=dbp4ss
+      - DATABASE_NAME=gameit
+      - DATABASE_PORT=3306
+
   my-app1:
     image: peshou/gameit1
     labels:

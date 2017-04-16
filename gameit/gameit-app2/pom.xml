@@ -77,11 +77,12 @@
 			<artifactId>spring-security-jwt</artifactId>
 			<version>1.0.0.RELEASE</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -123,6 +124,22 @@
 			<artifactId>json-path</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.dynamicreports</groupId>
+			<artifactId>dynamicreports-core</artifactId>
+			<version>4.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.6</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-eureka</artifactId>
@@ -133,6 +150,14 @@
 			<scope>test</scope>
 		</dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.integration</groupId>
+            <artifactId>spring-integration-mail</artifactId>
+        </dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -156,11 +181,17 @@
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.4.11</version>
+				<version>0.4.13</version>
 				<configuration>
 					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
 					<dockerDirectory>src/main/docker</dockerDirectory>
-					<resources>
+
+                    <!--Used only for windows-->
+                    <dockerHost>https://192.168.99.100:2376</dockerHost>
+                    <dockerCertPath>C:/Users/Stefan/.docker/machine/machines/default</dockerCertPath>
+                    <!--Delete this if docker:build does not work-->
+
+                    <resources>
 						<resource>
 							<targetPath>/</targetPath>
 							<directory>${project.build.directory}</directory>

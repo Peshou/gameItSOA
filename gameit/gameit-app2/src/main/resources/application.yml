@@ -1,21 +1,3 @@
-server:
-  port: 8082
-
-# Configure the public key to use for verifying the incoming JWT tokens
-security:
-  oauth2:
-    resource:
-      jwt:
-        keyValue: |
-          -----BEGIN PUBLIC KEY-----
-          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjj4JDMgT4OoaXisEd8Nz
-          uiLwum9mh8BH1l9Atpe+uZkepf3Vnv0Bhxn0BGR+kYGwEHZPVpWsHEyTfIRdinaQ
-          vlPaxWJquQW25yYstrCuQTKJvFjSO/cX/V4OGi1RUj76mOpwzkm1Kui3R7Sfh8Zo
-          WO0GiWIFJqNBsZ9b1wOfBMXnge+A+u/qxVNnTFpwCVj6k2Yb4YUsmLNCmND7E3Ra
-          BnrNQWqMU2numhV+ADpmVH08m/+pWdZ896uYu/tvQnz3agvZPcFsEst7LcNAWQFT
-          eNLkfwVfepKWa9jPELemtTLf1MkMppU+Lj1UNCr8x4Y6EupRDZhplVNtqYsPNDpO
-          7wIDAQAB
-          -----END PUBLIC KEY-----
 spring:
   profiles: default
   http:
@@ -31,15 +13,35 @@ spring:
     url: jdbc:mysql://localhost:3306/gameit?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: admin
+    schema: classpath:/sql/schema-mysql.sql
+  mail:
+    host: smtp.gmail.com
+    username: eyo.adms@gmail.com
+    password: pesho123
+    port: 587
+    test-connection: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          socketFactory:
+            port: 25
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: false
+          ssl.enable: true
+gameit:
+  oauth:
+    client-id: gameit
+    client-secret: someSecret
+    token-validity-in-seconds: 3600
+  stripe:
+    testpk: sk_test_qp9lcBPFPbDor0K5K8TaOR09
+    client-id: ca_AQuIoAUDP9cVKHzEXtViIp4krfm0hIwQ
 
-authentication.oauth:
-  clientid: gameit
-  secret: someSecret
-  tokenValidityInSeconds: 3600
-
-stripe:
-  testpk: sk_test_qp9lcBPFPbDor0K5K8TaOR09
-  clientid: ca_AQuIoAUDP9cVKHzEXtViIp4krfm0hIwQ
+logging:
+  level: debug
+security:
+  enable-csrf: false
 
 eureka:
   client:

@@ -26,4 +26,6 @@ public interface GameService {
     Path loadPath(String id, String filename);
 
     void deleteAllResources();
+
+    void initStorage();
 }

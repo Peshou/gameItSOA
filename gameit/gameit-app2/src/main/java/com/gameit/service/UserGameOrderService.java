@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface UserGameOrderService {
-    UserGameOrder placeOrder(String stripeToken, Game game);
+    UserGameOrder placeOrder(String paymentToken, String buyerId, Game game);
 
     Page<UserGameOrder> getAllOrders(Pageable pageable);
 
