@@ -1,49 +1,28 @@
 spring:
   profiles: local
+  mvc:
+    dispatch-options-request: true
 
 eureka:
   client:
     service-url:
      defaultZone: http://my-eureka:8761/eureka/
 
-# Configure the Authorization Server and User Info Resource Server details
-security:
-  oauth2:
-    sso:
-      home:
-        secure: true
-        path: /,/**/*.html
-    client:
-      accessTokenUri: http://my-auth/auth/oauth/token
-      userAuthorizationUri: http://my-auth/auth/oauth/authorize
-      clientId: myauthserver
-      clientSecret: verysecretpassword
-    resource:
-      loadBalanced: true
-      userInfoUri: http://my-auth/auth/user
-
 zuul:
   ignoredServices: '*'
   routes:
-    my-app1: /my-app1/**
-    my-app2: /my-app2/**
     my-gateway: /my-gateway/**
     my-auth:
-      path: /my-auth/**
-      serviceId: oauth2
-      stripPrefix: false
-
-# Make sure the OAuth2 token is only relayed when using the internal API,
-# do not pass any authentication to the external API
-proxy:
-  auth:
-    routes:
-      my-app1: my-auth
-      my-app2: my-auth
-      my-gateway: my-auth
-
+       path: /my-auth/**
+       sensitive-headers:
 management:
   security:
     enabled: false
+
 logging:
   level: debug
+security:
+  basic:
+    enabled: false
+
+

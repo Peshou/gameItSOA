@@ -76,20 +76,20 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public ResponseEntity<?> createNewUser(@RequestBody UserWithAuthorities userObject) throws IOException, SQLException, EmailExistsException {
-        ArrayList<Authority> authorities = new ArrayList<>();
-        authorities = userObject.getAuthorities()
-                .stream()
-                .map(authority -> authorityRepository.findOne(authority))
-                .collect(Collectors.toCollection(ArrayList<Authority>::new));
-
-        User user = userService.create(userObject.getUser(), authorities);
-        final URI location = ServletUriComponentsBuilder.
-                fromCurrentServletMapping().path("/users/{id}").build()
-                .expand(user.getId()).toUri();
-        return ResponseEntity.created(location).body(user);
-    }
+//    @RequestMapping(value = "/users", method = RequestMethod.POST)
+//    public ResponseEntity<?> createNewUser(@RequestBody UserWithAuthorities userObject) throws IOException, SQLException, EmailExistsException {
+//        ArrayList<Authority> authorities = new ArrayList<>();
+//        authorities = userObject.getAuthorities()
+//                .stream()
+//                .map(authority -> authorityRepository.findOne(authority))
+//                .collect(Collectors.toCollection(ArrayList<Authority>::new));
+//
+//        User user = userService.create(userObject.getUser(), authorities);
+//        final URI location = ServletUriComponentsBuilder.
+//                fromCurrentServletMapping().path("/users/{id}").build()
+//                .expand(user.getId()).toUri();
+//        return ResponseEntity.created(location).body(user);
+//    }
 
     @RequestMapping(value = "/users/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateUser(@PathVariable String id, @RequestBody User userObject) {

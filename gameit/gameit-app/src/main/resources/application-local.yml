@@ -14,29 +14,15 @@ spring:
     username: ${DATABASE_USER}
     password: ${DATABASE_PASSWORD}
     initialize: true
-  mail:
-    host: smtp.gmail.com
-    username: eyo.adms@gmail.com
-    password: pesho123
-    port: 587
-    test-connection: true
-    properties:
-      mail:
-        smtp:
-          auth: true
-          socketFactory:
-            port: 25
-            class: javax.net.ssl.SSLSocketFactory
-            fallback: false
-          ssl.enable: true
+
 gameit:
   oauth:
-    client-id: gameit
-    client-secret: someSecret
-    token-validity-in-seconds: 3600
+    client-id: ${OAUTH_CLIENT_ID}
+    client-secret: ${OAUTH_CLIENT_SECRET}
+    token-validity-in-seconds: ${OAUTH_TOKEN_VALIDITY}
   stripe:
-    testpk: sk_test_qp9lcBPFPbDor0K5K8TaOR09
-    client-id: ca_AQuIoAUDP9cVKHzEXtViIp4krfm0hIwQ
+    testpk: ${STRIPE_TEST_PK}
+    client-id: ${STRIPE_CLIENT_ID}
 
 logging:
   level: debug

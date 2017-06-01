@@ -14,21 +14,7 @@ spring:
     username: root
     password: admin
     schema: classpath:/sql/schema-mysql.sql
-  mail:
-    host: smtp.gmail.com
-    username: eyo.adms@gmail.com
-    password: pesho123
-    port: 587
-    test-connection: true
-    properties:
-      mail:
-        smtp:
-          auth: true
-          socketFactory:
-            port: 25
-            class: javax.net.ssl.SSLSocketFactory
-            fallback: false
-          ssl.enable: true
+
 gameit:
   oauth:
     client-id: gameit

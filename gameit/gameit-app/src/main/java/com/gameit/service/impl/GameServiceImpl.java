@@ -56,7 +56,7 @@ public class GameServiceImpl implements GameService {
     @Override
     @Transactional
     public Game create(Game game) {
-        User seller = userService.getLoggedInUser();
+        User seller = userService.findByEmail("admin@example.com");
         game.setUserSeller(seller);
 
         game = gameRepository.save(game);

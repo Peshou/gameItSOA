@@ -66,7 +66,6 @@ public class GamesController {
     @PostMapping("/games/{id}/order")
     public ResponseEntity createCharge(@PathVariable String id, @RequestBody StripeBuyerToken stripeToken) {
         try {
-            System.out.println(userService.getLoggedInUser());
             Game game = gameService.findById(id);
             UserGameOrder order = userGameOrderService.placeOrder(stripeToken.getToken(), stripeToken.getBuyer(), game);
             return ResponseEntity.ok(order);

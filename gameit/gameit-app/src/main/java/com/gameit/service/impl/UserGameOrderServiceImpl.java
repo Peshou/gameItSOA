@@ -4,7 +4,6 @@ import com.gameit.model.Game;
 import com.gameit.model.User;
 import com.gameit.model.UserGameOrder;
 import com.gameit.repository.UserGameOrderRepository;
-import com.gameit.service.MailSender;
 import com.gameit.service.PaymentProcessorService;
 import com.gameit.service.UserGameOrderService;
 import com.gameit.service.UserService;
@@ -15,8 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.mail.MessagingException;
-
 @Service
 public class UserGameOrderServiceImpl implements UserGameOrderService {
     @Autowired
@@ -24,10 +21,6 @@ public class UserGameOrderServiceImpl implements UserGameOrderService {
 
     @Autowired
     private UserService userService;
-
-
-    @Autowired
-    private MailSender mailSender;
 
     @Autowired
     private PaymentProcessorService paymentProcessorService;
@@ -47,20 +40,16 @@ public class UserGameOrderServiceImpl implements UserGameOrderService {
             userGameOrder.setPaymentProcessorChargeId(chargeId);
 
             userGameOrder = userGameOrderRepository.save(userGameOrder);
-            mailSender.sendOrderEmail(buyer, game, userGameOrder.getPaymentProcessorChargeId());
             return userGameOrder;
         } catch (APIConnectionException | InvalidRequestException | APIException | AuthenticationException | CardException e) {
             e.printStackTrace();
-        } catch (MessagingException e) {
-            e.printStackTrace();
         }
-
         return null;
     }
 
     @Override
     public Page<UserGameOrder> getAllOrders(Pageable pageable) {
-        User user = userService.getLoggedInUser();
+        User user = userService.findByEmail("admin@example.com");
         return userGameOrderRepository.findAllByUser(pageable, user);
     }
 

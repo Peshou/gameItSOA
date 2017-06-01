@@ -1,0 +1,19 @@
+<div style="height: 100%;">
+  <div class="register mat-elevation-z12">
+    <div class="register-header">
+      <img src="assets/logoSmall.png">
+    </div>
+    <form #form="ngForm" (ngSubmit)="register()">
+      <div class="register-content" >
+        <input placeholder="Name" type="text" name="name" required [(ngModel)]="name">
+        <input placeholder="E-Mail" type="text" name="email" required [(ngModel)]="email">
+        <input placeholder="Password" type="password" name="password" required [(ngModel)]="password">
+        <input placeholder="Password (Confirm)" type="password" name="password-confirm" required
+               [(ngModel)]="passwordConfirm">
+
+        <button [disabled]="!form.valid">CREATE ACCOUNT</button>
+        <p class="note">Already have an account?<br/> <a [routerLink]="['/login']">Sign in here</a></p>
+      </div>
+    </form>
+  </div>
+</div>

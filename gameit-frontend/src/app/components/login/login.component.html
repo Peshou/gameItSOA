@@ -1,0 +1,16 @@
+<div style="height: 100%;">
+  <div class="login mat-elevation-z12">
+    <div class="login-header" >
+      <img src="assets/logoSmall.png">
+    </div>
+    <form #form="ngForm" (ngSubmit)="login()">
+      <div class="login-content" >
+            <input  placeholder="E-Mail" type="text" name="email" required [(ngModel)]="email">
+            <input  placeholder="Password" type="password" name="password" required [(ngModel)]="password">
+
+          <button [disabled]="!form.valid">SIGN IN</button>
+        <p class="note">Don't have an account?<br/> <a [routerLink]="['/register']">Click here to create one</a></p>
+      </div>
+    </form>
+  </div>
+</div>

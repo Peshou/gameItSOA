@@ -50,14 +50,7 @@ public class GateController {
         String ip1 = service1.getInstanceInfo().getIPAddr();
         String greeting1 = this.restTemplate.getForObject("http://"+ip1+":8080/greeting", String.class);
 
-        //my-app2
-        List<ServiceInstance> services2 = discoveryClient.getInstances("my-app2");
-        EurekaDiscoveryClient.EurekaServiceInstance service2 = (EurekaDiscoveryClient.EurekaServiceInstance) services2.get(rnd.nextInt(services2.size()));
-        String ip2 = service2.getInstanceInfo().getIPAddr();
-        String greeting2 = this.restTemplate.getForObject("http://"+ip2+":8080/greeting", String.class);
-
-
-        return String.format("Got my-app1 answer: %s from ip %s, and my-app2 answer: %s from ip %s", greeting1, ip1, greeting2, ip2);
+        return String.format("Got my-app1 answer: %s from ip %s", greeting1, ip1);
     }
 
 }

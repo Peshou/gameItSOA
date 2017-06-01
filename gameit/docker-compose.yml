@@ -14,9 +14,7 @@ services:
   my-eureka:
     image: peshou/gameit-eureka
     labels:
-      - "traefik.port=8761"
-      - "traefik.backend=my-eureka"
-      - "traefik.frontend.rule=PathPrefixStrip:/my-eureka"
+      - "traefik.enable=false"
     expose:
       - "8761"
     ports:
@@ -32,9 +30,7 @@ services:
   my-gateway:
     image: peshou/gameit-gateway
     labels:
-      - "traefik.port=8080"
-      - "traefik.backend=my-gateway"
-      - "traefik.frontend.rule=PathPrefixStrip:/my-gateway"
+      - "traefik.enabled=false"
 
   my-mysql:
     image: mysql
@@ -51,20 +47,14 @@ services:
   my-auth:
     image: peshou/gameit-auth
     labels:
-      - "traefik.port=9999"
-      - "traefik.backend=my-auth"
-      - "traefik.frontend.rule=PathPrefixStrip:/my-auth"
+      - "traefik.enable=false"
     links:
       - my-mysql
       - my-eureka
-      - my-zuul
-      - my-gateway
     depends_on:
       - my-mysql
       - my-traefik
       - my-eureka
-      - my-zuul
-      - my-gateway
     environment:
       - DATABASE_HOST=my-mysql
       - DATABASE_USER=dbuser
@@ -75,50 +65,45 @@ services:
   my-app1:
     image: peshou/gameit1
     labels:
-      - "traefik.port=8080"
-      - "traefik.backend=my-app1"
-      - "traefik.frontend.rule=PathPrefixStrip:/my-app1"
+      - "traefik.enable=false"
     links:
       - my-mysql
       - my-eureka
-      - my-zuul
-      - my-gateway
     depends_on:
       - my-mysql
       - my-traefik
       - my-eureka
-      - my-zuul
-      - my-gateway
     environment:
       - DATABASE_HOST=my-mysql
       - DATABASE_USER=dbuser
       - DATABASE_PASSWORD=dbp4ss
       - DATABASE_NAME=gameit
       - DATABASE_PORT=3306
+      - OAUTH_CLIENT_ID=gameit
+      - OAUTH_CLIENT_SECRET=someSecret
+      - OAUTH_TOKEN_VALIDITY=3600
+      - STRIPE_TEST_PK=sk_test_qp9lcBPFPbDor0K5K8TaOR09
+      - STRIPE_CLIENT_ID=ca_AQuIoAUDP9cVKHzEXtViIp4krfm0hIwQ
 
-  my-app2:
-    image: peshou/gameit2
+  my-mail:
+    image: peshou/gameit-mail
     labels:
-      - "traefik.port=8080"
-      - "traefik.backend=my-app2"
-      - "traefik.frontend.rule=PathPrefixStrip:/my-app2"
+      - "traefik.enable=false"
     links:
       - my-mysql
       - my-eureka
-      - my-zuul
-      - my-gateway
     depends_on:
       - my-mysql
       - my-traefik
       - my-eureka
-      - my-zuul
-      - my-gateway
     environment:
-      - DATABASE_HOST=my-mysql
-      - DATABASE_USER=dbuser
-      - DATABASE_PASSWORD=dbp4ss
-      - DATABASE_NAME=gameit
-      - DATABASE_PORT=3306
+      - MAIL_HOST=smtp.gmail.com
+      - MAIL_USERNAME=eyo.adms@gmail.com
+      - MAIL_PASSWORD=pesho123
+      - MAIL_PORT=587
+      - MAIL_TEST_CONNECTION=true
+      - MAIL_AUTH=true
+      - MAIL_SOCKET_PORT=25
 
 volumes:
   my-datavolume: {}
