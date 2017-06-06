@@ -46,7 +46,6 @@ export class BaseService {
     }
     return Observable.create((observer) => {
       this._http.request(new Request(requestOptions))
-        .map(res=> res.json())
         .subscribe(
           (res) => {
             observer.next(res);

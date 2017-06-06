@@ -100,11 +100,18 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>net.sourceforge.dynamicreports</groupId>
 			<artifactId>dynamicreports-core</artifactId>
 			<version>4.1.1</version>
 		</dependency>
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.1.7</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
@@ -158,8 +165,8 @@
 					<dockerDirectory>src/main/docker</dockerDirectory>
 
                     <!--Used only for windows-->
-                    <dockerHost>https://192.168.99.100:2376</dockerHost>
-                    <dockerCertPath>C:/Users/Stefan/.docker/machine/machines/default</dockerCertPath>
+                    <!--<dockerHost>https://192.168.99.100:2376</dockerHost>-->
+                    <!--<dockerCertPath>C:/Users/Stefan/.docker/machine/machines/default</dockerCertPath>-->
                     <!--Delete this if docker:build does not work-->
 
                     <resources>

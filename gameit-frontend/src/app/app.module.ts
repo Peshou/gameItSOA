@@ -8,10 +8,10 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {RouterModule, Routes} from "@angular/router";
 import {PageNotFoundComponent} from "./components/not-found/not-found.component";
 import {HomeComponent} from "./components/home/home.component";
-import {RoutesPaths} from "./routes-paths";
 import {WrapperComponent} from "./components/wrapper/wrapper.component";
 import {LoginComponent} from "./components/login/login.component";
 import {RegisterComponent} from "./components/register/register.component";
+import {RoutesPaths} from "./services/navigation.service";
 
 const appRoutes: Routes = [
   {path: RoutesPaths.login, component: LoginComponent},

@@ -14,7 +14,8 @@ zuul:
     my-gateway: /my-gateway/**
     my-auth:
        path: /my-auth/**
-       sensitive-headers:
+       sensitive-headers: true
+
 management:
   security:
     enabled: false

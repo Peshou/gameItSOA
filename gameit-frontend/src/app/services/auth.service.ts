@@ -6,13 +6,14 @@ import {BaseService} from "./base.service";
 import {User} from "../models/user.model";
 import {Deserialize} from "cerialize";
 import {Response, URLSearchParams} from "@angular/http";
+import {UserService} from "./user.service";
 
 @Injectable()
 export class AuthService extends BaseService {
   private isLoggedInSource = new Subject<boolean>();
   isLoggedIn$ = this.isLoggedInSource.asObservable();
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private _userService: UserService) {
     super(http);
     this.isLoggedInSource.next(sessionStorage.getItem('access-token') != null);
   }
@@ -21,49 +22,49 @@ export class AuthService extends BaseService {
     return sessionStorage.getItem('access-token') != null;
   }
 
-  fullLogin(email: string, password: string) {
-    let login = this.login(email, password);
-    let getUserDetails = this.getUserDetails();
-    return Observable.forkJoin(login, getUserDetails).flatMap((result: any[]) => {
-        let successLogin = result[0];
-        let user = result[1];
-
-        return Observable.of(user);
-    });
+  fullLogin(username: string, password: string) {
+    console.log("using login");
+    return this.login(username, password).switchMap((result) => result ? this.getUserDetails() : Observable.throw("error"));
   }
 
-  login(email: string, password: string): Observable<any> {
+  login(username: string, password: string): Observable<any> {
     const endpoint = 'my-auth/login';
-    let params = {};
-    params['username']= email;
-    params['password']= password;
-      return this.post(endpoint, params).map((json: Response) => {
+    let params = {
+      username: username,
+      password: password
+    };
+
+    return this.post(endpoint, params).map((json: Response) => {
       let token = json.headers.get("Authorization");
       if (token) {
         token = token.split(" ")[1];
+      } else {
+        return false;
       }
 
       sessionStorage.setItem('access-token', token);
-        return true;
-      })
-      .catch((error: any) => {
-        this.isLoggedInSource.next(false);
-        return Observable.throw(error || 'Server error');
-      });
+      return true;
+    }).catch((error: any) => {
+      this._userService.onUserDidFailToLogin();
+      return Observable.throw(error || 'Server error');
+    });
   }
 
   getUserDetails() {
     const endpoint = 'my-auth/me';
     return this.get(endpoint).map((json: Response) => {
-      let user = Deserialize(json, User);
-      sessionStorage.setItem('user', JSON.stringify(json));
-      this.isLoggedInSource.next(true);
+      console.log("getUserDetails");
+      let user = new User().deserialize(json.json());
+      sessionStorage.setItem('user', JSON.stringify(user));
+
+      this._userService.onUserDidLogin(user);
       return user;
-    }) .catch((error: any) => {
-      this.isLoggedInSource.next(false);
+    }).catch((error: any) => {
+      this._userService.onUserDidFailToLogin();
       return Observable.throw(error || 'Server error');
     });
   }
+
   signup(displayName: string, email: string, password: string, phone: string): Observable<User> {
     const endpoint = 'v2/auth/sign_up';
     let params = new URLSearchParams();
@@ -76,10 +77,11 @@ export class AuthService extends BaseService {
     return this.http.post(endpoint, null, params)
       .map((res: Response) => res.json())
       .map((json) => {
-        let user = Deserialize(json, User);
+        let user = new User().deserialize(json);
         sessionStorage.setItem('access-token', user.access_token);
-        sessionStorage.setItem('user', JSON.stringify(json));
-        this.isLoggedInSource.next(true);
+        sessionStorage.setItem('user', JSON.stringify(user));
+
+        this._userService.onUserDidLogin(user);
         return user;
       })
       .catch((error: any) => {
