@@ -1,8 +1,33 @@
 <div class="container-fluid home">
-  <video poster="assets/home/ocean-breeze.png"
+  <video poster="assets/home/background_video.png"
          class="home_video" autoplay muted loop>
-    <source src="assets/home/ocean-breeze.mp4" type="video/mp4">
-    <source src="assets/home/ocean-breeze.ogg" type="video/ogg">
+    <source src="assets/home/background_video.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
+  <div *ngIf="!isUserLoggedIn;
+       then notLoggedInContent
+       else loggedInContent">
+  </div>
+
+  <ng-template #notLoggedInContent>
+    <div class="text-center">
+      <button class="btn btn-primary" (click)="goToLogin()">Login</button>
+    </div>
+    <div class="text-center">
+      <button class="btn btn-primary" (click)="goToRegister()">Register</button>
+    </div>
+  </ng-template>
+  <ng-template #loggedInContent>
+    <div class="text-center">
+      <button class="btn btn-primary" (click)="logout()">Logout</button>
+    </div>
+  </ng-template>
+
+
+  <div *ngIf="!isUserLoggedIn">
+
+  </div>
+  <div *ngIf="!isUserLoggedIn">
+
+  </div>
 </div>

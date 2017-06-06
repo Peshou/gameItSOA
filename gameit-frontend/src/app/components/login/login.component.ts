@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
     this._authService.fullLogin(this.email, this.password)
       .subscribe((user: User) => {
         console.log(user);
+        this._navigationService.goToHome();
       });
 
     // this._router.navigate(['/']);

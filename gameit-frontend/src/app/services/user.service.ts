@@ -31,7 +31,7 @@ export class UserService {
   }
 
   onLogoutUser() {
-    this.removeUserFromSession()
+    this.removeUserFromSession();
     this.isLoggedInSource.next(false);
     this.userSource.next(null);
   }

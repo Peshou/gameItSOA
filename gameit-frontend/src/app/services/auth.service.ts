@@ -109,6 +109,6 @@ export class AuthService extends BaseService {
     sessionStorage.removeItem('access-token');
     sessionStorage.removeItem('user');
     this.isLoggedInSource.next(false);
-    callback();
+    callback && callback();
   }
 }

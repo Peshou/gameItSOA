@@ -10,7 +10,7 @@
     height: auto;
     z-index: -100;
     transform: translateX(-50%) translateY(-50%);
-    background: url('/assets/home/ocean-breeze.png') no-repeat;
+    background: url('/assets/home/background_video.png') no-repeat;
     background-size: cover;
     transition: 1s opacity;
   }
@@ -21,7 +21,7 @@
     div{width:70%;}
   }
   @media screen and (max-device-width: 800px) {
-     background: url('/assets/home/ocean-breeze.png') #000 no-repeat center center fixed;
+     background: url('/assets/home/background_video.png') #000 no-repeat center center fixed;
     video.home_video { display: none; }
   }
 }
