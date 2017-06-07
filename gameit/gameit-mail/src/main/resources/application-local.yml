@@ -22,10 +22,13 @@ spring:
           ssl.enable: true
 logging:
   level: debug
-security:
-  enable-csrf: false
+
 
 eureka:
   client:
     service-url:
       defaultZone: http://my-eureka:8761/eureka/
+
+security:
+  basic:
+    enabled: false

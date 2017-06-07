@@ -10,7 +10,9 @@
         <input [formControlName]="'password'" placeholder="Password" type="password" name="password" />
         <input [formControlName]="'confirmPassword'"  placeholder="Password (Confirm)" type="password" name="confirmPassword" />
 
-        <button [disabled]="!registerForm.valid" (click)="register()">CREATE ACCOUNT</button>
+        <button class="btn btn-primary"
+                [disabled]="!registerForm.valid"
+                (click)="register()">CREATE ACCOUNT</button>
         <p class="note">Already have an account?<br/> <a [routerLink]="['/login']">Sign in here</a></p>
       </div>
     </form>

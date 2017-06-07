@@ -13,6 +13,9 @@ import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EurekaDiscoveryClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
@@ -96,14 +99,18 @@ public class UserController {
         try {
             user = userService.create(userObject.getUser(), authorities);
         } catch (EmailExistsException | UsernameExistsException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(e);
         }
         final URI location = ServletUriComponentsBuilder.
                 fromCurrentServletMapping().path("/users/{id}").build()
                 .expand(user.getId()).toUri();
 
         EurekaDiscoveryClient.EurekaServiceInstance mailService = getService("my-mail");
-        ResponseEntity<Object> responseEntity = this.restTemplate.postForEntity("http://" + mailService.getInstanceInfo().getIPAddr() + "/mail/register", null, null);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<User> entity = new HttpEntity<User>(user, headers);
+        ResponseEntity<Object> responseEntity = this.restTemplate.postForEntity("http://" + mailService.getInstanceInfo().getIPAddr() + ":8080/mail/register", entity, null);
 
         return ResponseEntity.created(location).body(user);
     }

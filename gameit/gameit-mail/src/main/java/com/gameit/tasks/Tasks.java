@@ -40,7 +40,7 @@ public class Tasks {
     public void sendPromotionEmail() {
         EurekaDiscoveryClient.EurekaServiceInstance authService = getService("my-auth");
 
-        ResponseEntity<User[]> responseEntity = this.restTemplate.getForEntity("http://" + authService.getInstanceInfo().getIPAddr() + "/users", User[].class);
+        ResponseEntity<User[]> responseEntity = this.restTemplate.getForEntity("http://" + authService.getInstanceInfo().getIPAddr() + ":8080/users", User[].class);
         for (User user : responseEntity.getBody()) {
             try {
                 mailSender.sendNewsLetter(user);
