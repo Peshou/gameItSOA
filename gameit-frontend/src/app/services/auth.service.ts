@@ -65,25 +65,15 @@ export class AuthService extends BaseService {
     });
   }
 
-  signup(displayName: string, email: string, password: string, phone: string): Observable<User> {
-    const endpoint = 'v2/auth/sign_up';
-    let params = new URLSearchParams();
-    params.append('email', email);
-    params.append('password', password);
-    params.append('display_name', password);
-    if (phone) {
-      params.append('phone_number', password);
-    }
-    return this.http.post(endpoint, null, params)
-      .map((res: Response) => res.json())
-      .map((json) => {
-        let user = new User().deserialize(json);
-        sessionStorage.setItem('access-token', user.access_token);
-        sessionStorage.setItem('user', JSON.stringify(user));
+  signup(userToBeCreated: User): Observable<User> {
+    const endpoint = 'my-auth/users';
 
-        this._userService.onUserDidLogin(user);
-        return user;
-      })
+    let params = {
+      user: userToBeCreated
+    };
+
+    return this.post(endpoint, params)
+      .map((res: Response) => res.json())
       .catch((error: any) => {
         this.isLoggedInSource.next(false);
         return Observable.throw(error || 'Server error');
@@ -111,4 +101,10 @@ export class AuthService extends BaseService {
     this.isLoggedInSource.next(false);
     callback && callback();
   }
+}
+
+interface RegisterFormData {
+  username: string,
+  password: string,
+  email: string
 }

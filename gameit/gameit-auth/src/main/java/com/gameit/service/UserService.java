@@ -3,6 +3,7 @@ package com.gameit.service;
 import com.gameit.model.Authority;
 import com.gameit.model.User;
 import com.gameit.model.exceptions.EmailExistsException;
+import com.gameit.model.exceptions.UsernameExistsException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ public interface UserService {
 
     User findById(String id);
 
-    User create(User user, ArrayList<Authority> roles) throws EmailExistsException;
+    User create(User user, ArrayList<Authority> roles) throws EmailExistsException, UsernameExistsException;
 
     User update(User beforeUpdate, User user);
 

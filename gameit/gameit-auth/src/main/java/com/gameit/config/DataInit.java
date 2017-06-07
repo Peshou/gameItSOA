@@ -3,6 +3,7 @@ package com.gameit.config;
 import com.gameit.model.Authority;
 import com.gameit.model.User;
 import com.gameit.model.exceptions.EmailExistsException;
+import com.gameit.model.exceptions.UsernameExistsException;
 import com.gameit.repository.AuthorityRepository;
 import com.gameit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,7 @@ public class DataInit {
 
             try {
                 userService.create(admin, roles);
-            } catch (EmailExistsException e) {
+            } catch (EmailExistsException | UsernameExistsException e) {
                 e.printStackTrace();
             }
         }
@@ -74,7 +75,7 @@ public class DataInit {
 
             try {
                 userService.create(user, roles);
-            } catch (EmailExistsException e) {
+            } catch (EmailExistsException | UsernameExistsException e) {
                 e.printStackTrace();
             }
         }
@@ -91,7 +92,7 @@ public class DataInit {
 
             try {
                 userService.create(stefan, roles);
-            } catch (EmailExistsException e) {
+            } catch (EmailExistsException | UsernameExistsException e) {
                 e.printStackTrace();
             }
         }

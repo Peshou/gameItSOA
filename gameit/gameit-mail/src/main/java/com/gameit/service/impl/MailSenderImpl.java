@@ -41,7 +41,7 @@ public class MailSenderImpl implements MailSender {
 
     @Override
     @Async
-    public void sendReistrationSuccessEmail(User user) throws MessagingException {
+    public void sendRegistrationSuccessEmail(User user) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper message =
                 new MimeMessageHelper(

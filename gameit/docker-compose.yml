@@ -14,7 +14,9 @@ services:
   my-eureka:
     image: peshou/gameit-eureka
     labels:
-      - "traefik.enable=false"
+      - "traefik.port=8761"
+      - "traefik.backend=my-eureka"
+      - "traefik.frontend.rule=PathPrefixStrip:/my-eureka"
     expose:
       - "8761"
     ports:

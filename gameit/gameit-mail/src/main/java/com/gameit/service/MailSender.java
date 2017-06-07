@@ -9,7 +9,7 @@ import javax.mail.MessagingException;
 
 public interface MailSender {
 
-    void sendReistrationSuccessEmail(User user) throws MessagingException;
+    void sendRegistrationSuccessEmail(User user) throws MessagingException;
     void sendNewsLetter(User user) throws MessagingException;
     void sendOrderEmail(UserGameOrder userGameOrder) throws MessagingException;
 }

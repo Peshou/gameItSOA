@@ -3,15 +3,14 @@
     <div class="register-header">
       <img src="assets/logoSmall.png">
     </div>
-    <form #form="ngForm" (ngSubmit)="register()">
+    <form [formGroup]="registerForm">
       <div class="register-content" >
-        <input placeholder="Name" type="text" name="name" required [(ngModel)]="name">
-        <input placeholder="E-Mail" type="text" name="email" required [(ngModel)]="email">
-        <input placeholder="Password" type="password" name="password" required [(ngModel)]="password">
-        <input placeholder="Password (Confirm)" type="password" name="password-confirm" required
-               [(ngModel)]="passwordConfirm">
+        <input [formControlName]="'username'" placeholder="Name" type="text" name="name" />
+        <input [formControlName]="'email'" placeholder="E-Mail" type="text" name="email" />
+        <input [formControlName]="'password'" placeholder="Password" type="password" name="password" />
+        <input [formControlName]="'confirmPassword'"  placeholder="Password (Confirm)" type="password" name="confirmPassword" />
 
-        <button [disabled]="!form.valid">CREATE ACCOUNT</button>
+        <button [disabled]="!registerForm.valid" (click)="register()">CREATE ACCOUNT</button>
         <p class="note">Already have an account?<br/> <a [routerLink]="['/login']">Sign in here</a></p>
       </div>
     </form>

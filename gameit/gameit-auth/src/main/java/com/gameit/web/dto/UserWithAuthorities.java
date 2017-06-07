@@ -2,9 +2,12 @@ package com.gameit.web.dto;
 
 import com.gameit.model.User;
 
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserWithAuthorities {
+    @NotNull
     private User user;
     private List<String> authorities;
 
@@ -14,6 +17,7 @@ public class UserWithAuthorities {
     }
 
     public UserWithAuthorities() {
+        authorities = new ArrayList<>();
     }
 
     public User getUser() {

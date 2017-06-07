@@ -20,10 +20,5 @@ public enum Authorities {
         public String toString() {
             return "BUYER";
         }
-    },
-    GOOGLE {
-        public String toString() {
-            return "GOOGLE";
-        }
     }
 }

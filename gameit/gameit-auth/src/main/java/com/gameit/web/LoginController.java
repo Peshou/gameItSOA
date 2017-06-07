@@ -1,17 +1,18 @@
-package com.gameit.controller;
+package com.gameit.web;
 
 import com.gameit.model.User;
-import com.gameit.security.AccountCredentials;
 import com.gameit.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class LoginController {
+
     @Autowired
     private UserService userService;
+
 
     @GetMapping("/me")
     public User getLoggedInUserDetails() {
@@ -23,4 +24,6 @@ public class LoginController {
             return userService.findByUsername(name);
         }
     }
+
+
 }

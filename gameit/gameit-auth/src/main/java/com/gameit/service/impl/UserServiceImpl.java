@@ -3,6 +3,7 @@ package com.gameit.service.impl;
 import com.gameit.model.Authority;
 import com.gameit.model.User;
 import com.gameit.model.exceptions.EmailExistsException;
+import com.gameit.model.exceptions.UsernameExistsException;
 import com.gameit.repository.AuthorityRepository;
 import com.gameit.repository.UserRepository;
 import com.gameit.service.UserService;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,14 +58,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User create(User user, ArrayList<Authority> roles) throws EmailExistsException {
+    public User create(User user, ArrayList<Authority> roles) throws EmailExistsException, UsernameExistsException {
         if (userRepository.findByEmail(user.getEmail()) != null) {
             throw new EmailExistsException();
         }
+        if(userRepository.findByUsernameCaseInsensitive(user.getUsername()) != null){
+            throw new UsernameExistsException();
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setAuthorities(roles.stream()
-                .map(authority -> authorityRepository.findOne(authority.getName()))
-                .collect(Collectors.toSet()));
+        user.setAuthorities(new HashSet<>(roles));
         user = userRepository.save(user);
 
         return user;

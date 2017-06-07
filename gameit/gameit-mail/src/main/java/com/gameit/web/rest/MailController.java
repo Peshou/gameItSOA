@@ -31,7 +31,7 @@ public class MailController {
     @PostMapping("/mail/register")
     public ResponseEntity sendRegistration(@RequestBody User user) {
         try {
-            this.mailSender.sendReistrationSuccessEmail(user);
+            this.mailSender.sendRegistrationSuccessEmail(user);
             return ResponseEntity.ok().build();
         } catch (MessagingException e) {
             e.printStackTrace();

@@ -6,7 +6,7 @@ spring:
 eureka:
   client:
     service-url:
-     defaultZone: http://my-eureka:8761/eureka/
+      defaultZone: http://my-eureka:8761/eureka/
 
 zuul:
   ignoredServices: '*'
@@ -14,7 +14,7 @@ zuul:
     my-gateway: /my-gateway/**
     my-auth:
        path: /my-auth/**
-       sensitive-headers: true
+       sensitive-headers:
 
 management:
   security:

@@ -7,12 +7,13 @@ export class User extends Deserialization  {
   @deserialize createdAt: number;
   @deserialize updatedAt: number;
   @deserialize username: string;
+  @deserialize password: string;
   @deserialize email: string;
   @deserializeAs(Authority) authorities: Authority[];
 
   isAdmin() {
     return !!this.authorities.find((authority: Authority) => {
-      return authority.name == "ROLE_ADMIN";
+      return authority.name == "ADMIN";
     });
   }
 }
