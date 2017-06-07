@@ -20,35 +20,42 @@ public class MailSenderImpl implements MailSender {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Autowired
+    private MailContentBuilder mailContentBuilder;
+
     @Value("${spring.mail.username}")
     private String username;
 
     @Async
     public void sendOrderEmail(final UserGameOrder userGameOrder) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper message =
+        MimeMessageHelper messageHelper =
                 new MimeMessageHelper(
                         mimeMessage, false, CharEncoding.UTF_8);
-        message.setTo(userGameOrder.getUser().getEmail());
-        message.setFrom(username);
-        message.setSubject("Order Confirmation");
-        message.setText("Dear " + userGameOrder.getUser().getUsername()
-                + ", thank you for placing order. Your order number is "
-                + userGameOrder.getPaymentProcessorChargeId(), true);
+        messageHelper.setTo(userGameOrder.getUser().getEmail());
+        messageHelper.setFrom(username);
+        messageHelper.setSubject("Order Confirmation");
+        String content = mailContentBuilder.build("newsletterMail", userGameOrder);
+        messageHelper.setText(content, true);
+//        messageHelper.setText("Dear " + userGameOrder.getUser().getUsername()
+//                + ", thank you for placing order. Your order number is "
+//                + userGameOrder.getPaymentProcessorChargeId(), true);
         mailSender.send(mimeMessage);
 
     }
-
+//TODO: FIX THYMELEAF
     @Override
     @Async
     public void sendRegistrationSuccessEmail(User user) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper message =
+        MimeMessageHelper messageHelper =
                 new MimeMessageHelper(
                         mimeMessage, false, CharEncoding.UTF_8);
-        message.setTo(user.getEmail());
-        message.setFrom(username);
-        message.setSubject("Account Registration");
+        messageHelper.setTo(user.getEmail());
+        messageHelper.setFrom(username);
+        messageHelper.setSubject("Account Registration");
+//        String content = mailContentBuilder.build("registrationMail", user);
+//        messageHelper.setText(content, true);
         message.setText("Dear " + user.getUsername()
                 + ", Your account has been created. <br/> Thank you for your registration.<br/> The Game It Team.", true);
         mailSender.send(mimeMessage);

@@ -87,6 +87,29 @@ services:
       - STRIPE_TEST_PK=sk_test_qp9lcBPFPbDor0K5K8TaOR09
       - STRIPE_CLIENT_ID=ca_AQuIoAUDP9cVKHzEXtViIp4krfm0hIwQ
 
+  my-games:
+    image: peshou/gameit-games
+    labels:
+      - "traefik.enable=false"
+    links:
+      - my-mysql
+      - my-eureka
+    depends_on:
+      - my-mysql
+      - my-traefik
+      - my-eureka
+    environment:
+      - DATABASE_HOST=my-mysql
+      - DATABASE_USER=dbuser
+      - DATABASE_PASSWORD=dbp4ss
+      - DATABASE_NAME=gameit
+      - DATABASE_PORT=3306
+      - OAUTH_CLIENT_ID=gameit
+      - OAUTH_CLIENT_SECRET=someSecret
+      - OAUTH_TOKEN_VALIDITY=3600
+      - STRIPE_TEST_PK=sk_test_qp9lcBPFPbDor0K5K8TaOR09
+      - STRIPE_CLIENT_ID=ca_AQuIoAUDP9cVKHzEXtViIp4krfm0hIwQ
+
   my-mail:
     image: peshou/gameit-mail
     labels:

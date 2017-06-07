@@ -2,12 +2,14 @@ package com.gameit.tasks;
 
 import com.gameit.model.User;
 import com.gameit.service.MailSender;
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.EurekaClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EurekaDiscoveryClient;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -27,6 +29,10 @@ public class Tasks {
     @Autowired
     private DiscoveryClient discoveryClient;
 
+    @Autowired
+    private EurekaDiscoveryClient eurekaDiscoveryClient;
+
+
     @Bean
     RestTemplate restTemplate() {
         return new RestTemplate();
@@ -40,7 +46,13 @@ public class Tasks {
     public void sendPromotionEmail() {
         EurekaDiscoveryClient.EurekaServiceInstance authService = getService("my-auth");
 
-        ResponseEntity<User[]> responseEntity = this.restTemplate.getForEntity("http://" + authService.getInstanceInfo().getIPAddr() + ":8080/users", User[].class);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Object> entity = new HttpEntity<Object>(headers);
+
+        ResponseEntity<User[]> responseEntity =
+                this.restTemplate.exchange("http://" + authService.getInstanceInfo().getIPAddr() + ":8080/users", HttpMethod.GET, entity, User[].class);
         for (User user : responseEntity.getBody()) {
             try {
                 mailSender.sendNewsLetter(user);

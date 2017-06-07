@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  baseApiUrl: "http://127.0.0.1/my-zuul"
+  baseApiUrl: "http://127.0.0.1/my-zuul",
+  stripeKey: 'sk_test_qp9lcBPFPbDor0K5K8TaOR09'
 };
