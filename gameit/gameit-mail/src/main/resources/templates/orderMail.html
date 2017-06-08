@@ -4,12 +4,14 @@
     <meta charset="UTF-8"/>
     <title>Title</title>
     <link rel="stylesheet" type="text/css"
-          href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+          href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
 </head>
 <body>
 <div>
     Dear <span th:text="${user.username}"></span>
-    , Your account has been created. <br/> Thank you for your registration.<br/> The Game It Team.
+    , thank you for placing order. Your order number is
+    <span th:text="${orderNumber}"></span>
 </div>
+
 </body>
 </html>

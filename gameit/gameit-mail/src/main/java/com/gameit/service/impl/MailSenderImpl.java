@@ -29,35 +29,29 @@ public class MailSenderImpl implements MailSender {
     @Async
     public void sendOrderEmail(final UserGameOrder userGameOrder) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper messageHelper =
-                new MimeMessageHelper(
-                        mimeMessage, false, CharEncoding.UTF_8);
+        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, false, CharEncoding.UTF_8);
         messageHelper.setTo(userGameOrder.getUser().getEmail());
         messageHelper.setFrom(username);
         messageHelper.setSubject("Order Confirmation");
-        String content = mailContentBuilder.build("newsletterMail", userGameOrder);
+
+        String content = mailContentBuilder.buildOrderTemplate("orderMail", userGameOrder);
         messageHelper.setText(content, true);
-//        messageHelper.setText("Dear " + userGameOrder.getUser().getUsername()
-//                + ", thank you for placing order. Your order number is "
-//                + userGameOrder.getPaymentProcessorChargeId(), true);
+
         mailSender.send(mimeMessage);
 
     }
-//TODO: FIX THYMELEAF
+
     @Override
     @Async
     public void sendRegistrationSuccessEmail(User user) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper messageHelper =
-                new MimeMessageHelper(
-                        mimeMessage, false, CharEncoding.UTF_8);
+        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, false, CharEncoding.UTF_8);
         messageHelper.setTo(user.getEmail());
         messageHelper.setFrom(username);
         messageHelper.setSubject("Account Registration");
-//        String content = mailContentBuilder.build("registrationMail", user);
-//        messageHelper.setText(content, true);
-        message.setText("Dear " + user.getUsername()
-                + ", Your account has been created. <br/> Thank you for your registration.<br/> The Game It Team.", true);
+
+        String content = mailContentBuilder.buildRegisterTemplate("registrationMail", user);
+        messageHelper.setText(content, true);
         mailSender.send(mimeMessage);
 
     }
@@ -66,14 +60,16 @@ public class MailSenderImpl implements MailSender {
     @Async
     public void sendNewsLetter(User user) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper message =
+        MimeMessageHelper messageHelper =
                 new MimeMessageHelper(
                         mimeMessage, false, CharEncoding.UTF_8);
-        message.setTo(user.getEmail());
-        message.setFrom(username);
-        message.setSubject("Newsletter");
-        message.setText("Dear " + user.getUsername()
-                + ", Thank you for receiving this newsletter", true);
+        messageHelper.setTo(user.getEmail());
+        messageHelper.setFrom(username);
+        messageHelper.setSubject("Newsletter");
+
+        String content = mailContentBuilder.buildNewsletterTemplate("newsletterMail", user);
+        messageHelper.setText(content, true);
+
         mailSender.send(mimeMessage);
     }
 }

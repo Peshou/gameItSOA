@@ -42,7 +42,7 @@ public class Tasks {
     RestTemplate restTemplate;
 
     //EVERY DAY FROM 10 - 18, EVERY HALF AN HOUR, 10:30, 11:00, 11:30, 12:00, 12:30 ....
-    @Scheduled(cron = "0 0/30 10-21 * * *")
+    @Scheduled(cron = "* 0/10 * * * *")
     public void sendPromotionEmail() {
         EurekaDiscoveryClient.EurekaServiceInstance authService = getService("my-auth");
 
@@ -51,15 +51,27 @@ public class Tasks {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Object> entity = new HttpEntity<Object>(headers);
 
-        ResponseEntity<User[]> responseEntity =
-                this.restTemplate.exchange("http://" + authService.getInstanceInfo().getIPAddr() + ":8080/users", HttpMethod.GET, entity, User[].class);
-        for (User user : responseEntity.getBody()) {
-            try {
-                mailSender.sendNewsLetter(user);
-            } catch (MessagingException e) {
-                e.printStackTrace();
-            }
+        User user = new User();
+        user.setUsername("pesho");
+        user.setEmail("stefan.pesik@yahoo.com");
+
+        try {
+            mailSender.sendNewsLetter(user);
+        } catch (MessagingException e) {
+            e.printStackTrace();
         }
+//
+//        ResponseEntity<User[]> responseEntity =
+//                this.restTemplate.exchange("http://" + authService.getInstanceInfo().getIPAddr() + ":8080/users", HttpMethod.GET, entity, User[].class);
+//
+//
+//        for (User user : responseEntity.getBody()) {
+//            try {
+//                mailSender.sendNewsLetter(user);
+//            } catch (MessagingException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     private EurekaDiscoveryClient.EurekaServiceInstance getService(String serviceName) {

@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Title</title>
-    <link rel="stylesheet" type="text/css"
-          href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <title>WebJars Demo</title>
+    <link rel="stylesheet"
+          href="/webjars/bootstrap/css/bootstrap.min.css" />
 </head>
 <body>
 <div>
-    Dear <span th:text="${user.getUsername()}" userGameOrder.getUser().getUsername()
-    //                + ", thank you for placing order. Your order number is "
-    //                + userGameOrder.getPaymentProcessorChargeId()
-</div>
+    <h2 class="page-header">Newsletter</h2>
+    Hello <span th:text="${user.username}"></span>
 
+</div>
 </body>
 </html>
