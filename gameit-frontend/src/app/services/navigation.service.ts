@@ -5,7 +5,8 @@ import {Router} from "@angular/router";
 export const RoutesPaths = {
   login: 'login',
   register: 'register',
-  home: 'home',
+  home: '',
+  games: 'games'
 };
 
 @Injectable()

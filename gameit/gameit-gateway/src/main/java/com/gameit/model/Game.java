@@ -1,7 +1,6 @@
 package com.gameit.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.hateoas.core.Relation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,7 +9,6 @@ import java.util.Set;
 
 @Table
 @Entity
-@Relation(collectionRelation = "items")
 public class Game extends AbstractBaseEntity {
     @NotNull
     @Column(nullable = false)

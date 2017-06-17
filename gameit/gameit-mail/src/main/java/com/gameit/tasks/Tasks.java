@@ -18,9 +18,6 @@ import javax.mail.MessagingException;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by Stefan on 23.04.2016.
- */
 @Component
 public class Tasks {
     @Autowired
@@ -28,10 +25,6 @@ public class Tasks {
 
     @Autowired
     private DiscoveryClient discoveryClient;
-
-    @Autowired
-    private EurekaDiscoveryClient eurekaDiscoveryClient;
-
 
     @Bean
     RestTemplate restTemplate() {
@@ -42,36 +35,26 @@ public class Tasks {
     RestTemplate restTemplate;
 
     //EVERY DAY FROM 10 - 18, EVERY HALF AN HOUR, 10:30, 11:00, 11:30, 12:00, 12:30 ....
-    @Scheduled(cron = "* 0/10 * * * *")
+    @Scheduled(cron = "* * 0/30 * * *")
     public void sendPromotionEmail() {
         EurekaDiscoveryClient.EurekaServiceInstance authService = getService("my-auth");
 
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Object> entity = new HttpEntity<Object>(headers);
+        HttpEntity<Object> entity = new HttpEntity<Object>(null, headers);
 
-        User user = new User();
-        user.setUsername("pesho");
-        user.setEmail("stefan.pesik@yahoo.com");
+        ResponseEntity<User[]> responseEntity =
+                this.restTemplate.exchange("http://" + authService.getInstanceInfo().getIPAddr() + ":8080/users", HttpMethod.GET, entity, User[].class);
 
-        try {
-            mailSender.sendNewsLetter(user);
-        } catch (MessagingException e) {
-            e.printStackTrace();
+
+        for (User user : responseEntity.getBody()) {
+            try {
+                mailSender.sendNewsLetter(user);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
         }
-//
-//        ResponseEntity<User[]> responseEntity =
-//                this.restTemplate.exchange("http://" + authService.getInstanceInfo().getIPAddr() + ":8080/users", HttpMethod.GET, entity, User[].class);
-//
-//
-//        for (User user : responseEntity.getBody()) {
-//            try {
-//                mailSender.sendNewsLetter(user);
-//            } catch (MessagingException e) {
-//                e.printStackTrace();
-//            }
-//        }
     }
 
     private EurekaDiscoveryClient.EurekaServiceInstance getService(String serviceName) {

@@ -6,17 +6,21 @@ import com.gameit.model.User;
 import com.gameit.model.exceptions.StorageException;
 import com.gameit.model.exceptions.StorageFileNotFoundException;
 import com.gameit.repository.GameRepository;
-import com.gameit.repository.UserRepository;
 import com.gameit.service.GameService;
-import com.gameit.service.UserService;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.netflix.eureka.EurekaDiscoveryClient;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileSystemUtils;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -24,24 +28,39 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.Random;
 
 @Service
 public class GameServiceImpl implements GameService {
     private final GameRepository gameRepository;
 
-    private final UserRepository userRepository;
+    private final DiscoveryClient discoveryClient;
 
     private final Path rootLocation;
 
     @Autowired
-    public GameServiceImpl(StorageProperties properties, GameRepository gameRepository, UserRepository userRepository, UserService userService) {
+    public GameServiceImpl(StorageProperties properties, GameRepository gameRepository, DiscoveryClient discoveryClient, StorageProperties properties1) {
         this.rootLocation = Paths.get(properties.getLocation());
+        System.out.println(this.rootLocation);
         this.gameRepository = gameRepository;
-        this.userRepository = userRepository;
-        this.userService = userService;
+        this.discoveryClient = discoveryClient;
     }
 
-    private final UserService userService;
+
+    @Bean
+    RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
+    @Autowired
+    RestTemplate restTemplate;
+
+    private EurekaDiscoveryClient.EurekaServiceInstance getService(String serviceName) {
+        Random rnd = new Random();
+        List<ServiceInstance> services = discoveryClient.getInstances(serviceName);
+        return (EurekaDiscoveryClient.EurekaServiceInstance) services.get(rnd.nextInt(services.size()));
+    }
 
     @Override
     public Game findById(String id) {
@@ -56,17 +75,30 @@ public class GameServiceImpl implements GameService {
     @Override
     @Transactional
     public Game create(Game game) {
-        User seller = userService.findByEmail("admin@example.com");
-        game.setUserSeller(seller);
+        EurekaDiscoveryClient.EurekaServiceInstance authService = getService("my-auth");
 
-        game = gameRepository.save(game);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Object> entity = new HttpEntity<Object>(null, headers);
 
-        if(seller != null) {
+        ResponseEntity<User> responseEntity =
+                this.restTemplate.exchange("http://" + authService.getInstanceInfo().getIPAddr() + ":8080/me", HttpMethod.GET, entity, User.class);
+
+
+        User seller = responseEntity.getBody();
+        if (seller != null) {
+            game.setUserSeller(seller);
+            game = gameRepository.save(game);
+
             seller.getSellingGames().add(game);
-            userRepository.save(seller);
+
+            HttpEntity<User> userEntity = new HttpEntity<User>(seller, headers);
+            this.restTemplate.exchange("http://" + authService.getInstanceInfo().getIPAddr() + ":8080/users/"+seller.getId(), HttpMethod.PUT, userEntity, User.class);
+
+            return game;
         }
 
-        return game;
+        return null;
     }
 
     @Override

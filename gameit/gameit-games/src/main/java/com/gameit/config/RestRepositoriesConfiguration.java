@@ -14,6 +14,7 @@ public class RestRepositoriesConfiguration extends RepositoryRestConfigurerAdapt
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
         config.exposeIdsFor(User.class);
         config.exposeIdsFor(Game.class);
+        config.useHalAsDefaultJsonMediaType(false);
 
         // Specify JSON instead of default HAL+JSON
         config.setDefaultMediaType(MediaType.APPLICATION_JSON);

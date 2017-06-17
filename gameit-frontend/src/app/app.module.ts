@@ -13,6 +13,7 @@ import {LoginComponent} from "./components/login/login.component";
 import {RegisterComponent} from "./components/register/register.component";
 import {RoutesPaths} from "./services/navigation.service";
 import {CustomFormsModule} from "ng2-validation";
+import {GameListComponent} from "./components/game-list/game-list.component";
 
 const appRoutes: Routes = [
   {path: RoutesPaths.login, component: LoginComponent},
@@ -21,8 +22,9 @@ const appRoutes: Routes = [
     path: '',
     component: WrapperComponent,
     children: [
-      {path: '', redirectTo: '/' + RoutesPaths.home, pathMatch: 'full'},
+      {path: RoutesPaths.games, component: GameListComponent},
       {path: RoutesPaths.home, component: HomeComponent},
+      {path: '', redirectTo: '/' + RoutesPaths.home, pathMatch: 'full'},
     ]
   },
   {path: '**', component: PageNotFoundComponent}
@@ -34,7 +36,8 @@ const appRoutes: Routes = [
     PageNotFoundComponent,
     WrapperComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    GameListComponent
   ],
   imports: [
     BrowserModule,
