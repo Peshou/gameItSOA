@@ -7,6 +7,7 @@ export class PaginatedResource<T extends Deserialization> extends Deserializatio
 
   constructor(currentPage?:number, numPages?:number, totalCount?:number, items?:Array<T>) {
     super();
+    this.page = new PageDetails();
     this.page.number = currentPage ? currentPage : 1;
 
     if (numPages) {
@@ -37,14 +38,14 @@ export class PaginatedResource<T extends Deserialization> extends Deserializatio
   }
 
   deserializeGeneric(json:any, clazz:any) {
-    json.items.map((item:any) => {
+    json._embedded[clazz.PAGINATED_ARRAY_NAME].map((item:any) => {
       let deserialized_item = new clazz().deserialize(item);
       this.items.push(deserialized_item);
     });
-    if(json.page.number) this.page.number = json.page.number;
-    if(json.page.totalPages) this.page.totalPages = json.page.totalPages;
-    if(json.page.totalElements) this.page.totalElements = json.page.totalElements;
-    if(json.page.size) this.page.size = json.page.size;
+    if(json.page.number != null) this.page.number = json.page.number;
+    if(json.page.totalPages != null) this.page.totalPages = json.page.totalPages;
+    if(json.page.totalElements != null) this.page.totalElements = json.page.totalElements;
+    if(json.page.size != null) this.page.size = json.page.size;
     return this;
   }
 
@@ -55,9 +56,9 @@ export class PaginatedResource<T extends Deserialization> extends Deserializatio
   }
 
 }
-interface PageDetails {
-  size: number,
-  totalElements: number,
-  totalPages: number,
-  number: number,
+class PageDetails {
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  number: number = 0;
 }

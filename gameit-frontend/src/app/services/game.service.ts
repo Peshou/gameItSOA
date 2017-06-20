@@ -17,15 +17,16 @@ export class GameService extends BaseService {
     super(http);
   }
 
-  getAllGames() {
+  getAllGames(pageNumber?: number, pageSize?: number) {
     const endpoint = 'my-gateway/games';
-    return this.get(endpoint, null)
+    let params = {};
+    if (pageNumber != null) params["page"] = pageNumber;
+    if (pageSize != null) params["size"] = pageSize;
+
+    return this.get(endpoint, params)
       .map((res: Response) => {
-      console.log(res.json());
+        console.log(res.json());
         return new PaginatedResource().deserializeGeneric(res.json(), Game);
-      })
-      .catch((error: any) => {
-        return Observable.throw(error || 'Server error');
       });
   }
 }

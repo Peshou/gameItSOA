@@ -1,18 +1,38 @@
-
 import {Injectable} from "@angular/core";
-import {Router} from "@angular/router";
+import {Router, NavigationEnd} from "@angular/router";
+import {Subject, Observable} from "rxjs";
 
 export const RoutesPaths = {
   login: 'login',
   register: 'register',
   home: '',
-  games: 'games'
+  games: 'games',
+  contactUs: "contact"
 };
 
 @Injectable()
 export class NavigationService {
 
+  private currentPath = RoutesPaths.home;
+  private currentPathSource = new Subject<string>();
+  currentPathSource$ = this.currentPathSource.asObservable();
+
   constructor(private _router: Router) {
+    this.subscribeToRouterEvents();
+  }
+
+  subscribeToRouterEvents() {
+    this._router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.currentPath = event.url.split('/')[1];
+        this.currentPath = this.currentPath.split('?')[0];
+        this.currentPathSource.next(this.currentPath)
+      }
+    });
+  }
+
+  currentPath$(): Observable<string> {
+    return this.currentPathSource$;
   }
 
   goToHome() {
@@ -44,5 +64,13 @@ export class NavigationService {
         });
     }
     return {url: url, params: hashParams}
+  }
+
+  goToContactUs() {
+    this._router.navigate(['/' + RoutesPaths.contactUs]);
+  }
+
+  goToGameListScreen() {
+    this._router.navigate(['/' + RoutesPaths.games]);
   }
 }

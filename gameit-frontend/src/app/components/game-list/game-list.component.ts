@@ -1,15 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NavigationService} from "../../services/navigation.service";
 import {UserService} from "../../services/user.service";
-import {CustomValidators} from "ng2-validation";
-import {FormValidators} from "../../util/forms/form_validators";
-import {AuthService} from "../../services/auth.service";
-import {User} from "../../models/user.model";
 import {GameService} from "../../services/game.service";
 import {Game} from "../../models/game.model";
 import {PaginatedResource} from "../../models/paginanted-resource.model";
+import {ShoppingCartService} from "../../services/shopping-cart.service";
 
 @Component({
   selector: 'game-list',
@@ -19,11 +14,13 @@ import {PaginatedResource} from "../../models/paginanted-resource.model";
 })
 export class GameListComponent implements OnInit {
   gameList: PaginatedResource<Game>;
-
   isGameRequestSent: boolean = false;
+
+  showAsGrid = true;
 
   constructor(private _userService: UserService,
               private _gameService: GameService,
+              private _shoppingCartService: ShoppingCartService,
               private _navigationService: NavigationService) {
   }
 
@@ -32,15 +29,38 @@ export class GameListComponent implements OnInit {
 
   }
 
-  getAllGames() {
+  getAllGames(pageNumber: number = 0) {
     if (!this.isGameRequestSent) {
       this.isGameRequestSent = true;
-      this._gameService.getAllGames().subscribe((gameList: PaginatedResource<Game>) => {
-        this.gameList = gameList;
+      this._gameService.getAllGames(pageNumber, Game.PAGE_SIZE).subscribe((gameList: PaginatedResource<Game>) => {
+        if (this.gameList) {
+          this.gameList.append(gameList);
+        } else {
+          this.gameList = gameList;
+        }
+
         console.log(gameList);
+        this.isGameRequestSent = false;
+      }, (error: any) => {
+        this.isGameRequestSent = false;
       });
     }
+  }
 
+  showGrid(showAsGrid: boolean) {
+    this.showAsGrid = showAsGrid;
+  }
+
+  addItemToCard(game: Game) {
+    this._shoppingCartService.addItem(game);
+  }
+
+  onGamesListScroll() {
+    console.log(this.gameList);
+    if (this.gameList.page.number < this.gameList.page.totalPages) {
+      this.getAllGames(this.gameList.page.number + 1);
+    }
+    console.log('scrolled!!')
   }
 
 

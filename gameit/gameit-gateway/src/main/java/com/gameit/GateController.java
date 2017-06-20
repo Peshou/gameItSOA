@@ -7,6 +7,7 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EurekaDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.*;
@@ -54,14 +55,14 @@ public class GateController {
     }
 
     @RequestMapping(value = "/games", method = RequestMethod.GET)
-    public PagedResources<Game> getGames(){
+    public PagedResources<Game> getGames(@RequestParam(name = "page",required = false) Integer page,@RequestParam(name = "size",required = false) Integer size) {
         EurekaDiscoveryClient.EurekaServiceInstance gameService = getService("my-games");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Object> entity = new HttpEntity<Object>(null, headers);
 
         ResponseEntity<PagedResources<Game>> responseEntity =
-                this.restTemplate.exchange("http://" + gameService.getInstanceInfo().getIPAddr() + ":8080/games", HttpMethod.GET, entity, new ParameterizedTypeReference<PagedResources<Game>>(){});
+                this.restTemplate.exchange("http://" + gameService.getInstanceInfo().getIPAddr() + ":8080/games"+"?page="+page+"&size="+size, HttpMethod.GET, entity, new ParameterizedTypeReference<PagedResources<Game>>(){});
 
         return responseEntity.getBody();
     }

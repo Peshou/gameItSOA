@@ -14,6 +14,9 @@ import {RegisterComponent} from "./components/register/register.component";
 import {RoutesPaths} from "./services/navigation.service";
 import {CustomFormsModule} from "ng2-validation";
 import {GameListComponent} from "./components/game-list/game-list.component";
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
+import {ShoppingCartService} from "./services/shopping-cart.service";
+import {NavbarComponent} from "./components/wrapper/navbar/navbar.component";
 
 const appRoutes: Routes = [
   {path: RoutesPaths.login, component: LoginComponent},
@@ -35,6 +38,7 @@ const appRoutes: Routes = [
     HomeComponent,
     PageNotFoundComponent,
     WrapperComponent,
+    NavbarComponent,
     LoginComponent,
     RegisterComponent,
     GameListComponent
@@ -46,9 +50,10 @@ const appRoutes: Routes = [
     HttpModule,
     ReactiveFormsModule,
     CustomFormsModule,
+    InfiniteScrollModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [ShoppingCartService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

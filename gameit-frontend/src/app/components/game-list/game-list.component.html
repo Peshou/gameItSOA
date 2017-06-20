@@ -4,9 +4,57 @@
       <h1 class="page-header">Game List</h1>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-4" *ngFor="let game of gameList">
-        {{game.name}}
+
+  <div id="game-list" class="row"
+       [class.list-group]="!showAsGrid"
+       infiniteScroll
+       [infiniteScrollDistance]="1"
+       [infiniteScrollThrottle]="300"
+       (scrolled)="onGamesListScroll()">
+      <div class="main_well well well-sm">
+        <strong>Category Title</strong>
+        <div class="btn-group">
+          <button id="list"
+                  type="button"
+                  class="btn btn-secondary change_grid"
+                  [class.selected_button]="!showAsGrid"
+                  (click)="showGrid(false)">
+            <span class="glyphicon glyphicon-th-list"></span>List
+          </button>
+          <button id="grid"
+                  type="button"
+                  class="btn btn-secondary change_grid"
+                  [class.selected_button]="showAsGrid"
+                  (click)="showGrid(true)">
+            <span class="glyphicon glyphicon-th"></span>Grid
+          </button>
+        </div>
+      </div>
+
+    <div *ngFor="let game of gameList?.items"
+         class="item col-xs-4 col-sm-4"
+         [class.list-group-item]="!showAsGrid"
+         [class.grid-group-item]="showAsGrid">
+      <div class="thumbnail">
+        <img class="group list-group-image img-responsive img_preview" [src]="game.getPreviewImage()" alt=""/>
+        <div class="caption">
+          <h4 class="group inner list-group-item-heading">
+            {{game.name}}
+          </h4>
+          <p class="group inner list-group-item-text">
+            {{game.description}}
+            </p>
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <p class="lead">
+                {{game.gamePrice | currency:'USD':true:'2.2-2'}}</p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <button class="btn btn-success" (click)="addItemToCard(game)">Add to cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
