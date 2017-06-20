@@ -1,0 +1,9 @@
+<img *ngIf="!useFontAwesomeSpinner" src="../../../../assets/images/loading@2x.gif" width="24" height="24"/>
+<ng-container *ngIf="coverWholeScreen">
+  <div id="blocker" *ngIf="useFontAwesomeSpinner" [class.blocker_ui_white_background]="whiteBackground" class="blocker_ui">
+    <div><i [class.fa-2x]="!useBiggerFontAwesomeSpinner" [class.fa-4x]="useBiggerFontAwesomeSpinner" class="fa fa-spinner fa-spin fa-pulse"></i></div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!coverWholeScreen">
+  <div class="text-center"><i [class.fa-2x]="!useBiggerFontAwesomeSpinner" [class.fa-4x]="useBiggerFontAwesomeSpinner" class="fa fa-spinner fa-spin fa-pulse"></i></div>
+</ng-container>
