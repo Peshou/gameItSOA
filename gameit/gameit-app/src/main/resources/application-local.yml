@@ -16,15 +16,6 @@ spring:
     initialize: true
     data: classpath:/sql/mysql-data.sql
 
-gameit:
-  oauth:
-    client-id: ${OAUTH_CLIENT_ID}
-    client-secret: ${OAUTH_CLIENT_SECRET}
-    token-validity-in-seconds: ${OAUTH_TOKEN_VALIDITY}
-  stripe:
-    testpk: ${STRIPE_TEST_PK}
-    client-id: ${STRIPE_CLIENT_ID}
-
 logging:
   level: debug
 security:

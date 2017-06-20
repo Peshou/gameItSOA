@@ -15,14 +15,6 @@ spring:
     password: dbp4ss
   hateoas:
     use-hal-as-default-json-media-type: false
-gameit:
-  oauth:
-    client-id: gameit
-    client-secret: someSecret
-    token-validity-in-seconds: 3600
-  stripe:
-    testpk: sk_test_qp9lcBPFPbDor0K5K8TaOR09
-    client-id: ca_AQuIoAUDP9cVKHzEXtViIp4krfm0hIwQ
 
 logging:
   level: debug

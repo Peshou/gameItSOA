@@ -45,16 +45,21 @@
             {{game.description}}
             </p>
           <div class="row">
-            <div class="col-xs-12 col-md-6">
-              <p class="lead">
-                {{game.gamePrice | currency:'USD':true:'2.2-2'}}</p>
+            <div class="col-xs-12 col-md-4">
+              <div><s>{{game.gamePrice | currency:'USD':true:'2.2-2'}}</s></div>
+              <p class="lead">{{game.getPriceWithDiscount() | currency:'USD':true:'2.2-2'}}</p>
+              <p>{{game.discountPercent}}% discount!</p>
             </div>
-            <div class="col-xs-12 col-md-6">
+            <div class="col-xs-12 col-md-8">
               <button class="btn btn-success" (click)="addItemToCard(game)">Add to cart</button>
+              <button class="btn btn-primary" (click)="buyItem(game)">Buy now</button>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+  <div>
+    <loading *ngIf="isGameRequestSent"></loading>
   </div>
 </div>

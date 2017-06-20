@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="row">
+    <div *ngIf="game" class="col-sm-12">
+      <h1 class="page-header">{{game.name}}</h1>
+      <button class="btn btn-primary" (click)="buyGame()">
+        <i class="fa fa-buysellads"></i>
+        Buy now
+      </button>
+    </div>
+  </div>
+</div>

@@ -38,7 +38,7 @@ export class PaginatedResource<T extends Deserialization> extends Deserializatio
   }
 
   deserializeGeneric(json:any, clazz:any) {
-    json._embedded[clazz.PAGINATED_ARRAY_NAME].map((item:any) => {
+    json.content.map((item:any) => {
       let deserialized_item = new clazz().deserialize(item);
       this.items.push(deserialized_item);
     });

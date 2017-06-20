@@ -22,4 +22,8 @@ export class Game extends Deserialization {
   getPreviewImage() {
     return this.imagePaths && this.imagePaths.length ? this.imagePaths[0] : "/assets/images/nopreview.png";
   }
+
+  getPriceWithDiscount() {
+    return this.gamePrice - (this.gamePrice * (this.discountPercent / 100));
+  }
 }

@@ -1,0 +1,35 @@
+spring:
+  profiles: default
+  http:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  jpa:
+    hibernate:
+      dialect: org.hibernate.dialect.MySQLInnoDBDialect
+      ddl-auto: update
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.99.100:3306/gameit?useUnicode=true&characterEncoding=UTF-8
+    username: dbuser
+    password: dbp4ss
+  hateoas:
+    use-hal-as-default-json-media-type: false
+gameit:
+  oauth:
+    client-id: gameit
+    client-secret: someSecret
+    token-validity-in-seconds: 3600
+  stripe:
+    testpk: sk_test_qp9lcBPFPbDor0K5K8TaOR09
+    client-id: ca_AQuIoAUDP9cVKHzEXtViIp4krfm0hIwQ
+
+logging:
+  level: debug
+security:
+  enable-csrf: false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.99.100:8761/eureka/

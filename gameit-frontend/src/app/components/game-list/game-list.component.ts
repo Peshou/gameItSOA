@@ -5,11 +5,13 @@ import {GameService} from "../../services/game.service";
 import {Game} from "../../models/game.model";
 import {PaginatedResource} from "../../models/paginanted-resource.model";
 import {ShoppingCartService} from "../../services/shopping-cart.service";
+import {LoadingComponent} from "../../util/loading/loading.component";
 
 @Component({
   selector: 'game-list',
   templateUrl: './game-list.component.html',
   providers: [GameService],
+  viewProviders: [LoadingComponent],
   styleUrls: ['./game-list.component.scss']
 })
 export class GameListComponent implements OnInit {
@@ -26,7 +28,6 @@ export class GameListComponent implements OnInit {
 
   ngOnInit() {
     this.getAllGames();
-
   }
 
   getAllGames(pageNumber: number = 0) {
@@ -55,12 +56,14 @@ export class GameListComponent implements OnInit {
     this._shoppingCartService.addItem(game);
   }
 
+  buyItem(game: Game) {
+    this._navigationService.goToGameDetailsPage(game.id);
+  }
+
   onGamesListScroll() {
-    console.log(this.gameList);
     if (this.gameList.page.number < this.gameList.page.totalPages) {
       this.getAllGames(this.gameList.page.number + 1);
     }
-    console.log('scrolled!!')
   }
 
 

@@ -389,3 +389,7 @@ body.is-search {
   height: 0;
   clear: both;
   visibility: hidden; }
+
+button {
+  cursor: pointer;
+}

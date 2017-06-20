@@ -16,11 +16,11 @@ export class BaseService {
   }
 
   public get(endpoint: string, params?: any, options?: RequestOptionsArgs): Observable<Response> {
-    return this._request(RequestMethod.Get, endpoint, null, params, options);
+    return this._request(RequestMethod.Get, endpoint, null, params, options).retry(5);
   }
 
   public post(endpoint: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-    return this._request(RequestMethod.Post, endpoint, body, null, options);
+    return this._request(RequestMethod.Post, endpoint, body, null, options).retry(5);
   }
 
   public put(endpoint: string, body: any, options?: RequestOptionsArgs): Observable<Response> {

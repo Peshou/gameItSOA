@@ -1,0 +1,40 @@
+// Converted Variables
+
+// Custom Media Query Variables
+
+.blocker_ui {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .5;
+  background-color: #000;
+  z-index: 1000;
+  overflow: auto;
+}
+
+.blocker_ui div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5em;
+  height: 2em;
+  margin: -1em 0 0 -2.5em;
+  color: #fff;
+  font-weight: bold;
+}
+
+.blocker_ui i {
+  position: relative;
+  top: -55px;
+  left: 15%;
+}
+
+.blocker_ui_white_background {
+  background-color: #fff !important;
+}
+
+.blocker_ui_white_background div {
+  color: #000 !important;
+}

@@ -29,4 +29,13 @@ export class GameService extends BaseService {
         return new PaginatedResource().deserializeGeneric(res.json(), Game);
       });
   }
+
+  getGame(gameId: string) {
+    const endpoint = 'my-gateway/games/' + gameId;
+    return this.get(endpoint, null)
+      .map((res: Response) => {
+        console.log(res.json());
+        return new Game().deserialize(res.json());
+      });
+  }
 }

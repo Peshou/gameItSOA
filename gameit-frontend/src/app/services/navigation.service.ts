@@ -73,4 +73,8 @@ export class NavigationService {
   goToGameListScreen() {
     this._router.navigate(['/' + RoutesPaths.games]);
   }
+
+  goToGameDetailsPage(gameId: string) {
+    this._router.navigate(['/' + RoutesPaths.games, gameId]);
+  }
 }

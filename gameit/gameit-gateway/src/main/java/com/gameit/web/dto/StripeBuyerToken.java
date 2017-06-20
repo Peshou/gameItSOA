@@ -1,13 +1,12 @@
 package com.gameit.web.dto;
 
+import com.gameit.model.Game;
+import com.gameit.model.User;
+
 public class StripeBuyerToken {
     private String token;
-
-    public String getBuyer() {
-        return buyer;
-    }
-
-    private String buyer;
+    private User buyer;
+    private Game game;
 
     public StripeBuyerToken() {
     }
@@ -19,4 +18,13 @@ public class StripeBuyerToken {
     public String getToken() {
         return token;
     }
+
+    public User getBuyer() {
+        return buyer;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
 }

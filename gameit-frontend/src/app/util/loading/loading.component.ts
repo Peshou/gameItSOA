@@ -3,10 +3,11 @@ import {Component, Input} from '@angular/core';
 @Component({
   selector: 'loading',
   templateUrl: './loading.component.html',
+  styleUrls: ['./loading.component.scss']
 })
 export class LoadingComponent {
-  @Input() useFontAwesomeSpinner: boolean = false;
-  @Input() useBiggerFontAwesomeSpinner: boolean = false;
-  @Input() whiteBackground: boolean = false;
-  @Input() coverWholeScreen: boolean = true;
+  @Input() useFontAwesomeSpinner: boolean = true;
+  @Input() useBiggerFontAwesomeSpinner: boolean = true;
+  @Input() whiteBackground: boolean = true;
+  @Input() coverWholeScreen: boolean = false;
 }
