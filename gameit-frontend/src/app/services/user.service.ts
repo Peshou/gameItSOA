@@ -46,7 +46,7 @@ export class UserService {
     sessionStorage.removeItem('user')
   }
 
-  getUserFromSession() {
+  getUserFromSession(): User {
     let json = JSON.parse(sessionStorage.getItem('user'));
     return new User().deserialize(json);
   }

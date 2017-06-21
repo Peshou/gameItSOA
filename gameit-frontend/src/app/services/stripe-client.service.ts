@@ -1,12 +1,15 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {environment} from "../../environments/environment";
+import {UserService} from "./user.service";
 
 declare var StripeCheckout:any;
 
 @Injectable()
 export class StripeClientService {
 
+  constructor(private _userService: UserService) {
+  }
   //https://stripe.com/docs/checkout#integration-custom
 
   checkout(price: number):Observable<any> {
@@ -18,7 +21,8 @@ export class StripeClientService {
       var handler = StripeCheckout.configure({
         key: environment.stripeKey,
         image: '/assets/logoSmall.png',
-        locale: 'en',
+        color: 'black',
+        locale: 'auto',
         token: (token, args) => {
           // Use the token to create the charge with a server-side script.
           // You can access the token ID with `token.id`
@@ -30,8 +34,9 @@ export class StripeClientService {
       handler.open({
         name: 'GameIt Store Game purchase',
         description: 'Purchase game',
-        amount: Number(price),
-        currency: 'USD'
+        amount: Number(price * 100),
+        currency: 'USD',
+        email: this._userService.getUserFromSession().email
       });
 
       window.addEventListener('popstate', function() {

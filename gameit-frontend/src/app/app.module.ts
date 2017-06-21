@@ -19,6 +19,8 @@ import {ShoppingCartService} from "./services/shopping-cart.service";
 import {NavbarComponent} from "./components/wrapper/navbar/navbar.component";
 import {LoadingComponent} from "./util/loading/loading.component";
 import {GameDetailsComponent} from "./components/game-details/game-details.component";
+import {Stripe} from "stripe";
+import {environment} from "../environments/environment";
 
 const appRoutes: Routes = [
   {path: RoutesPaths.login, component: LoginComponent},

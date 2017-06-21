@@ -1,15 +1,12 @@
 package com.gameit.web.rest;
 
-import com.gameit.model.Game;
 import com.gameit.model.UserGameOrder;
 import com.gameit.web.dto.StripeBuyerToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EurekaDiscoveryClient;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +35,13 @@ public class OrdersGateController {
         ResponseEntity<Resource<UserGameOrder>> responseEntity =
                 this.restTemplate.exchange("http://" + gameService.getInstanceInfo().getIPAddr() + ":8080/games/order", HttpMethod.POST, entity, new ParameterizedTypeReference<Resource<UserGameOrder>>() {
                 });
+
+
+        EurekaDiscoveryClient.EurekaServiceInstance mailService = getService("my-mail");
+        headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<UserGameOrder> orderHttpEntity = new HttpEntity<UserGameOrder>(responseEntity.getBody().getContent(), headers);
+        this.restTemplate.postForEntity("http://" + mailService.getInstanceInfo().getIPAddr() + ":8080/mail/order", orderHttpEntity, null);
 
         return responseEntity.getBody();
     }

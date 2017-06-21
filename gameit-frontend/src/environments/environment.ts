@@ -6,6 +6,6 @@
 export const environment = {
   production: false,
   baseApiUrl: "http://192.168.99.100/my-zuul",
-  stripeKey: 'sk_test_qp9lcBPFPbDor0K5K8TaOR09'
+  stripeKey: 'pk_test_i85fUQVFNX8EQUID3i4Knhgp'
 };
 //  baseApiUrl: "http://192.168.99.100/my-zuul",

@@ -9,7 +9,7 @@ import {PaymentService} from "../../services/payment.service";
 @Component({
   selector: 'game-details',
   templateUrl: './game-details.component.html',
-  providers: [GameService],
+  providers: [GameService, StripeClientService, PaymentService],
   viewProviders: [LoadingComponent],
   styleUrls: ['./game-details.component.scss']
 })
@@ -35,6 +35,8 @@ export class GameDetailsComponent implements OnInit {
       .switchMap(id => this._gameService.getGame(id))
       .subscribe((game: Game) => {
         this.game = game;
+        console.log(this.game.getPriceWithDiscount());
+        console.log(Number(this.game.getPriceWithDiscount()));
         this.isGameRequestSent = false;
       }, (error: any) => {
         this.isGameRequestSent = false;
