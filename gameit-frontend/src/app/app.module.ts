@@ -21,6 +21,7 @@ import {LoadingComponent} from "./util/loading/loading.component";
 import {GameDetailsComponent} from "./components/game-details/game-details.component";
 import {Stripe} from "stripe";
 import {environment} from "../environments/environment";
+import {ContactComponent} from "./components/contact/contact.component";
 
 const appRoutes: Routes = [
   {path: RoutesPaths.login, component: LoginComponent},
@@ -36,6 +37,7 @@ const appRoutes: Routes = [
           {path: ':id', component: GameDetailsComponent}
         ]
       },
+      {path: RoutesPaths.contactUs, component: ContactComponent},
       {path: RoutesPaths.home, component: HomeComponent},
       {path: '', redirectTo: '/' + RoutesPaths.home, pathMatch: 'full'},
     ]
@@ -53,7 +55,8 @@ const appRoutes: Routes = [
     RegisterComponent,
     GameListComponent,
     LoadingComponent,
-    GameDetailsComponent
+    GameDetailsComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,

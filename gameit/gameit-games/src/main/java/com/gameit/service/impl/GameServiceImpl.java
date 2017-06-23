@@ -41,7 +41,7 @@ public class GameServiceImpl implements GameService {
 
     @Autowired
     public GameServiceImpl(StorageProperties properties, GameRepository gameRepository, DiscoveryClient discoveryClient, StorageProperties properties1) {
-        this.rootLocation = Paths.get(properties.getLocation());
+        this.rootLocation = Paths.get("dsa");
         System.out.println(this.rootLocation);
         this.gameRepository = gameRepository;
         this.discoveryClient = discoveryClient;

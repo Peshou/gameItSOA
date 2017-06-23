@@ -28,8 +28,9 @@ logging:
   level: debug
 security:
   enable-csrf: false
-
 eureka:
   client:
     service-url:
       defaultZone: http://192.168.99.100:8761/eureka/
+server:
+  port: 8081

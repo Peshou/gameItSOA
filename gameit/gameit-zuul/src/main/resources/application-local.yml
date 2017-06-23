@@ -12,16 +12,23 @@ zuul:
   ignoredServices: '*'
   routes:
     my-gateway:
-           path: /my-gateway/**
-           sensitive-headers:
+      path: /my-gateway/**
+      sensitive-headers:
     my-auth:
-       path: /my-auth/**
-       sensitive-headers:
+      path: /my-auth/**
+      sensitive-headers:
 
 management:
   security:
     enabled: false
-
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: THREAD
+          thread:
+            timeoutInMilliseconds: 60000
 logging:
   level: debug
 security:

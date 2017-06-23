@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 @Table
 public class UserGameOrder extends AbstractBaseEntity {
 
-    @JsonIgnore
     @ManyToOne
     @NotNull
     private User user;

@@ -15,7 +15,6 @@ spring:
     password: dbp4ss
   hateoas:
     use-hal-as-default-json-media-type: false
-
 logging:
   level: debug
 security:
@@ -25,3 +24,5 @@ eureka:
   client:
     service-url:
       defaultZone: http://192.168.99.100:8761/eureka/
+server:
+  port: 8082

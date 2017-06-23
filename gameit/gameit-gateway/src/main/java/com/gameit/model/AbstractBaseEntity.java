@@ -25,11 +25,15 @@ public abstract class AbstractBaseEntity implements Serializable {
     //have to rely on Hibernate
 
     public String getId() {
-        if (id == null) {
-            id = UUID.randomUUID().toString();
-        }
-
         return id;
+    }
+
+    public void setId(String id) {
+        if(id != null) {
+            this.id = id;
+        } else {
+            this.id = UUID.randomUUID().toString();
+        }
     }
 
     public Long getCreatedAt() {
@@ -67,7 +71,9 @@ public abstract class AbstractBaseEntity implements Serializable {
     public static class AbstractEntityListener {
         @PrePersist
         protected void onPrePersist(AbstractBaseEntity abstractEntity) {
-            abstractEntity.getId();
+            if (abstractEntity.getId() == null) {
+                abstractEntity.setId(null);
+            }
             abstractEntity.setCreatedAt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
             abstractEntity.setUpdatedAt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
         }

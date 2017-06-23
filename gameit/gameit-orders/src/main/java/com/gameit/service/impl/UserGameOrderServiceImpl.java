@@ -25,7 +25,7 @@ public class UserGameOrderServiceImpl implements UserGameOrderService {
     @Transactional
     public UserGameOrder placeOrder(String paymentToken, User buyer, Game game) {
 
-        Double price = game.getGamePrice() - (game.getGamePrice() * (game.getDiscountPercent() / 100));
+        Double price = (game.getGamePrice() - (game.getGamePrice() * (game.getDiscountPercent() / 100)))*100;
         try {
             String chargeId =  paymentProcessorService.createChargeRequest(paymentToken, price, game.getName());
 

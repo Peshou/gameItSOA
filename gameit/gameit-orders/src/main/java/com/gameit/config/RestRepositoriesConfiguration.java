@@ -14,12 +14,8 @@ public class RestRepositoriesConfiguration extends RepositoryRestConfigurerAdapt
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-        config.exposeIdsFor(UserGameOrder.class);
-        config.exposeIdsFor(User.class);
-        config.exposeIdsFor(Game.class);
-        config.exposeIdsFor(AbstractBaseEntity.class);
         config.useHalAsDefaultJsonMediaType(false);
-
+        config.exposeIdsFor(UserGameOrder.class, User.class, Game.class, AbstractBaseEntity.class);
         // Specify JSON instead of default HAL+JSON
         config.setDefaultMediaType(MediaType.APPLICATION_JSON);
     }

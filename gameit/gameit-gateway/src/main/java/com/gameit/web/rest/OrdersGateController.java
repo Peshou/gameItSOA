@@ -26,22 +26,23 @@ public class OrdersGateController {
     private DiscoveryClient discoveryClient;
 
     @PostMapping("/games/order")
-    public Resource<UserGameOrder> createCharge(@RequestBody StripeBuyerToken stripeToken) {
+    public UserGameOrder createCharge(@RequestBody StripeBuyerToken stripeToken) {
         EurekaDiscoveryClient.EurekaServiceInstance gameService = getService("my-orders");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<StripeBuyerToken> entity = new HttpEntity<>(stripeToken, headers);
 
-        ResponseEntity<Resource<UserGameOrder>> responseEntity =
-                this.restTemplate.exchange("http://" + gameService.getInstanceInfo().getIPAddr() + ":8080/games/order", HttpMethod.POST, entity, new ParameterizedTypeReference<Resource<UserGameOrder>>() {
-                });
+        ResponseEntity<UserGameOrder> responseEntity =
+                this.restTemplate.exchange("http://" + gameService.getInstanceInfo().getIPAddr() + ":8080/games/order", HttpMethod.POST, entity, UserGameOrder.class);
+//                this.restTemplate.exchange("http://" + "localhost" + ":8081/games/order", HttpMethod.POST, entity, UserGameOrder.class);
 
 
         EurekaDiscoveryClient.EurekaServiceInstance mailService = getService("my-mail");
         headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<UserGameOrder> orderHttpEntity = new HttpEntity<UserGameOrder>(responseEntity.getBody().getContent(), headers);
+        HttpEntity<UserGameOrder> orderHttpEntity = new HttpEntity<UserGameOrder>(responseEntity.getBody(), headers);
         this.restTemplate.postForEntity("http://" + mailService.getInstanceInfo().getIPAddr() + ":8080/mail/order", orderHttpEntity, null);
+//        this.restTemplate.postForEntity("http://" + "localhost" + ":8084/mail/order", orderHttpEntity, null);
 
         return responseEntity.getBody();
     }

@@ -63,15 +63,14 @@ public class GamesGateController {
     }
 
     @RequestMapping(value = "/games/{gameId}", method = RequestMethod.GET)
-    public Resource<Game> getGames(@PathVariable String gameId) {
+    public Game getGames(@PathVariable String gameId) {
         EurekaDiscoveryClient.EurekaServiceInstance gameService = getService("my-games");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Object> entity = new HttpEntity<Object>(null, headers);
 
-        ResponseEntity<Resource<Game>> responseEntity =
-                this.restTemplate.exchange("http://" + gameService.getInstanceInfo().getIPAddr() + ":8080/games/" + gameId, HttpMethod.GET, entity, new ParameterizedTypeReference<Resource<Game>>() {
-                });
+        ResponseEntity<Game> responseEntity =
+                this.restTemplate.exchange("http://" + gameService.getInstanceInfo().getIPAddr() + ":8080/games/" + gameId, HttpMethod.GET, entity, Game.class);
 
         return responseEntity.getBody();
     }

@@ -27,7 +27,8 @@ public class MailSenderImpl implements MailSender {
     private String username;
 
     @Async
-    public void sendOrderEmail(final UserGameOrder userGameOrder) throws MessagingException {
+    @Override
+    public void sendOrderEmail(UserGameOrder userGameOrder) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, false, CharEncoding.UTF_8);
         messageHelper.setTo(userGameOrder.getUser().getEmail());
