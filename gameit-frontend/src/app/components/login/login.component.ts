@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {User} from "../../models/user.model";
 import {UserService} from "../../services/user.service";
@@ -12,13 +12,14 @@ import {NavigationService} from "../../services/navigation.service";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  registeredMessage: string;
 
   email: string;
   password: string;
 
-  constructor(private _router: Router,
-              private _authService: AuthService,
+  constructor(private _authService: AuthService,
               private _userService: UserService,
+              private _activatedRoute: ActivatedRoute,
               private _navigationService: NavigationService) {
   }
 
@@ -26,6 +27,8 @@ export class LoginComponent implements OnInit {
     if (this._userService.isLoggedIn()) {
       this._navigationService.goToHome();
     }
+
+    this.checkIfUserCameFromRegister();
   }
 
   login() {
@@ -34,8 +37,18 @@ export class LoginComponent implements OnInit {
         console.log(user);
         this._navigationService.goToHome();
       });
+  }
 
-    // this._router.navigate(['/']);
+  checkIfUserCameFromRegister() {
+    console.log(this._activatedRoute);
+    this._activatedRoute
+      .params
+      .subscribe(params => {
+        console.log(params);
+        if (params['justRegistered']) {
+          this.registeredMessage = "Your account has been created. You can now log in.";
+        }
+      });
   }
 
 }

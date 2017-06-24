@@ -1,20 +1,63 @@
-<div style="height: 100%;">
-  <div class="register mat-elevation-z12">
-    <div class="register-header">
-      <img src="assets/logoSmall.png">
-    </div>
-    <form [formGroup]="registerForm">
-      <div class="register-content" >
-        <input [formControlName]="'username'" placeholder="Name" type="text" name="name" />
-        <input [formControlName]="'email'" placeholder="E-Mail" type="text" name="email" />
-        <input [formControlName]="'password'" placeholder="Password" type="password" name="password" />
-        <input [formControlName]="'confirmPassword'"  placeholder="Password (Confirm)" type="password" name="confirmPassword" />
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="register mat-elevation-z12" *ngIf="registerForm">
+        <div class="register-header">
+          <img src="assets/logoSmall.png">
+        </div>
+        <form [formGroup]="registerForm">
+          <div class="error-list">
+            <div class="alert alert-danger" role="alert" *ngIf="registerError">
+              <strong>{{registerError}}</strong>
+            </div>
+          </div>
+          <div class="register-content">
+            <div class="form-group" [class.has-danger]='hasInputErrors("username")'>
+              <label for="username">Username</label>
+              <input [formControlName]="'username'" id="username" class="form-control" placeholder="Username"
+                     type="text"
+                     name="username"/>
+              <p class="form-control-feedback" *ngIf='hasInputErrors("username")'>Please enter the desired username</p>
+            </div>
+            <div class="form-group" [class.has-danger]='hasInputErrors("email")'>
+              <label for="email">E-Mail</label>
+              <input [formControlName]="'email'" id="email" class="form-control" placeholder="E-Mail" type="text"
+                     name="email"/>
+              <p class="form-control-feedback" *ngIf='hasInputErrors("email")'>Please enter a valid email address</p>
+            </div>
+            <div class="form-group" [class.has-danger]='hasInputErrors("password")'>
+              <label for="password">Password</label>
+              <input [formControlName]="'password'" id="password" class="form-control" placeholder="Password"
+                     type="password" name="password"/>
+              <p class="form-control-feedback" *ngIf='hasParticularError("password", "required")'>Please enter a password</p>
+              <p class="form-control-feedback" *ngIf='hasParticularError("password", "minlength")'>The password
+                must be at least 8 characters</p>
+            </div>
+            <div class="form-group" [class.has-danger]='hasInputErrors("confirmPassword")'>
+              <label for="confirmPassword">Password (Confirm)</label>
+              <input [formControlName]="'confirmPassword'" id="confirmPassword" class="form-control"
+                     placeholder="Password (Confirm)" type="password" name="confirmPassword"/>
+              <p class="form-control-feedback" *ngIf='hasParticularError("confirmPassword", "required")'>Please reenter
+                the
+                password</p>
+              <p class="form-control-feedback" *ngIf='hasParticularError("confirmPassword", "equalTo")'>The passwords
+                do not match</p>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input [formControlName]="'sellerAccount'" class="form-check-input" type="checkbox"
+                       name="sellerAccount"/>
+                Register as a seller account?
+              </label>
+            </div>
 
-        <button class="btn btn-primary"
-                [disabled]="!registerForm.valid"
-                (click)="register()">CREATE ACCOUNT</button>
-        <p class="note">Already have an account?<br/> <a [routerLink]="['/login']">Sign in here</a></p>
+            <button type="button" class="btn btn-primary" (click)="register()">
+              CREATE ACCOUNT
+            </button>
+            <p class="note">Already have an account?<br/> <a [routerLink]="['/login']">Sign in here</a></p>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
 </div>

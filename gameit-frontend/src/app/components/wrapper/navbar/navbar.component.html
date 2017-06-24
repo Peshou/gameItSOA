@@ -19,6 +19,11 @@
             <p class="d-inline-block">{{getProfileTabTitle()}}</p>
           </a>
         </li>
+        <li *ngIf="isUserLoggedIn" class="nav-item">
+          <a class="nav-link" (click)="logout()">
+            Logout
+          </a>
+        </li>
         <li *ngIf="!isUserLoggedIn" class="nav-item"><a class="nav-link" (click)="goToRegisterScreen()">JOIN</a></li>
         <li *ngIf="!isUserLoggedIn" class="nav-item"><a class="nav-link" (click)="goToLoginScreen()">SIGN IN</a></li>
       </ul>

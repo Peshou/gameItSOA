@@ -2,8 +2,10 @@ import {Injectable} from "@angular/core";
 import {BehaviorSubject} from "rxjs";
 import {User} from "../models/user.model";
 import {Serialize} from "cerialize";
+import {BaseService} from "./base.service";
+import {Http} from "@angular/http";
 @Injectable()
-export class UserService {
+export class UserService extends BaseService {
 
   private isLoggedInSource = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this.isLoggedInSource.asObservable();
@@ -15,7 +17,8 @@ export class UserService {
     return this.isLoggedInSource.getValue();
   }
 
-  constructor() {
+  constructor(http: Http) {
+    super(http);
     this.isLoggedInSource.next(sessionStorage.getItem('access-token') != null);
     this.userSource.next(this.getUserFromSession());
   }
@@ -49,5 +52,12 @@ export class UserService {
   getUserFromSession(): User {
     let json = JSON.parse(sessionStorage.getItem('user'));
     return new User().deserialize(json);
+  }
+
+  getUser(userId: string) {
+    const endpoint = "my-auth/users/" + userId;
+    return this.get(endpoint, null).map((res: any) => {
+      return new User().deserialize(res.json());
+    });
   }
 }

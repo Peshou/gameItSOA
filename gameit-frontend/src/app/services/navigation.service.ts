@@ -7,7 +7,8 @@ export const RoutesPaths = {
   register: 'register',
   home: '',
   games: 'games',
-  contactUs: "contact"
+  contactUs: "contact",
+  userDetails: "user-details"
 };
 
 @Injectable()
@@ -39,9 +40,9 @@ export class NavigationService {
     this._router.navigate(['/' + RoutesPaths.home]);
   }
 
-  goToLogin(errorMsg?: string) {
-    if (errorMsg)
-      this._router.navigate(['/' + RoutesPaths.login, {error: errorMsg}]);
+  goToLogin(justRegistered?: boolean) {
+    if (justRegistered)
+      this._router.navigate(['/' + RoutesPaths.login, {justRegistered: justRegistered}]);
     else
       this._router.navigate(['/' + RoutesPaths.login]);
   }
@@ -76,5 +77,8 @@ export class NavigationService {
 
   goToGameDetailsPage(gameId: string) {
     this._router.navigate(['/' + RoutesPaths.games, gameId]);
+  }
+  goToUserDetailsPage(userId: string) {
+    this._router.navigate(['/' + RoutesPaths.userDetails, userId]);
   }
 }

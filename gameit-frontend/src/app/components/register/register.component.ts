@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {NavigationService} from "../../services/navigation.service";
 import {UserService} from "../../services/user.service";
-import {CustomValidators} from "ng2-validation";
 import {FormValidators} from "../../util/forms/form_validators";
 import {AuthService} from "../../services/auth.service";
 import {User} from "../../models/user.model";
+import {CustomValidators} from "ng2-validation";
 
 @Component({
   selector: 'register',
@@ -15,6 +14,7 @@ import {User} from "../../models/user.model";
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  registerError: string = "";
 
   constructor(private _userService: UserService,
               private _formBuilder: FormBuilder,
@@ -31,11 +31,15 @@ export class RegisterComponent implements OnInit {
   }
 
   initRegisterForm() {
+    let password = new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)]));
+    let certainPassword = new FormControl('', Validators.compose([Validators.required, CustomValidators.equalTo(password)]));
+
     this.registerForm = this._formBuilder.group({
       username: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.compose([Validators.required,])]
+      password: password,
+      confirmPassword: certainPassword,
+      sellerAccount: [false, Validators.required]
     });
   }
 
@@ -43,9 +47,11 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.valid) {
       let formValue = this.registerForm.value;
       if (formValue["confirmPassword"] === formValue["password"]) {
-        this._authService.signup(new User().deserialize(formValue))
+        this._authService.signup(new User().deserialize(formValue), formValue.sellerAccount)
           .subscribe(() => {
-            this._navigationService.goToLogin();
+            this._navigationService.goToLogin(true);
+          }, (error: any) => {
+            this.registerError = error.json().message || "An error occurred. Please try again.";
           });
       }
     } else {
@@ -53,4 +59,18 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  hasInputErrors(inputField: string) {
+    return FormValidators.hasInputErrors(inputField, this.registerForm);
+  }
+
+  /**
+   * Check if a form control has a particular error
+   * @param inputField: string - The name of the Form Control
+   * @param errorToCheck: string - The name of the Error
+   * @return {boolean} - True if the control has the error, false if it doesn't.
+   */
+  hasParticularError(inputField: string, errorToCheck: string) {
+    return FormValidators.hasParticularError(inputField, errorToCheck, this.registerForm);
+  }
 }
+

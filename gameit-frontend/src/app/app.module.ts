@@ -22,6 +22,7 @@ import {GameDetailsComponent} from "./components/game-details/game-details.compo
 import {Stripe} from "stripe";
 import {environment} from "../environments/environment";
 import {ContactComponent} from "./components/contact/contact.component";
+import {UserDetailsComponent} from "./components/user-details/user-details.component";
 
 const appRoutes: Routes = [
   {path: RoutesPaths.login, component: LoginComponent},
@@ -38,6 +39,7 @@ const appRoutes: Routes = [
         ]
       },
       {path: RoutesPaths.contactUs, component: ContactComponent},
+      {path: RoutesPaths.userDetails+"/:id", component: UserDetailsComponent},
       {path: RoutesPaths.home, component: HomeComponent},
       {path: '', redirectTo: '/' + RoutesPaths.home, pathMatch: 'full'},
     ]
@@ -56,7 +58,8 @@ const appRoutes: Routes = [
     GameListComponent,
     LoadingComponent,
     GameDetailsComponent,
-    ContactComponent
+    ContactComponent,
+    UserDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -45,6 +45,10 @@ services:
       - my-datavolume:/var/lib/mysql
     labels:
       - "traefik.enable=false"
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
 
   my-auth:
     image: peshou/gameit-auth

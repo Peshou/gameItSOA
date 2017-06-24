@@ -105,4 +105,24 @@ export class FormValidators {
       return {notInArray: true};
     };
   }
+
+  static hasGroupInputErrors(inputGroup: string, inputField: string, formGroup: FormGroup) {
+    return formGroup.get(inputGroup).errors && formGroup.get(inputGroup).touched
+      || formGroup.get(inputGroup).get(inputField).errors && formGroup.get(inputGroup).get(inputField).touched;
+  }
+
+  static hasInputErrors(inputField: string, formGroup: FormGroup) {
+    return formGroup.get(inputField).errors && formGroup.get(inputField).touched;
+  }
+
+  /**
+   * Check if a form control has a particular error
+   * @param inputField: string - The name of the Form Control
+   * @param errorToCheck: string - The name of the Error
+   * @param formGroup
+   * @return {boolean} - True if the control has the error, false if it doesn't.
+   */
+  static hasParticularError(inputField: string, errorToCheck: string, formGroup: FormGroup) {
+    return formGroup.get(inputField).hasError(errorToCheck) && formGroup.get(inputField).touched;
+  }
 }

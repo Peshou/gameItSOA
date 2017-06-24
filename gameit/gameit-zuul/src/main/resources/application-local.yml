@@ -7,7 +7,6 @@ eureka:
   client:
     service-url:
       defaultZone: http://my-eureka:8761/eureka/
-
 zuul:
   ignoredServices: '*'
   routes:
@@ -17,6 +16,10 @@ zuul:
     my-auth:
       path: /my-auth/**
       sensitive-headers:
+  ribbon-isolation-strategy: thread
+  host:
+    connect-timeout-millis: 60000 # starting the connection
+    socket-timeout-millis: 60000  # monitor the continuous incoming data flow
 
 management:
   security:
@@ -25,10 +28,11 @@ hystrix:
   command:
     default:
       execution:
-        isolation:
-          strategy: THREAD
-          thread:
-            timeoutInMilliseconds: 60000
+        timeout:
+          enabled: false
+ribbon:
+  ReadTimeout: 100000
+  ConnectTimeout: 100000
 logging:
   level: debug
 security:

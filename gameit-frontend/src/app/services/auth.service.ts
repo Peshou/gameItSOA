@@ -7,6 +7,8 @@ import {User} from "../models/user.model";
 import {Deserialize} from "cerialize";
 import {Response, URLSearchParams} from "@angular/http";
 import {UserService} from "./user.service";
+import {RouterLink} from "@angular/router";
+import {Authorities, Authority} from "../models/authority.model";
 
 @Injectable()
 export class AuthService extends BaseService {
@@ -65,12 +67,16 @@ export class AuthService extends BaseService {
     });
   }
 
-  signup(userToBeCreated: User): Observable<User> {
+  signup(userToBeCreated: User, isSellerAccount: boolean): Observable<User> {
     const endpoint = 'my-auth/users';
 
     let params = {
       user: userToBeCreated
     };
+
+    if(isSellerAccount) {
+      params["authorities"] = [Authorities.SELLER, Authorities.BUYER];
+    }
 
     return this.post(endpoint, params)
       .map((res: Response) => res.json())

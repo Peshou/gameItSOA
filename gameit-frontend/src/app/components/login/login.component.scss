@@ -10,7 +10,8 @@
 
 .login {
   background: white;
-  width: 380px;
+  box-shadow: 10px 10px 15px 5px #888888;
+  border: 1px solid black;
 
   .login-header {
     background: $background-color__sidenav-list;
@@ -39,6 +40,7 @@
 
       &:hover {
         text-decoration: underline;
+        cursor: pointer;
       }
     }
 

@@ -55,6 +55,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this._authService.logOut(() => {
       this._userService.onLogoutUser();
       this.isUserLoggedIn = false;
+      this._navigationService.goToHome();
     });
   }
 
@@ -67,7 +68,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   goToProfileScreen() {
-
+    this._navigationService.goToUserDetailsPage(this.user.id);
   }
 
   goToRegisterScreen() {
