@@ -74,7 +74,7 @@ export class AuthService extends BaseService {
       user: userToBeCreated
     };
 
-    if(isSellerAccount) {
+    if (isSellerAccount) {
       params["authorities"] = [Authorities.SELLER, Authorities.BUYER];
     }
 
@@ -90,7 +90,7 @@ export class AuthService extends BaseService {
     const endpoint = 'v1/auth/forgot_password';
     let params = new URLSearchParams();
     params.append('email', email);
-    return this.http.post(endpoint, null, params)
+    return this.http.post(endpoint, null, {params: params})
       .map((res: Response) => res.json())
       .map((json) => {
         return true;

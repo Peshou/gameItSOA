@@ -86,14 +86,14 @@ export class FormValidators {
    */
   static markAllTouched(control: AbstractControl) {
     if (control.hasOwnProperty('controls')) {
-      control.markAsTouched(true); // mark group
+      control.markAsTouched(); // mark group
       let ctrl = <any>control;
       for (let inner in ctrl.controls) {
         this.markAllTouched(ctrl.controls[inner] as AbstractControl);
       }
     }
     else {
-      (<FormControl>(control)).markAsTouched(true);
+      (<FormControl>(control)).markAsTouched();
     }
   }
 
