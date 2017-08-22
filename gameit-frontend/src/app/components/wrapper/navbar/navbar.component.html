@@ -10,34 +10,40 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item"><a class="nav-link" (click)="goToHomeScreen()">HOME</a>
         </li>
-        <li class="nav-item"><a class="nav-link" (click)="goToGameListScreen()">GAMES LIST</a>
+        <li class="nav-item"><a class="nav-link" (click)="goToGameListScreen()">GAMES</a>
         </li>
-        <li class="nav-item"><a class="nav-link" (click)="goToContactUs()">CONTACT US</a></li>
-        <ng-container *ngIf="isUserLoggedIn">
-          <li class="nav-item">
-            <a class="nav-link" (click)="goToProfileScreen()">
-              <i class="fa fa-user fa-1x"></i>
-              <p class="d-inline-block">{{getProfileTabTitle()}}</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" (click)="goToShoppingCartScreen()">
-              <i class="fa fa-shopping-cart fa-1x"></i>
-              <p class="d-inline-block">Cart ({{getShoppingCartPrice() | currency:'USD':true:'1.2-2'}})</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" (click)="logout()">
-              Logout
-            </a>
-          </li>
-        </ng-container>
-        <li *ngIf="!isUserLoggedIn" class="nav-item"><a class="nav-link" (click)="goToRegisterScreen()">JOIN</a></li>
-        <li *ngIf="!isUserLoggedIn" class="nav-item"><a class="nav-link" (click)="goToLoginScreen()">SIGN IN</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="goToContactUs()">CONTACT</a></li>
       </ul>
+
       <form class="form-inline my-2 my-lg-0">
+        <ul class="navbar-nav mr-auto">
+          <ng-container *ngIf="isUserLoggedIn">
+            <li class="nav-item">
+              <a class="nav-link" (click)="goToProfileScreen()">
+                <i class="fa fa-user fa-1x"></i>
+                <p class="d-inline-block">{{getProfileTabTitle()}}</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="goToShoppingCartScreen()">
+                <i class="fa fa-shopping-cart fa-1x"></i>
+                <p class="d-inline-block">CART ({{getShoppingCartPrice() | currency:'USD':true:'1.2-2'}})</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="logout()">
+                LOGOUT
+              </a>
+            </li>
+          </ng-container>
+          <ng-container *ngIf="!isUserLoggedIn">
+            <li class="nav-item"><a class="nav-link" (click)="goToRegisterScreen()">REGISTER</a></li>
+            <li class="nav-item"><a class="nav-link" (click)="goToLoginScreen()">SIGN IN</a></li>
+          </ng-container>
+        </ul>
+
         <input class="form-control mr-sm-2" type="text" placeholder="Search">
-        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">SEARCH</button>
       </form>
     </div>
   </nav>

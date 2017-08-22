@@ -1,4 +1,4 @@
-import {deserialize, deserializeAs, UnderscoreCase, SerializeKeysTo, DeserializeKeysFrom} from "cerialize";
+import {deserialize, deserializeAs} from "cerialize";
 import {Authority} from "./authority.model";
 import {Deserialization} from "./shared/deserialization.model";
 

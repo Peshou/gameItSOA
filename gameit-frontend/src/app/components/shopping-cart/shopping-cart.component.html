@@ -1,57 +1,65 @@
 <div class="container">
-  <table id="cart" class="table table-hover table-condensed">
-    <thead>
-    <tr>
-      <th style="width:50%">Product</th>
-      <th style="width:10%">Price</th>
-      <th style="width:8%">Quantity</th>
-      <th style="width:22%" class="text-center">Subtotal</th>
-      <th style="width:10%"></th>
-    </tr>
-    </thead>
-    <tbody *ngIf="shoppingCartItems.length">
-    <tr *ngFor="let game of shoppingCartItems">
-      <td data-th="Product">
-        <div class="row">
-          <div class="col-md-2 hidden-xs">
-            <img [src]="game.getPreviewImage()" alt="..." class="img-responsive"/>
-          </div>
-          <div class="col-md-10">
-            <h4 class="nomargin">{{game.name}}</h4>
-            <p>{{game.description}}</p>
-          </div>
-        </div>
-      </td>
-      <td data-th="Price">{{game.getPriceWithDiscount() | currency:'USD':true:'1.2-2'}}</td>
-      <td data-th="Quantity">
-        <input type="number" class="form-control text-center" [(ngModel)]="game.quantity">
-      </td>
-      <td data-th="Subtotal" class="text-center">{{(game.getPriceWithDiscount() * game.quantity) |
-        currency:'USD':true:'1.2-2'}}
-      </td>
-      <td class="actions" data-th="">
-        <button class="btn btn-danger btn-sm" (click)="removeItemFromCart(game)"><i class="fa fa-trash-o"></i> Remove
-        </button>
-      </td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr class="visible-xs">
-      <td class="text-center"><strong>Total {{calculateTotalPrice() | currency:'USD':true:'1.2-2'}}</strong></td>
-    </tr>
-    <tr>
-      <td>
-        <button class="btn btn-warning" (click)="goToGamesList()"><i class="fa fa-angle-left"></i> Continue Shopping
-        </button>
-      </td>
-      <td colspan="2" class="hidden-xs"></td>
-      <td class="hidden-xs text-center"><strong>Total {{calculateTotalPrice() | currency:'USD':true:'1.2-2'}}</strong>
-      </td>
-      <td>
-        <button class="btn btn-success btn-block" [disabled]="!shoppingCartItems.length" (click)="proceedToCheckout()">
-          Checkout <i class="fa fa-angle-right"></i></button>
-      </td>
-    </tr>
-    </tfoot>
-  </table>
+  <div class="row">
+    <div class="col-sm-12">
+      <h1 class="page-header text-center mt-1">Shopping Cart</h1>
+
+      <table id="cart" class="table table-hover table-condensed">
+        <thead>
+        <tr>
+          <th style="width:60%">Product</th>
+          <th style="width:10%">Price</th>
+          <th style="width:8%">Quantity</th>
+          <th style="width:15%" class="text-center">Subtotal</th>
+          <th style="width:7%">Action</th>
+        </tr>
+        </thead>
+        <tbody *ngIf="shoppingCartItems.length">
+        <tr *ngFor="let game of shoppingCartItems">
+          <td data-th="Product">
+            <div class="row">
+              <div class="col-md-7 hidden-xs">
+                <img [src]="game.getPreviewImage()" alt="..."/>
+              </div>
+              <div class="col-md-5">
+                <h4 class="nomargin">{{game.name}}</h4>
+              </div>
+            </div>
+          </td>
+          <td data-th="Price">{{game.getPriceWithDiscount() | currency:'USD':true:'1.2-2'}}</td>
+          <td data-th="Quantity">
+            <input type="number" class="form-control text-center" [(ngModel)]="game.quantity">
+          </td>
+          <td data-th="Subtotal" class="text-center">{{(game.getPriceWithDiscount() * game.quantity) |
+            currency:'USD':true:'1.2-2'}}
+          </td>
+          <td class="actions" data-th="">
+            <button class="btn btn-danger btn-sm" (click)="removeItemFromCart(game)"><i class="fa fa-trash-o"></i>
+              Remove
+            </button>
+          </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr class="visible-xs">
+          <td class="text-center"><strong>Total {{calculateTotalPrice() | currency:'USD':true:'1.2-2'}}</strong></td>
+        </tr>
+        <tr>
+          <td>
+            <button class="btn btn-warning" (click)="goToGamesList()"><i class="fa fa-angle-left"></i> Continue Shopping
+            </button>
+          </td>
+          <td colspan="2" class="hidden-xs"></td>
+          <td class="hidden-xs text-center"><strong>Total {{calculateTotalPrice() |
+            currency:'USD':true:'1.2-2'}}</strong>
+          </td>
+          <td>
+            <button class="btn btn-success btn-block" [disabled]="!shoppingCartItems.length"
+                    (click)="proceedToCheckout()">
+              Checkout <i class="fa fa-angle-right"></i></button>
+          </td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
 </div>

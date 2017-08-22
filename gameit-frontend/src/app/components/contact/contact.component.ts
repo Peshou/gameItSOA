@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {NavigationService} from "../../services/navigation.service";
-import {UserService} from "../../services/user.service";
-import {CustomValidators} from "ng2-validation";
-import {FormValidators} from "../../util/forms/form_validators";
-import {AuthService} from "../../services/auth.service";
-import {User} from "../../models/user.model";
+import {Component} from '@angular/core';
+import {ContactInfo} from "../../models/contact-info.model";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss']
 })
-export class ContactComponent   {
+export class ContactComponent {
+  contact: ContactInfo;
 
+  constructor(private _toasterService: ToastrService) {
+    this.contact = new ContactInfo();
+  }
+
+
+  sendContactMessage() {
+    this._toasterService.success("The contact message has been sent", "Contact Message");
+  }
 }

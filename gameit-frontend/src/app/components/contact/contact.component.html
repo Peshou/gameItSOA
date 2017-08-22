@@ -1,1 +1,87 @@
-<h1>Contact us</h1>
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-12 text-center">
+      <h1 class="page-header">Contact Us</h1>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="well well-sm">
+            <form #form="ngForm" role="form">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" [(ngModel)]="contact.name" id="name" required name="name" class="form-control"
+                           placeholder="Name"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="fa fa-envelope"></i>
+                      </span>
+                      <input type="text" [(ngModel)]="contact.email" id="email" required name="email"
+                             class="form-control"
+                             placeholder="Email"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="name" translate="contact.message">Message</label>
+                    <textarea rows="6" type="text" [(ngModel)]="contact.message" id="message" required name="message"
+                              class="form-control" style="resize: vertical"
+                              placeholder="Message"></textarea>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <button type="button" ID="btnContactUs" class="btn btn-primary pull-right"
+                          [disabled]="!form.valid"
+                          (click)="sendContactMessage()">Send Message
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div role="form">
+            <h3 class="text-center">
+              <i class="fa fa-globe"></i>
+              <span>Game It office</span>
+            </h3>
+            <div class="row text-center">
+              <h4><strong>Game It, Inc.</strong></h4>
+              <h4><i class="fa fa-university"></i>&nbsp;<span>st. Rugjer Boshkovikj 5</span>
+              </h4>
+              <h4>Skopje, Macedonia, 1000</h4>
+              <h4>
+                <span class="glyphicon glyphicon-phone"></span>
+                (+389) 72 253457
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <div class="panel panel-default">
+        <div class="panel-heading text-center">
+          <h1>Find us</h1>
+        </div>
+        <div class="panel-body">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1482.4238734092603!2d21.410723!3d42.00354299999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDLCsDAwJzEyLjgiTiAyMcKwMjQnMzguNiJF!5e0!3m2!1sen!2sus!4v1434900875914"
+            width="800" height="600" frameborder="0" style="border: 0"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
