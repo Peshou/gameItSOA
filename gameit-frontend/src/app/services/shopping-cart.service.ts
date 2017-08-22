@@ -17,11 +17,13 @@ export class ShoppingCartService {
   clearCart() {
     this.cartItems = [];
     sessionStorage.removeItem(ShoppingCartService.SHOPPING_CART_STORAGE_KEY);
+
+    return this.cartItems;
   }
 
   getCartItems() {
     if (!this.cartItems || !this.cartItems.length) {
-      this.cartItems = JSON.parse(sessionStorage.getItem(ShoppingCartService.SHOPPING_CART_STORAGE_KEY));
+      this.cartItems = new Game().deserialize(JSON.parse(sessionStorage.getItem(ShoppingCartService.SHOPPING_CART_STORAGE_KEY)));
     }
 
     return this.cartItems;
@@ -33,8 +35,30 @@ export class ShoppingCartService {
   }
 
   getTotalPrice() {
-    return this.cartItems.reduce((sum, cartItem: Game) => {
-      return sum + cartItem.gamePrice * (100 / cartItem.discountPercent);
+    return this.cartItems.reduce((priceSum: number, currentGame: Game) => {
+      return priceSum + currentGame.getPriceWithDiscount() * currentGame.quantity;
     }, 0);
+  }
+
+  removeItem(gameToRemove: Game, onlyRemoveOneItem = false) {
+    this.cartItems = this.getCartItems().filter((game: Game) => {
+      if (gameToRemove.id === game.id) {
+        if (onlyRemoveOneItem) {
+          game.quantity--;
+        } else {
+          return false;
+        }
+
+        if (!game.quantity) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+
+    this.saveCartItems();
+
+    return this.cartItems;
   }
 }

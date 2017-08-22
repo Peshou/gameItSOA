@@ -5,6 +5,7 @@ import {UserService} from "../../../services/user.service";
 import {AuthService} from "../../../services/auth.service";
 import {NavigationService, RoutesPaths} from "../../../services/navigation.service";
 import {isNullOrUndefined} from "util";
+import {ShoppingCartService} from "../../../services/shopping-cart.service";
 
 @Component({
   selector: 'navbar',
@@ -23,6 +24,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(private _authService: AuthService,
               private _userService: UserService,
+              public _shoppingCartService: ShoppingCartService,
               private _navigationService: NavigationService) {
   }
 
@@ -59,6 +61,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
   }
 
+  getShoppingCartPrice() {
+    return this._shoppingCartService.getTotalPrice();
+  }
+
   goToGameListScreen() {
     this._navigationService.goToGameListScreen();
   }
@@ -77,6 +83,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   goToLoginScreen() {
     this._navigationService.goToLogin();
+  }
+
+  goToShoppingCartScreen() {
+    this._navigationService.goToShoppingCart();
   }
 
   getProfileTabTitle() {

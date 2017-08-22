@@ -4,7 +4,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
 import {AppComponent} from './app.component';
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {RouterModule, Routes} from "@angular/router";
 import {PageNotFoundComponent} from "./components/not-found/not-found.component";
 import {HomeComponent} from "./components/home/home.component";
@@ -21,6 +20,7 @@ import {LoadingComponent} from "./util/loading/loading.component";
 import {GameDetailsComponent} from "./components/game-details/game-details.component";
 import {ContactComponent} from "./components/contact/contact.component";
 import {UserDetailsComponent} from "./components/user-details/user-details.component";
+import {ShoppingCartComponent} from "./components/shopping-cart/shopping-cart.component";
 
 const appRoutes: Routes = [
   {path: RoutesPaths.login, component: LoginComponent},
@@ -38,6 +38,7 @@ const appRoutes: Routes = [
       },
       {path: RoutesPaths.contactUs, component: ContactComponent},
       {path: RoutesPaths.userDetails+"/:id", component: UserDetailsComponent},
+      {path: RoutesPaths.shoppingCart, component: ShoppingCartComponent},
       {path: RoutesPaths.home, component: HomeComponent},
       {path: '', redirectTo: '/' + RoutesPaths.home, pathMatch: 'full'},
     ]
@@ -57,12 +58,12 @@ const appRoutes: Routes = [
     LoadingComponent,
     GameDetailsComponent,
     ContactComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    ShoppingCartComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    NgbModule.forRoot(),
     HttpModule,
     ReactiveFormsModule,
     CustomFormsModule,

@@ -1,23 +1,28 @@
-import {deserialize, deserializeAs, UnderscoreCase, SerializeKeysTo, DeserializeKeysFrom} from "cerialize";
+import {
+  deserialize, deserializeAs, UnderscoreCase, SerializeKeysTo, DeserializeKeysFrom,
+  autoserialize, autoserializeAs
+} from "cerialize";
 import {Deserialization} from "./shared/deserialization.model";
 import {User} from "./user.model";
 
 export class Game extends Deserialization {
   static PAGINATED_ARRAY_NAME = "games";
   static PAGE_SIZE = 7;
-  @deserialize id: string;
-  @deserialize createdAt: number;
-  @deserialize updatedAt: number;
-  @deserialize name: string;
-  @deserialize releaseYear: number;
-  @deserialize description: string;
-  @deserialize category: string;
-  @deserialize gamePrice: number;
-  @deserialize imagePaths: string[];
-  @deserialize itemsLeft: number;
-  @deserialize discountPercent: number;
-  @deserialize userGameOrders: any;
-  @deserializeAs(User) userSeller: User;
+  @autoserialize id: string;
+  @autoserialize createdAt: number;
+  @autoserialize updatedAt: number;
+  @autoserialize name: string;
+  @autoserialize releaseYear: number;
+  @autoserialize description: string;
+  @autoserialize category: string;
+  @autoserialize gamePrice: number;
+  @autoserialize imagePaths: string[];
+  @autoserialize itemsLeft: number;
+  @autoserialize discountPercent: number;
+  @autoserialize userGameOrders: any;
+  @autoserializeAs(User) userSeller: User;
+
+  quantity: number = 1;
 
   getPreviewImage() {
     return this.imagePaths && this.imagePaths.length ? this.imagePaths[0] : "/assets/images/nopreview.png";

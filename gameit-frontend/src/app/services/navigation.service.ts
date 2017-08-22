@@ -8,7 +8,8 @@ export const RoutesPaths = {
   home: '',
   games: 'games',
   contactUs: "contact",
-  userDetails: "user-details"
+  userDetails: "user-details",
+  shoppingCart: "cart"
 };
 
 @Injectable()
@@ -49,6 +50,10 @@ export class NavigationService {
 
   goToRegister() {
     this._router.navigate(['/' + RoutesPaths.register]);
+  }
+
+  goToShoppingCart() {
+    this._router.navigate(['/' + RoutesPaths.shoppingCart]);
   }
 
   private _parseUrl(urlWithParams: string) {

@@ -35,7 +35,6 @@ export class GameDetailsComponent implements OnInit {
       .switchMap(id => this._gameService.getGame(id))
       .subscribe((game: Game) => {
         this.game = game;
-        console.log(this.game.getPriceWithDiscount());
         console.log(Number(this.game.getPriceWithDiscount()));
         this.isGameRequestSent = false;
       }, (error: any) => {

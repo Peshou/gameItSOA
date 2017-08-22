@@ -16,7 +16,7 @@ public class DeliveryOrderController {
     private DeliveryOrderService deliveryOrderService;
 
     @PutMapping("/deliveryOrders/{id}/status")
-    public ResponseEntity changeDelieryOrderStatus(@PathVariable String id, @RequestBody DeliveryOrderStatus newStatus) {
+    public ResponseEntity changeDeliveryOrderStatus(@PathVariable String id, @RequestBody DeliveryOrderStatus newStatus) {
         DeliveryOrder deliveryOrder = deliveryOrderService.findOne(id);
         deliveryOrder = deliveryOrderService.changeStatus(deliveryOrder, newStatus);
 
