@@ -26,9 +26,12 @@
       <td data-th="Quantity">
         <input type="number" class="form-control text-center" [(ngModel)]="game.quantity">
       </td>
-      <td data-th="Subtotal" class="text-center">{{(game.getPriceWithDiscount() * game.quantity) | currency:'USD':true:'1.2-2'}}</td>
+      <td data-th="Subtotal" class="text-center">{{(game.getPriceWithDiscount() * game.quantity) |
+        currency:'USD':true:'1.2-2'}}
+      </td>
       <td class="actions" data-th="">
-        <button class="btn btn-danger btn-sm" (click)="removeItemFromCart(game)"><i class="fa fa-trash-o"></i> Remove</button>
+        <button class="btn btn-danger btn-sm" (click)="removeItemFromCart(game)"><i class="fa fa-trash-o"></i> Remove
+        </button>
       </td>
     </tr>
     </tbody>
@@ -37,10 +40,17 @@
       <td class="text-center"><strong>Total {{calculateTotalPrice() | currency:'USD':true:'1.2-2'}}</strong></td>
     </tr>
     <tr>
-      <td><button class="btn btn-warning" (click)="goToGamesList()"><i class="fa fa-angle-left"></i> Continue Shopping</button></td>
+      <td>
+        <button class="btn btn-warning" (click)="goToGamesList()"><i class="fa fa-angle-left"></i> Continue Shopping
+        </button>
+      </td>
       <td colspan="2" class="hidden-xs"></td>
-      <td class="hidden-xs text-center"><strong>Total {{calculateTotalPrice() | currency:'USD':true:'1.2-2'}}</strong></td>
-      <td><button class="btn btn-success btn-block" (click)="proceedToCheckout()">Checkout <i class="fa fa-angle-right"></i></button></td>
+      <td class="hidden-xs text-center"><strong>Total {{calculateTotalPrice() | currency:'USD':true:'1.2-2'}}</strong>
+      </td>
+      <td>
+        <button class="btn btn-success btn-block" [disabled]="!shoppingCartItems.length" (click)="proceedToCheckout()">
+          Checkout <i class="fa fa-angle-right"></i></button>
+      </td>
     </tr>
     </tfoot>
   </table>

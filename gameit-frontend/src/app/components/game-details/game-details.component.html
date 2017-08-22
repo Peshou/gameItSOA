@@ -1,11 +1,33 @@
 <div class="container">
   <div class="row">
+    <loading *ngIf="isPaymentInProgress || isGameRequestSent" [coverWholeScreen]="true"
+             [useBiggerFontAwesomeSpinner]="true" [useFontAwesomeSpinner]="true"></loading>
     <div *ngIf="game" class="col-sm-12">
-      <h1 class="page-header">{{game.name}}</h1>
-      <button class="btn btn-primary" (click)="buyGame()">
-        <i class="fa fa-buysellads"></i>
-        Buy now
-      </button>
+      <div *ngIf="isCurrentUserTheGameSeller()">
+
+      </div>
+      <h1 class=" text-center page-header">{{game.name}}</h1>
+      <div class="row">
+        <div class="col-sm-5">
+          <h1 class="text-center"><img [src]="game.getPreviewImage()" class="img-responsive"/></h1>
+        </div>
+        <div class="col-sm-7">
+          <h2 class="text-center">Game Description</h2>
+          <h4 class="text-justify">{{game.description}}</h4>
+        </div>
+      </div>
+      <h2><span>Sold by:</span> {{game.userSeller?.username}}</h2>
+      <h4><span>Release year:</span> {{game.releaseYear | date}}</h4>
+      <div class="text-center">
+        <button class="btn btn-primary" (click)="buyGame()">
+          <i class="fa fa-buysellads"></i>
+          Buy now {{game.getPriceWithDiscount()}}
+        </button>
+        <button class="btn btn-primary" (click)="addGameToShoppingCart()">
+          <i class="fa fa-shopping-cart"></i>
+          Add to cart
+        </button>
+      </div>
     </div>
   </div>
 </div>

@@ -4,6 +4,7 @@ import {Game} from "../../models/game.model";
 import {NavigationService} from "../../services/navigation.service";
 import {PaymentService} from "../../services/payment.service";
 import {StripeClientService} from "../../services/stripe-client.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'shopping-cart',
@@ -18,6 +19,7 @@ export class ShoppingCartComponent implements OnInit {
   constructor(public shoppingCartService: ShoppingCartService,
               private _stripeClient: StripeClientService,
               private _paymentService: PaymentService,
+              private _toaster: ToastrService,
               private _navigationService: NavigationService) {
   }
 
@@ -37,7 +39,7 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   proceedToCheckout() {
-    if(this.shoppingCartItems.length) {
+    if (this.shoppingCartItems.length) {
       this.purchaseGame(this.shoppingCartItems[0]);
     }
   }
@@ -50,11 +52,14 @@ export class ShoppingCartComponent implements OnInit {
           .subscribe(() => {
             this.isPaymentInProgress = false;
             this.shoppingCartItems = this.shoppingCartService.removeItem(game, true);
-            if(this.shoppingCartItems.length) {
+            if (this.shoppingCartItems.length) {
               this.purchaseGame(this.shoppingCartItems[0]);
+            } else {
+              this._toaster.success("The transactions are successful. You will receive completion emails soon.", "Successful payment");
             }
           }, (error: string) => {
             this.isPaymentInProgress = false;
+            this._toaster.error("An error occurred, please try again.", "Payment error");
           });
       });
   }

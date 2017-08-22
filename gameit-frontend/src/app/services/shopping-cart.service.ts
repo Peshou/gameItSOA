@@ -7,11 +7,22 @@ export class ShoppingCartService {
   private cartItems: Game[] = [];
 
   addItem(game: Game, numberOfItems: number = 1) {
-    for (let index = 0; index < numberOfItems; index++) {
+    game.quantity = numberOfItems;
+
+    let gameInCartAlready: Game = this.findGame(game);
+    if (gameInCartAlready) {
+      gameInCartAlready.quantity += game.quantity;
+    } else {
       this.cartItems.push(game);
     }
 
     this.saveCartItems();
+  }
+
+  findGame(gameToFind) {
+    return this.cartItems.find((game: Game) => {
+      return gameToFind.id == game.id;
+    });
   }
 
   clearCart() {

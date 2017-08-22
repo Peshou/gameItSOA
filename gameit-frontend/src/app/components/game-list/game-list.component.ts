@@ -52,7 +52,7 @@ export class GameListComponent implements OnInit {
     this.showAsGrid = showAsGrid;
   }
 
-  addItemToCard(game: Game) {
+  addItemToShoppingCart(game: Game) {
     this._shoppingCartService.addItem(game);
   }
 

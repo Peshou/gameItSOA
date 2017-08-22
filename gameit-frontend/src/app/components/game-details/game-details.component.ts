@@ -5,6 +5,9 @@ import {ActivatedRoute} from "@angular/router";
 import {Game} from "../../models/game.model";
 import {StripeClientService} from "../../services/stripe-client.service";
 import {PaymentService} from "../../services/payment.service";
+import {ShoppingCartService} from "../../services/shopping-cart.service";
+import {UserService} from "../../services/user.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'game-details',
@@ -21,6 +24,9 @@ export class GameDetailsComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               private _stripeClient: StripeClientService,
               private _paymentService: PaymentService,
+              public shoppingCartService: ShoppingCartService,
+              private _toaster: ToastrService,
+              private _userService: UserService,
               private _gameService: GameService) {
   }
 
@@ -49,10 +55,21 @@ export class GameDetailsComponent implements OnInit {
         this._paymentService.createPaymentTransaction(this.game, token.id)
           .subscribe(() => {
             this.isPaymentInProgress = false;
+            this._toaster.success("Transaction successful. You will receive a completion email soon.", "Successful payment");
           }, (error: string) => {
             this.isPaymentInProgress = false;
+            this._toaster.error("An error occurred, please try again.", "Payment error");
           });
       });
+  }
+
+  addGameToShoppingCart() {
+    this.shoppingCartService.addItem(this.game);
+  }
+
+  isCurrentUserTheGameSeller() {
+    let user = this._userService.getUserFromSession();
+    return (user && this.game.userSeller) ? user.id == this.game.userSeller.id : false;
   }
 
 }

@@ -11,25 +11,25 @@
        [infiniteScrollDistance]="1"
        [infiniteScrollThrottle]="300"
        (scrolled)="onGamesListScroll()">
-      <div class="main_well well well-sm">
-        <strong>Category Title</strong>
-        <div class="btn-group">
-          <button id="list"
-                  type="button"
-                  class="btn btn-secondary change_grid"
-                  [class.selected_button]="!showAsGrid"
-                  (click)="showGrid(false)">
-            <span class="glyphicon glyphicon-th-list"></span>List
-          </button>
-          <button id="grid"
-                  type="button"
-                  class="btn btn-secondary change_grid"
-                  [class.selected_button]="showAsGrid"
-                  (click)="showGrid(true)">
-            <span class="glyphicon glyphicon-th"></span>Grid
-          </button>
-        </div>
+    <div class="main_well well well-sm">
+      <strong>Category Title</strong>
+      <div class="btn-group">
+        <button id="list"
+                type="button"
+                class="btn btn-secondary change_grid"
+                [class.selected_button]="!showAsGrid"
+                (click)="showGrid(false)">
+          <span class="glyphicon glyphicon-th-list"></span>List
+        </button>
+        <button id="grid"
+                type="button"
+                class="btn btn-secondary change_grid"
+                [class.selected_button]="showAsGrid"
+                (click)="showGrid(true)">
+          <span class="glyphicon glyphicon-th"></span>Grid
+        </button>
       </div>
+    </div>
 
     <div *ngFor="let game of gameList?.items"
          class="item col-xs-4 col-sm-4"
@@ -38,21 +38,27 @@
       <div class="thumbnail">
         <img class="group list-group-image img-responsive img_preview" [src]="game.getPreviewImage()" alt=""/>
         <div class="caption">
-          <h4 class="group inner list-group-item-heading">
-            {{game.name}}
+          <h4 class="group inner list-group-item-heading text-center">
+            <button class="btn btn-link" (click)="buyItem(game)">{{game.name}}</button>
           </h4>
           <p class="group inner list-group-item-text">
             {{game.description}}
-            </p>
+          </p>
           <div class="row">
-            <div class="col-xs-12 col-md-4">
+            <div class="col-xs-12 col-md-6">
               <div><s>{{game.gamePrice | currency:'USD':true:'2.2-2'}}</s></div>
               <p class="lead">{{game.getPriceWithDiscount() | currency:'USD':true:'2.2-2'}}</p>
               <p>{{game.discountPercent}}% discount!</p>
             </div>
-            <div class="col-xs-12 col-md-8">
-              <button class="btn btn-info" (click)="addItemToCard(game)"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
-              <button class="btn btn-primary" (click)="buyItem(game)"><i class="fa fa-check" aria-hidden="true"></i> Buy now</button>
+            <div class="col-xs-12 col-md-6 text-right">
+              <button class="btn btn btn-outline-primary mb-1 mr-1" (click)="buyItem(game)">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                Buy now
+              </button>
+              <button class="btn btn btn-outline-info mr-1" (click)="addItemToShoppingCart(game)">
+                <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                Add to cart
+              </button>
             </div>
           </div>
         </div>

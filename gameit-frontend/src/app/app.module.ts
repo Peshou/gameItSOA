@@ -21,6 +21,8 @@ import {GameDetailsComponent} from "./components/game-details/game-details.compo
 import {ContactComponent} from "./components/contact/contact.component";
 import {UserDetailsComponent} from "./components/user-details/user-details.component";
 import {ShoppingCartComponent} from "./components/shopping-cart/shopping-cart.component";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastrModule} from "ngx-toastr";
 
 const appRoutes: Routes = [
   {path: RoutesPaths.login, component: LoginComponent},
@@ -66,6 +68,11 @@ const appRoutes: Routes = [
     FormsModule,
     HttpModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-right',
+      preventDuplicates: false,
+    }),
     CustomFormsModule,
     InfiniteScrollModule,
     RouterModule.forRoot(appRoutes)
