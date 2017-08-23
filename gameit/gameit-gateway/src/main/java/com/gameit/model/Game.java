@@ -1,14 +1,20 @@
 package com.gameit.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.hateoas.core.Relation;
+import org.springframework.security.crypto.codec.Base64;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.UnsupportedEncodingException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
 @Table
 @Entity
+@Relation(collectionRelation = "items")
 public class Game extends AbstractBaseEntity {
     @NotNull
     @Column(nullable = false)
@@ -28,9 +34,8 @@ public class Game extends AbstractBaseEntity {
     @Column(nullable = false)
     private Double gamePrice;
 
-    @ElementCollection
-    @CollectionTable(name = "game_image_paths")
-    private Set<String> imagePaths;
+    @JsonIgnore
+    private Blob previewImage;
 
     @NotNull
     @Column(nullable = false)
@@ -47,19 +52,18 @@ public class Game extends AbstractBaseEntity {
     @JoinColumn(name = "user_seller")
     private User userSeller;
 
+    private String previewImageToString;
 
     public Game() {
-        imagePaths = new HashSet<>();
+
     }
 
 
-
-    public Game(String name, Integer releaseYear, String description, Set<String> imagePaths, Long itemsLeft, Integer discountPercent) {
+    public Game(String name, Integer releaseYear, String description, Long itemsLeft, Integer discountPercent) {
         this.name = name;
         this.releaseYear = releaseYear;
 
         this.description = description;
-        this.imagePaths = imagePaths;
         this.itemsLeft = itemsLeft;
         this.discountPercent = discountPercent;
     }
@@ -88,12 +92,12 @@ public class Game extends AbstractBaseEntity {
         this.description = description;
     }
 
-    public Set<String> getImagePaths() {
-        return imagePaths;
+    public Blob getPreviewImage() {
+        return previewImage;
     }
 
-    public void setImagePaths(Set<String> imagePaths) {
-        this.imagePaths = imagePaths;
+    public void setPreviewImage(Blob previewImage) {
+        this.previewImage = previewImage;
     }
 
     public Long getItemsLeft() {
@@ -136,11 +140,51 @@ public class Game extends AbstractBaseEntity {
     public void setUserSeller(User userSeller) {
         this.userSeller = userSeller;
     }
+
     public String getCategory() {
         return category;
     }
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getPreviewImageToString() {
+        String base64Encoded = null;
+        if (this.getPreviewImage() != null) {
+            byte[] encodeBase64 = new byte[0];
+            try {
+                encodeBase64 = Base64.encode(this.getPreviewImage().getBytes(1, (int) this.getPreviewImage().length()));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                base64Encoded = new String(encodeBase64, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        return base64Encoded;
+    }
+
+    public void setPreviewImageToString(String previewImageToString) {
+        this.previewImageToString = previewImageToString;
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "name='" + name + '\'' +
+                ", releaseYear=" + releaseYear +
+                ", description='" + description + '\'' +
+                ", category='" + category + '\'' +
+                ", gamePrice=" + gamePrice +
+                ", previewImage=" + getPreviewImageToString() +
+                ", previewImageToString=" + previewImageToString +
+                ", itemsLeft=" + itemsLeft +
+                ", discountPercent=" + discountPercent +
+                ", userGameOrders=" + userGameOrders +
+                ", userSeller=" + userSeller +
+                '}';
     }
 }

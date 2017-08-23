@@ -7,12 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 
 @RepositoryRestController
 public class GamesController {
@@ -21,18 +24,20 @@ public class GamesController {
 
     @PostMapping("/games/{id}/upload")
     public ResponseEntity<Game> handleFileUpload(@PathVariable String id,
-                                                 @RequestParam(value = "files", required = false) MultipartFile[] uploadFiles) throws URISyntaxException {
+                                                 @RequestParam(value = "file", required = false) MultipartFile uploadFile) throws URISyntaxException {
         Game game = gameService.findById(id);
 
-        for (MultipartFile file : uploadFiles) {
-            gameService.store(game, file);
+        if (!uploadFile.isEmpty()) {
+            gameService.store(game, uploadFile);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return ResponseEntity.created(new URI("dsadsa")).body(game);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/games/{id}/images/{filename:.+}")
     public ResponseEntity<Resource> serveGameImage(@PathVariable String id, @PathVariable String filename) {
         try {
+            Game game = gameService.findById(id);
             Resource file = gameService.loadAsResource(id, filename);
             return ResponseEntity
                     .ok()

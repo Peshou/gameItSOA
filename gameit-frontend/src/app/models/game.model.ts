@@ -15,7 +15,7 @@ export class Game extends Deserialization {
   @autoserialize description: string;
   @autoserialize category: string;
   @autoserialize gamePrice: number;
-  @autoserialize imagePaths: string[];
+  @autoserialize previewImageToString: string;
   @autoserialize itemsLeft: number;
   @autoserialize discountPercent: number;
   @autoserialize userGameOrders: any;
@@ -24,7 +24,7 @@ export class Game extends Deserialization {
   quantity: number = 1;
 
   getPreviewImage() {
-    return this.imagePaths && this.imagePaths.length ? this.imagePaths[0] : "/assets/images/nopreview.png";
+    return this.previewImageToString ? this.previewImageToString : "/assets/images/nopreview.png";
   }
 
   getPriceWithDiscount() {

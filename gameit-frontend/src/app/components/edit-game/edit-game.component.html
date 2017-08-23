@@ -14,6 +14,9 @@
           </button>
         </h1>
         <div>
+          <img [src]="game.getPreviewImage()"/>
+        </div>
+        <div>
           <div ng2FileDrop
                [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
                (fileOver)="fileOverBase($event)"

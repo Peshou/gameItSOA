@@ -23,11 +23,14 @@ import org.springframework.util.FileSystemUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 
@@ -114,35 +117,18 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    @Transactional
     public void store(Game game, MultipartFile file) {
-        try {
-            if (file.isEmpty()) {
-                throw new StorageException("Failed to store empty file " + file.getOriginalFilename());
+        Blob pictureBlob = null;
+        if(file != null) {
+            try {
+                pictureBlob = new SerialBlob(file.getBytes());
+            } catch (SQLException | IOException e) {
+                e.printStackTrace();
             }
 
-            String storagePath = "games/" + game.getId() + "/images/";
-            if (!Files.exists(rootLocation.resolve(storagePath))) {
-                Files.createDirectories(rootLocation.resolve(storagePath));
-            }
-
-            //Check if filename already exists so we save the image with a new file name
-            Long fileNumberCounter = 0L;
-            String fileName = storagePath + file.getOriginalFilename();
-            while (Files.exists(this.rootLocation.resolve(fileName))) {
-                fileNumberCounter++;
-                if (fileNumberCounter > 1) {
-                    fileName = fileName.replace("_(" + (fileNumberCounter - 1) + ").", "_(" + fileNumberCounter.toString() + ").");
-                } else {
-                    fileName = fileName.replace(".", "_(" + fileNumberCounter.toString() + ").");
-                }
-            }
-
-            Files.copy(file.getInputStream(), this.rootLocation.resolve(fileName));
-
-            game.getImagePaths().add(fileName);
+            game.setPreviewImage(pictureBlob);
             gameRepository.save(game);
-        } catch (IOException e) {
-            throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
         }
     }
 
