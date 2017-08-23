@@ -16,6 +16,9 @@ zuul:
     my-auth:
       path: /my-auth/**
       sensitive-headers:
+    my-games:
+      path: /my-games/**
+      sensitive-headers:
   ribbon-isolation-strategy: thread
   host:
     connect-timeout-millis: 60000 # starting the connection

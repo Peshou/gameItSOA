@@ -3,10 +3,12 @@
     <loading *ngIf="isPaymentInProgress || isGameRequestSent" [coverWholeScreen]="true"
              [useBiggerFontAwesomeSpinner]="true" [useFontAwesomeSpinner]="true"></loading>
     <div *ngIf="game" class="col-sm-12">
-      <div *ngIf="isCurrentUserTheGameSeller()">
-
-      </div>
-      <h1 class=" text-center page-header">{{game.name}}</h1>
+      <h1 class=" text-center page-header">
+        {{game.name}}
+        <button *ngIf="isCurrentUserTheGameSeller()" class="btn btn-info" (click)="goToEditGame()">
+          Edit
+        </button>
+      </h1>
       <div class="row">
         <div class="col-sm-5">
           <h1 class="text-center"><img [src]="game.getPreviewImage()" class="img-responsive"/></h1>

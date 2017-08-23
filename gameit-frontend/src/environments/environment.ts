@@ -6,6 +6,7 @@
 export const environment = {
   production: false,
   baseApiUrl: "http://localhost:80/my-zuul",
+  imageUploadUrl: "http://localhost:80/my-zuul/my-games",
   stripeKey: 'pk_test_i85fUQVFNX8EQUID3i4Knhgp'
 };
 //  baseApiUrl: "http://192.168.99.100/my-zuul",

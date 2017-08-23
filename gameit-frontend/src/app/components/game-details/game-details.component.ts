@@ -8,6 +8,7 @@ import {PaymentService} from "../../services/payment.service";
 import {ShoppingCartService} from "../../services/shopping-cart.service";
 import {UserService} from "../../services/user.service";
 import {ToastrService} from "ngx-toastr";
+import {NavigationService} from "../../services/navigation.service";
 
 @Component({
   selector: 'game-details',
@@ -27,14 +28,15 @@ export class GameDetailsComponent implements OnInit {
               public shoppingCartService: ShoppingCartService,
               private _toaster: ToastrService,
               private _userService: UserService,
+              private _navigationService: NavigationService,
               private _gameService: GameService) {
   }
 
   ngOnInit(): void {
-    this.getGameFromUrlParam();
+    this._getGameFromUrlParam();
   }
 
-  private getGameFromUrlParam() {
+  private _getGameFromUrlParam() {
     this.isGameRequestSent = true;
     this._activatedRoute.params
       .map(params => params['id'])
@@ -70,6 +72,10 @@ export class GameDetailsComponent implements OnInit {
   isCurrentUserTheGameSeller() {
     let user = this._userService.getUserFromSession();
     return (user && this.game.userSeller) ? user.id == this.game.userSeller.id : false;
+  }
+
+  goToEditGame() {
+    this._navigationService.goToEditGamePage(this.game.id);
   }
 
 }

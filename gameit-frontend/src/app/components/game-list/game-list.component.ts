@@ -6,6 +6,7 @@ import {Game} from "../../models/game.model";
 import {PaginatedResource} from "../../models/paginanted-resource.model";
 import {ShoppingCartService} from "../../services/shopping-cart.service";
 import {LoadingComponent} from "../../util/loading/loading.component";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'game-list',
@@ -23,6 +24,7 @@ export class GameListComponent implements OnInit {
   constructor(private _userService: UserService,
               private _gameService: GameService,
               private _shoppingCartService: ShoppingCartService,
+              private _toasterService: ToastrService,
               private _navigationService: NavigationService) {
   }
 
@@ -54,6 +56,7 @@ export class GameListComponent implements OnInit {
 
   addItemToShoppingCart(game: Game) {
     this._shoppingCartService.addItem(game);
+    this._toasterService.success(game.name + " has been added to the cart", "Item added to cart");
   }
 
   buyItem(game: Game) {

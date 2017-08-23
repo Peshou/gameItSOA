@@ -2,7 +2,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
-
 import {AppComponent} from './app.component';
 import {RouterModule, Routes} from "@angular/router";
 import {PageNotFoundComponent} from "./components/not-found/not-found.component";
@@ -23,6 +22,9 @@ import {UserDetailsComponent} from "./components/user-details/user-details.compo
 import {ShoppingCartComponent} from "./components/shopping-cart/shopping-cart.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
+import {SellGameComponent} from "./components/sell-game/sell-game.component";
+import {EditGameComponent} from "./components/edit-game/edit-game.component";
+import {FileUploadModule} from "ng2-file-upload";
 
 const appRoutes: Routes = [
   {path: RoutesPaths.login, component: LoginComponent},
@@ -35,11 +37,18 @@ const appRoutes: Routes = [
         path: RoutesPaths.games,
         children: [
           {path: '', component: GameListComponent},
-          {path: ':id', component: GameDetailsComponent}
+          {
+            path: ':id', children: [
+            {path: '', component: GameDetailsComponent},
+            {path: 'edit', component: EditGameComponent},
+          ]
+          },
+
+          {path: 'sell', component: SellGameComponent}
         ]
       },
       {path: RoutesPaths.contactUs, component: ContactComponent},
-      {path: RoutesPaths.userDetails+"/:id", component: UserDetailsComponent},
+      {path: RoutesPaths.userDetails + "/:id", component: UserDetailsComponent},
       {path: RoutesPaths.shoppingCart, component: ShoppingCartComponent},
       {path: RoutesPaths.home, component: HomeComponent},
       {path: '', redirectTo: '/' + RoutesPaths.home, pathMatch: 'full'},
@@ -61,7 +70,9 @@ const appRoutes: Routes = [
     GameDetailsComponent,
     ContactComponent,
     UserDetailsComponent,
-    ShoppingCartComponent
+    ShoppingCartComponent,
+    SellGameComponent,
+    EditGameComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +85,7 @@ const appRoutes: Routes = [
       preventDuplicates: false,
     }),
     CustomFormsModule,
+    FileUploadModule,
     InfiniteScrollModule,
     RouterModule.forRoot(appRoutes)
   ],

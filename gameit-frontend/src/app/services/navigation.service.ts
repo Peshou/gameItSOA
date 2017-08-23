@@ -83,7 +83,12 @@ export class NavigationService {
   goToGameDetailsPage(gameId: string) {
     this._router.navigate(['/' + RoutesPaths.games, gameId]);
   }
+
   goToUserDetailsPage(userId: string) {
     this._router.navigate(['/' + RoutesPaths.userDetails, userId]);
+  }
+
+  goToEditGamePage(gameId: string) {
+    this._router.navigate(['/' + RoutesPaths.games, gameId, 'edit']);
   }
 }
