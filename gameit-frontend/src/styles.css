@@ -425,3 +425,7 @@ button {
 button[disabled] {
   cursor: auto;
 }
+
+.img {
+  max-width: 100%;
+}

@@ -1,7 +1,7 @@
-import {deserialize, UnderscoreCase, SerializeKeysTo, DeserializeKeysFrom} from "cerialize";
+import {autoserialize} from "cerialize";
 
 export class Authority {
-  @deserialize name: string;
+  @autoserialize name: string;
 }
 
 export const Authorities = {

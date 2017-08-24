@@ -5,6 +5,7 @@ import {ActivatedRoute} from "@angular/router";
 import {NavigationService} from "../../services/navigation.service";
 import {FileUploader} from "ng2-file-upload";
 import {environment} from "../../../environments/environment";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'edit-game',
@@ -25,6 +26,7 @@ export class EditGameComponent implements OnInit {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _navigationService: NavigationService,
+              private _toasterService: ToastrService,
               private _gameService: GameService) {
 
   }
@@ -55,14 +57,23 @@ export class EditGameComponent implements OnInit {
     this.uploader.onSuccessItem = () => {
       this._gameService.getGame(this.game.id).subscribe((game: Game) => {
         this.game = game;
+        this._toasterService.success("The game image has been changed");
       });
     };
 
-    console.log(this.uploader);
+    this.uploader.onErrorItem = () => {
+      this._toasterService.error("The game image failed to upload");
+    };
   }
 
   saveEditGameChanges() {
-
+    this._gameService.updateGame(this.game)
+      .subscribe((game: Game) => {
+        this.game = game;
+        this._toasterService.success("The game has been updated");
+      }, (error: any) => {
+        this._toasterService.error("An error occurred. Please try again.");
+      });
   }
 
   cancelEditingGame() {

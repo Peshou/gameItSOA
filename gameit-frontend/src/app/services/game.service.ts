@@ -38,4 +38,12 @@ export class GameService extends BaseService {
         return new Game().deserialize(res.json());
       });
   }
+
+  updateGame(game: Game) {
+    const endpoint = 'my-gateway/games/' + game.id;
+    return this.put(endpoint, game.serialize())
+      .map((res: Response) => {
+        return new Game().deserialize(res.json());
+      });
+  }
 }
