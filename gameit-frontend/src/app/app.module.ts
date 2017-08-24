@@ -25,6 +25,7 @@ import {ToastrModule} from "ngx-toastr";
 import {SellGameComponent} from "./components/sell-game/sell-game.component";
 import {EditGameComponent} from "./components/edit-game/edit-game.component";
 import {FileUploadModule} from "ng2-file-upload";
+import {TruncateModule} from "ng2-truncate";
 
 const appRoutes: Routes = [
   {path: RoutesPaths.login, component: LoginComponent},
@@ -79,6 +80,7 @@ const appRoutes: Routes = [
     FormsModule,
     HttpModule,
     ReactiveFormsModule,
+    TruncateModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',

@@ -3,9 +3,9 @@
     <div class="col-sm-12">
       <loading *ngIf="isGameRequestSent || isGameEditInProgress"
                [coverWholeScreen]="true" [useFontAwesomeSpinner]="true" [useBiggerFontAwesomeSpinner]="true"></loading>
-      <div *ngIf="game">
+      <div *ngIf="game" class="mt-1">
         <h1 class=" text-center page-header">
-          {{game.name}}
+          <input type="text" name="gameName" class="form-control" [(ngModel)]="game.name"/>
           <button class="btn btn-outline-success" (click)="saveEditGameChanges()">
             Save
           </button>
@@ -14,7 +14,7 @@
           </button>
         </h1>
         <div>
-          <img class="img img-responsive" [src]="game.getPreviewImage()"/>
+          <img class="img-fluid" [src]="game.getPreviewImage()"/>
         </div>
         <div>
           <div ng2FileDrop
@@ -24,11 +24,7 @@
                class="well my-drop-zone">
             Base drop zone
           </div>
-          <div class="col-md-9" style="margin-bottom: 40px">
-
-            <h3>Upload queue</h3>
-            <p>Queue length: {{ uploader?.queue?.length }}</p>
-
+          <div class="col-md-12" style="margin-bottom: 40px">
             <table class="table">
               <thead>
               <tr>
@@ -78,19 +74,30 @@
                   <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
                 </div>
               </div>
-              <button type="button" class="btn btn-success btn-s"
-                      (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-                <span class="glyphicon glyphicon-upload"></span> Upload all
-              </button>
-              <button type="button" class="btn btn-warning btn-s"
-                      (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
-                <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
-              </button>
-              <button type="button" class="btn btn-danger btn-s"
-                      (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-                <span class="glyphicon glyphicon-trash"></span> Remove all
-              </button>
             </div>
+          </div>
+
+          <div class="form-group">
+            <label for="gameDescription">Game Description</label>
+            <textarea id="gameDescription" type="text" name="gameDescription" class="form-control"
+                      [(ngModel)]="game.description"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="gamePrice">Game Price</label>
+            <input id="gamePrice" type="text" name="gamePrice" class="form-control" [(ngModel)]="game.gamePrice"/>
+          </div>
+
+          <div class="form-group">
+            <label for="gameDiscount">Game Discount Percent</label>
+            <input id="gameDiscount" type="number" name="gameDiscount" class="form-control"
+                   [(ngModel)]="game.discountPercent"/>
+          </div>
+
+          <div class="form-group">
+            <label for="gameCategory">Game Category</label>
+            <input id="gameCategory" type="text" name="gameCategory" class="form-control"
+            [(ngModel)]="game.category"/>
           </div>
         </div>
       </div>

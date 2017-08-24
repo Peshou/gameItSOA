@@ -2,7 +2,8 @@
   <div class="row">
     <div class="col-sm-12">
       <h1 class="page-header text-center mt-1">Shopping Cart</h1>
-
+      <loading *ngIf="isPaymentInProgress" [coverWholeScreen]="true"
+               [useBiggerFontAwesomeSpinner]="true" [useFontAwesomeSpinner]="true"></loading>
       <table id="cart" class="table table-hover table-condensed">
         <thead>
         <tr>
@@ -18,10 +19,10 @@
           <td data-th="Product">
             <div class="row">
               <div class="col-md-7 hidden-xs">
-                <img [src]="game.getPreviewImage()" alt="..."/>
+                <img [src]="game.getPreviewImage()" class="img-fluid" alt="..."/>
               </div>
               <div class="col-md-5">
-                <h4 class="nomargin">{{game.name}}</h4>
+                <h4 class="nomargin my-auto mx-auto">{{game.name}}</h4>
               </div>
             </div>
           </td>

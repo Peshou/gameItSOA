@@ -36,13 +36,13 @@
          [class.list-group-item]="!showAsGrid"
          [class.grid-group-item]="showAsGrid">
       <div class="thumbnail">
-        <img class="group list-group-image img-responsive img_preview" [src]="game.getPreviewImage()" alt=""/>
+        <img class="group list-group-image img-fluid img_preview" [src]="game.getPreviewImage()" alt=""/>
         <div class="caption">
           <h4 class="group inner list-group-item-heading text-center">
             <button class="btn btn-link" (click)="buyItem(game)">{{game.name}}</button>
           </h4>
-          <p class="group inner list-group-item-text">
-            {{game.description}}
+          <p class="px-2 text-justify group inner list-group-item-text">
+            {{game.description | truncate : 150 : "..." }}
           </p>
           <div class="row">
             <div class="col-xs-12 col-md-6">

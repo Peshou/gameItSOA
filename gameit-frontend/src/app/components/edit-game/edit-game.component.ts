@@ -71,6 +71,7 @@ export class EditGameComponent implements OnInit {
       .subscribe((game: Game) => {
         this.game = game;
         this._toasterService.success("The game has been updated");
+        this._navigationService.goToGameDetailsPage(this.game.id);
       }, (error: any) => {
         this._toasterService.error("An error occurred. Please try again.");
       });
