@@ -2,7 +2,7 @@ import {deserialize, deserializeAs, autoserializeAs, autoserialize} from "cerial
 import {Authority} from "./authority.model";
 import {Deserialization} from "./shared/deserialization.model";
 
-export class User extends Deserialization  {
+export class User extends Deserialization {
   @autoserialize id: string;
   @autoserialize createdAt: number;
   @autoserialize updatedAt: number;
@@ -15,5 +15,18 @@ export class User extends Deserialization  {
     return !!this.authorities.find((authority: Authority) => {
       return authority.name == "ADMIN";
     });
+  }
+
+  produceDeepCopy() {
+    let userCopy: User = new User();
+    userCopy.id = this.id;
+    userCopy.createdAt = this.createdAt;
+    userCopy.updatedAt = this.updatedAt;
+    userCopy.username = this.username;
+    userCopy.password = this.password;
+    userCopy.email = this.email;
+    userCopy.authorities = this.authorities;
+
+    return userCopy;
   }
 }

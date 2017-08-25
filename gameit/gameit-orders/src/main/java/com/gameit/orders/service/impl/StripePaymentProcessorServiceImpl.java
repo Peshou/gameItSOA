@@ -1,7 +1,7 @@
 package com.gameit.orders.service.impl;
 
-import com.gameit.config.GameitProperties;
-import com.gameit.service.PaymentProcessorService;
+import com.gameit.orders.config.GameitProperties;
+import com.gameit.orders.service.PaymentProcessorService;
 import com.stripe.Stripe;
 import com.stripe.exception.*;
 import com.stripe.model.Charge;

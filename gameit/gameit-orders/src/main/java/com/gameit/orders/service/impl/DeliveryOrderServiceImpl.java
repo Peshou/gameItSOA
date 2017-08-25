@@ -1,7 +1,7 @@
 package com.gameit.orders.service.impl;
 
-import com.gameit.model.DeliveryOrder;
-import com.gameit.model.DeliveryOrderStatus;
+import com.gameit.orders.model.DeliveryOrder;
+import com.gameit.orders.model.DeliveryOrderStatus;
 import com.gameit.orders.repository.DeliveryOrderRepository;
 import com.gameit.orders.service.DeliveryOrderService;
 import org.springframework.beans.factory.annotation.Autowired;

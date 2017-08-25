@@ -1,7 +1,7 @@
 package com.gameit.orders.service;
 
-import com.gameit.model.DeliveryOrder;
-import com.gameit.model.DeliveryOrderStatus;
+import com.gameit.orders.model.DeliveryOrder;
+import com.gameit.orders.model.DeliveryOrderStatus;
 
 public interface DeliveryOrderService {
     DeliveryOrder findOne(String id);

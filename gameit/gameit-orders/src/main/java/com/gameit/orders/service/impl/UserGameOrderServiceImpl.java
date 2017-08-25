@@ -1,10 +1,10 @@
 package com.gameit.orders.service.impl;
 
-import com.gameit.model.Game;
-import com.gameit.model.User;
+import com.gameit.orders.model.Game;
+import com.gameit.orders.model.User;
 import com.gameit.orders.model.UserGameOrder;
 import com.gameit.orders.repository.UserGameOrderRepository;
-import com.gameit.service.PaymentProcessorService;
+import com.gameit.orders.service.PaymentProcessorService;
 import com.gameit.orders.service.UserGameOrderService;
 import com.stripe.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +43,8 @@ public class UserGameOrderServiceImpl implements UserGameOrderService {
     }
 
     @Override
-    public Page<UserGameOrder> getAllOrders(User user, Pageable pageable) {
-        return userGameOrderRepository.findAllByUser(pageable, user);
+    public Page<UserGameOrder> getAllOrders(String userId, Pageable pageable) {
+        return userGameOrderRepository.findAllByUserId(pageable, userId);
     }
 
     @Override

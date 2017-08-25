@@ -1,14 +1,15 @@
 import {Deserialization} from "./shared/deserialization.model";
+import {isNullOrUndefined} from "util";
 export class PaginatedResource<T extends Deserialization> extends Deserialization {
-  items:Array<T> = [];
+  items: Array<T> = [];
   page: PageDetails;
 
-  static itemsPerPage:number = 20;
+  static itemsPerPage: number = 20;
 
-  constructor(currentPage?:number, numPages?:number, totalCount?:number, items?:Array<T>) {
+  constructor(currentPage?: number, numPages?: number, totalCount?: number, items?: Array<T>) {
     super();
     this.page = new PageDetails();
-    this.page.number = currentPage ? currentPage : 1;
+    this.page.number = currentPage ? currentPage : 0;
 
     if (numPages) {
       this.page.totalPages = numPages;
@@ -23,7 +24,7 @@ export class PaginatedResource<T extends Deserialization> extends Deserializatio
     }
   }
 
-  append(nextItemList:PaginatedResource<T>) {
+  append(nextItemList: PaginatedResource<T>) {
     if (nextItemList) {
       this.items = this.items.concat(nextItemList.items);
       this.page.number = nextItemList.page.number;
@@ -37,26 +38,37 @@ export class PaginatedResource<T extends Deserialization> extends Deserializatio
     return nextPage <= this.page.totalPages ? nextPage : null;
   }
 
-  deserializeGeneric(json:any, clazz:any) {
-    json.content.map((item:any) => {
+  deserializeGeneric(json: any, clazz: any) {
+    json.content.forEach((item: any) => {
       let deserialized_item = new clazz().deserialize(item);
       this.items.push(deserialized_item);
     });
-    if(json.page.number != null) this.page.number = json.page.number;
-    if(json.page.totalPages != null) this.page.totalPages = json.page.totalPages;
-    if(json.page.totalElements != null) this.page.totalElements = json.page.totalElements;
-    if(json.page.size != null) this.page.size = json.page.size;
+
+    if (json.page) {
+      if (!isNullOrUndefined(json.page.number)) this.page.number = json.page.number;
+      if (!isNullOrUndefined(json.page.totalPages)) this.page.totalPages = json.page.totalPages;
+      if (!isNullOrUndefined(json.page.totalElements)) this.page.totalElements = json.page.totalElements;
+      if (!isNullOrUndefined(json.page.size)) this.page.size = json.page.size;
+    } else {
+      if (!isNullOrUndefined(json.number)) this.page.number = json.number;
+      if (!isNullOrUndefined(json.totalPages)) this.page.totalPages = json.totalPages;
+      if (!isNullOrUndefined(json.totalElements)) this.page.totalElements = json.totalElements;
+      if (!isNullOrUndefined(json.size)) this.page.size = json.size;
+    }
+
     return this;
   }
 
-  serialize(){
-    return {items: this.items.map((item)=>{
-      return item.serialize();
-    })}
+  serialize() {
+    return {
+      items: this.items.map((item) => {
+        return item.serialize();
+      })
+    }
   }
 
 }
-class PageDetails {
+export class PageDetails {
   size: number;
   totalElements: number;
   totalPages: number;

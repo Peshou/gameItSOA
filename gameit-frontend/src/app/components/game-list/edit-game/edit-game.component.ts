@@ -1,11 +1,11 @@
 import {OnInit, Component} from "@angular/core";
-import {GameService} from "../../services/game.service";
-import {Game} from "../../models/game.model";
-import {ActivatedRoute} from "@angular/router";
-import {NavigationService} from "../../services/navigation.service";
-import {FileUploader} from "ng2-file-upload";
-import {environment} from "../../../environments/environment";
 import {ToastrService} from "ngx-toastr";
+import {GameService} from "../../../services/game.service";
+import {Game} from "../../../models/game.model";
+import {FileUploader} from "ng2-file-upload";
+import {environment} from "../../../../environments/environment";
+import {NavigationService} from "../../../services/navigation.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'edit-game',

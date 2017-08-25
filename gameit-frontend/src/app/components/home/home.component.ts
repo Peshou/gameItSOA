@@ -39,6 +39,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     this._navigationService.goToRegister();
   }
 
+  goToGamesList() {
+    this._navigationService.goToGameListScreen();
+  }
+
+  goToUserDetails() {
+    this._navigationService.goToUserDetailsPage();
+  }
+
   logout() {
     this._authService.logOut(() => {
       this._userService.onLogoutUser();

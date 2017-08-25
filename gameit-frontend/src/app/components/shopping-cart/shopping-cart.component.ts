@@ -2,7 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {ShoppingCartService} from "../../services/shopping-cart.service";
 import {Game} from "../../models/game.model";
 import {NavigationService} from "../../services/navigation.service";
-import {PaymentService} from "../../services/payment.service";
+import {OrderService} from "../../services/order.service";
 import {StripeClientService} from "../../services/stripe-client.service";
 import {ToastrService} from "ngx-toastr";
 
@@ -10,7 +10,7 @@ import {ToastrService} from "ngx-toastr";
   selector: 'shopping-cart',
   templateUrl: 'shopping-cart.component.html',
   styleUrls: ['shopping-cart.component.scss'],
-  providers: [PaymentService, StripeClientService]
+  providers: [OrderService, StripeClientService]
 })
 export class ShoppingCartComponent implements OnInit {
   shoppingCartItems: Game[] = [];
@@ -18,7 +18,7 @@ export class ShoppingCartComponent implements OnInit {
 
   constructor(public shoppingCartService: ShoppingCartService,
               private _stripeClient: StripeClientService,
-              private _paymentService: PaymentService,
+              private _paymentService: OrderService,
               private _toaster: ToastrService,
               private _navigationService: NavigationService) {
   }

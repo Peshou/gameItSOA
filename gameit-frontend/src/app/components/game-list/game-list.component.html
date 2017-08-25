@@ -45,12 +45,14 @@
             {{game.description | truncate : 150 : "..." }}
           </p>
           <div class="row">
-            <div class="col-xs-12 col-md-6">
+            <div class="col-sm-12 text-center">
               <div><s>{{game.gamePrice | currency:'USD':true:'2.2-2'}}</s></div>
-              <p class="lead">{{game.getPriceWithDiscount() | currency:'USD':true:'2.2-2'}}</p>
+              <p class="lead"><strong>{{game.getPriceWithDiscount() | currency:'USD':true:'2.2-2'}}</strong></p>
               <p>{{game.discountPercent}}% discount!</p>
             </div>
-            <div class="col-xs-12 col-md-6 text-right">
+          </div>
+          <div class="row">
+            <div class="col-sm-12 text-center">
               <button class="btn btn btn-outline-primary mb-1 mr-1" (click)="buyItem(game)">
                 <i class="fa fa-check" aria-hidden="true"></i>
                 Buy now

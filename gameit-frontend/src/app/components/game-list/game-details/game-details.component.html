@@ -25,7 +25,7 @@
       <div class="text-center">
         <button class="btn btn-primary" (click)="buyGame()">
           <i class="fa fa-buysellads"></i>
-          Buy now {{game.getPriceWithDiscount()}}
+          Buy now {{game.getPriceWithDiscount() | currency:'USD':true:'1.2-2'}}
         </button>
         <button class="btn btn-primary" (click)="addGameToShoppingCart()">
           <i class="fa fa-shopping-cart"></i>

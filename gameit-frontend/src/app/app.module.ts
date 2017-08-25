@@ -16,16 +16,18 @@ import {InfiniteScrollModule} from "ngx-infinite-scroll";
 import {ShoppingCartService} from "./services/shopping-cart.service";
 import {NavbarComponent} from "./components/wrapper/navbar/navbar.component";
 import {LoadingComponent} from "./util/loading/loading.component";
-import {GameDetailsComponent} from "./components/game-details/game-details.component";
+import {GameDetailsComponent} from "./components/game-list/game-details/game-details.component";
 import {ContactComponent} from "./components/contact/contact.component";
 import {UserDetailsComponent} from "./components/user-details/user-details.component";
 import {ShoppingCartComponent} from "./components/shopping-cart/shopping-cart.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import {SellGameComponent} from "./components/sell-game/sell-game.component";
-import {EditGameComponent} from "./components/edit-game/edit-game.component";
+import {EditGameComponent} from "./components/game-list/edit-game/edit-game.component";
 import {FileUploadModule} from "ng2-file-upload";
 import {TruncateModule} from "ng2-truncate";
+import {MaterialModule, MdTabsModule} from "@angular/material";
+import {NgxPaginationModule} from "ngx-pagination";
 
 const appRoutes: Routes = [
   {path: RoutesPaths.login, component: LoginComponent},
@@ -49,7 +51,7 @@ const appRoutes: Routes = [
         ]
       },
       {path: RoutesPaths.contactUs, component: ContactComponent},
-      {path: RoutesPaths.userDetails + "/:id", component: UserDetailsComponent},
+      {path: RoutesPaths.userDetails, component: UserDetailsComponent},
       {path: RoutesPaths.shoppingCart, component: ShoppingCartComponent},
       {path: RoutesPaths.home, component: HomeComponent},
       {path: '', redirectTo: '/' + RoutesPaths.home, pathMatch: 'full'},
@@ -81,6 +83,7 @@ const appRoutes: Routes = [
     HttpModule,
     ReactiveFormsModule,
     TruncateModule,
+    MdTabsModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
@@ -88,6 +91,7 @@ const appRoutes: Routes = [
     }),
     CustomFormsModule,
     FileUploadModule,
+    NgxPaginationModule,
     InfiniteScrollModule,
     RouterModule.forRoot(appRoutes)
   ],

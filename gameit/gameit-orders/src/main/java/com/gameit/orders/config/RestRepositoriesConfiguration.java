@@ -1,8 +1,8 @@
 package com.gameit.orders.config;
 
-import com.gameit.model.AbstractBaseEntity;
-import com.gameit.model.Game;
-import com.gameit.model.User;
+import com.gameit.orders.model.AbstractBaseEntity;
+import com.gameit.orders.model.Game;
+import com.gameit.orders.model.User;
 import com.gameit.orders.model.UserGameOrder;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;

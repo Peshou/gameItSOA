@@ -60,4 +60,11 @@ export class UserService extends BaseService {
       return new User().deserialize(res.json());
     });
   }
+
+  editUser(editUserCopy: User) {
+    const endpoint = "my-auth/users/" + editUserCopy.id;
+    return this.put(endpoint, editUserCopy).map((res: any) => {
+      return new User().deserialize(res.json());
+    })
+  }
 }

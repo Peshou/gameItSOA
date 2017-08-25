@@ -1,13 +1,13 @@
 package com.gameit.orders.model;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.hateoas.core.Relation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table
+@Relation(collectionRelation = "items")
 public class UserGameOrder extends AbstractBaseEntity {
 
     @ManyToOne

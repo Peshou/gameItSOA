@@ -2,7 +2,7 @@ package com.gameit.orders.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gameit.security.Authorities;
+import com.gameit.orders.security.Authorities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

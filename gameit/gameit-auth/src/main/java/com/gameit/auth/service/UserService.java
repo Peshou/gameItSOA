@@ -1,9 +1,9 @@
 package com.gameit.auth.service;
 
-import com.gameit.model.Authority;
+import com.gameit.auth.model.Authority;
 import com.gameit.auth.model.User;
-import com.gameit.model.exceptions.EmailExistsException;
-import com.gameit.model.exceptions.UsernameExistsException;
+import com.gameit.auth.model.exceptions.EmailExistsException;
+import com.gameit.auth.model.exceptions.UsernameExistsException;
 
 import java.util.ArrayList;
 import java.util.List;

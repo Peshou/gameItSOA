@@ -9,9 +9,10 @@ import {Response, URLSearchParams} from "@angular/http";
 import {UserService} from "./user.service";
 import {Game} from "../models/game.model";
 import {PaginatedResource} from "../models/paginanted-resource.model";
+import {UserGameOrder} from "../models/user-game-order.model";
 
 @Injectable()
-export class PaymentService extends BaseService {
+export class OrderService extends BaseService {
 
   constructor(private http: Http, private userService: UserService) {
     super(http);
@@ -30,6 +31,19 @@ export class PaymentService extends BaseService {
     }).catch((error: any) => {
       return Observable.throw(error || 'Server error');
     });
+  }
+
+  getUserOrders(userId: string, pageNumber: number = 0, pageSize: number) {
+    const endpoint = "my-gateway/orders/" + userId;
+    let params = {};
+    if (pageNumber != null) params["page"] = pageNumber;
+    if (pageSize != null) params["size"] = pageSize;
+
+    return this.get(endpoint, params)
+      .map((res: Response) => {
+        console.log(res.json());
+        return new PaginatedResource().deserializeGeneric(res.json(), UserGameOrder);
+      });
   }
 
 

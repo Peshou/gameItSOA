@@ -16,24 +16,22 @@
       </ul>
 
       <form class="form-inline my-2 my-lg-0">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav">
           <ng-container *ngIf="isUserLoggedIn">
-            <li class="nav-item">
-              <a class="nav-link" (click)="goToProfileScreen()">
-                <i class="fa fa-user fa-1x"></i>
-                <p class="d-inline-block">{{getProfileTabTitle()}}</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" (click)="goToShoppingCartScreen()">
-                <i class="fa fa-shopping-cart fa-1x"></i>
-                <p class="d-inline-block">CART ({{getShoppingCartPrice() | currency:'USD':true:'1.2-2'}})</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" (click)="logout()">
-                LOGOUT
-              </a>
+            <li class="nav-item dropdown">
+              <button class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                 aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-user fa-1x"></i>{{getProfileTabTitle()}}
+              </button>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <button class="dropdown-item" (click)="goToProfileScreen()"> <i class="fa fa-user fa-1x"></i>Profile</button>
+                <button class="dropdown-item" (click)="goToShoppingCartScreen()">
+                  <i class="fa fa-shopping-cart fa-1x"></i>Shopping Cart ({{getShoppingCartPrice() |
+                  currency:'USD':true:'1.2-2'}})</button>
+                <button class="dropdown-item" (click)="goToSellGameScreen()"><i class="fa fa-gamepad" aria-hidden="true"></i>Sell
+                  games</button>
+                <button class="dropdown-item" (click)="logout()"><i class="fa fa-power-off fa-1x"></i>Logout</button>
+              </div>
             </li>
           </ng-container>
           <ng-container *ngIf="!isUserLoggedIn">
@@ -41,9 +39,6 @@
             <li class="nav-item"><a class="nav-link" (click)="goToLoginScreen()">SIGN IN</a></li>
           </ng-container>
         </ul>
-
-        <input class="form-control mr-sm-2" type="text" placeholder="Search">
-        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">SEARCH</button>
       </form>
     </div>
   </nav>

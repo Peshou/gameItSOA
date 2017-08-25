@@ -1,10 +1,10 @@
 package com.gameit.auth.web;
 
-import com.gameit.config.Authorities;
-import com.gameit.model.Authority;
+import com.gameit.auth.config.Authorities;
+import com.gameit.auth.model.Authority;
 import com.gameit.auth.model.User;
-import com.gameit.model.exceptions.EmailExistsException;
-import com.gameit.model.exceptions.UsernameExistsException;
+import com.gameit.auth.model.exceptions.EmailExistsException;
+import com.gameit.auth.model.exceptions.UsernameExistsException;
 import com.gameit.auth.repository.AuthorityRepository;
 import com.gameit.auth.service.UserService;
 import com.gameit.auth.web.dto.UserWithAuthorities;

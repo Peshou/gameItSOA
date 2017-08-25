@@ -1,7 +1,7 @@
 package com.gameit.auth.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gameit.model.User;
+import com.gameit.auth.model.User;
 import com.gameit.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

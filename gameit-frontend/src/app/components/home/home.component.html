@@ -19,6 +19,8 @@
   </ng-template>
   <ng-template #loggedInContent>
     <div class="text-center">
+      <button class="btn btn-primary" (click)="goToUserDetails()">Profile</button>
+      <button class="btn btn-primary" (click)="goToGamesList()">Games</button>
       <button class="btn btn-primary" (click)="logout()">Logout</button>
     </div>
   </ng-template>

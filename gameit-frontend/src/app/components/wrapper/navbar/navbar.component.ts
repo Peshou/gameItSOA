@@ -74,7 +74,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   goToProfileScreen() {
-    this._navigationService.goToUserDetailsPage(this.user.id);
+    this._navigationService.goToUserDetailsPage();
   }
 
   goToRegisterScreen() {
@@ -87,6 +87,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   goToShoppingCartScreen() {
     this._navigationService.goToShoppingCart();
+  }
+
+  goToSellGameScreen() {
+    this._navigationService.goToSellGames();
   }
 
   getProfileTabTitle() {

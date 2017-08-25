@@ -1,3 +1,5 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
 @charset "UTF-8";
 /*! normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css */
 /**
@@ -10,6 +12,12 @@ html {
   /* 2 */
   -webkit-text-size-adjust: 100%;
   /* 2 */
+}
+
+.page-header {
+  padding-bottom: 9px;
+  margin: 40px 0 20px;
+  border-bottom: 1px solid #eee;
 }
 
 /**

@@ -1,21 +1,21 @@
 import {Component, OnInit} from "@angular/core";
-import {GameService} from "../../services/game.service";
-import {LoadingComponent} from "../../util/loading/loading.component";
+import {GameService} from "../../../services/game.service";
+import {StripeClientService} from "../../../services/stripe-client.service";
+import {OrderService} from "../../../services/order.service";
+import {LoadingComponent} from "../../../util/loading/loading.component";
 import {ActivatedRoute} from "@angular/router";
-import {Game} from "../../models/game.model";
-import {StripeClientService} from "../../services/stripe-client.service";
-import {PaymentService} from "../../services/payment.service";
-import {ShoppingCartService} from "../../services/shopping-cart.service";
-import {UserService} from "../../services/user.service";
+import {Game} from "../../../models/game.model";
+import {ShoppingCartService} from "../../../services/shopping-cart.service";
 import {ToastrService} from "ngx-toastr";
-import {NavigationService} from "../../services/navigation.service";
+import {UserService} from "../../../services/user.service";
+import {NavigationService} from "../../../services/navigation.service";
 
 @Component({
   selector: 'game-details',
-  templateUrl: './game-details.component.html',
-  providers: [GameService, StripeClientService, PaymentService],
+  templateUrl: 'game-details.component.html',
+  providers: [GameService, StripeClientService, OrderService],
   viewProviders: [LoadingComponent],
-  styleUrls: ['./game-details.component.scss']
+  styleUrls: ['game-details.component.scss']
 })
 export class GameDetailsComponent implements OnInit {
   isGameRequestSent: boolean = false;
@@ -24,7 +24,7 @@ export class GameDetailsComponent implements OnInit {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _stripeClient: StripeClientService,
-              private _paymentService: PaymentService,
+              private _paymentService: OrderService,
               public shoppingCartService: ShoppingCartService,
               private _toaster: ToastrService,
               private _userService: UserService,

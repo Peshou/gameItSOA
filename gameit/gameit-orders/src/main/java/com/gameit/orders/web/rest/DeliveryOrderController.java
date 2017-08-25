@@ -1,7 +1,7 @@
 package com.gameit.orders.web.rest;
 
-import com.gameit.model.DeliveryOrder;
-import com.gameit.model.DeliveryOrderStatus;
+import com.gameit.orders.model.DeliveryOrder;
+import com.gameit.orders.model.DeliveryOrderStatus;
 import com.gameit.orders.service.DeliveryOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;

@@ -1,7 +1,8 @@
 package com.gameit.orders.web.dto;
 
-import com.gameit.model.Game;
-import com.gameit.model.User;
+
+import com.gameit.orders.model.Game;
+import com.gameit.orders.model.User;
 
 public class StripeBuyerToken {
     private String token;
