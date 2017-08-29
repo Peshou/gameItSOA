@@ -8,20 +8,23 @@
           <div class="container" *ngIf="userDetailsTabActive()">
             <div class="row">
               <div class="col-sm-12">
-                <h1 class="page-header text-center">User Details</h1>
-
-                <div class="text-right" *ngIf="!userEditMode">
-                  <button class="btn btn-info" (click)="editUser()">
-                    Edit
-                  </button>
-                </div>
-                <div class="text-right" *ngIf="userEditMode">
-                  <button class="btn btn-outline-success" (click)="saveEditUserChanges()">
-                    Save
-                  </button>
-                  <button class="btn btn-outline-danger" (click)="cancelEditUserChanges()">
-                    Cancel
-                  </button>
+                <h1 class="page-header text-center">{{user.username}}</h1>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <img src="/assets/images/user_profile_icon.png"
+                           alt="" class="img-rounded img-fluid"/>
+                    </div>
+                    <div class="col-sm-7">
+                      <blockquote>
+                        <cite title="Source Title">{{user.printAuthorities()}}
+                        </cite>
+                      </blockquote>
+                      <p><i class="fa fa-envelope" aria-hidden="true"></i> {{user.email}}
+                        <br/> <i class="fa fa-gift" aria-hidden="true"></i>Joined: {{user.createdAt*1000 |
+                        date:'yMMMdjms'}}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

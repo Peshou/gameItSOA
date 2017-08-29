@@ -8,11 +8,11 @@
     <a class="navbar-brand" href="/">GameIt!</a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item"><a class="nav-link" (click)="goToHomeScreen()">HOME</a>
+        <li class="nav-item"><a class="nav-link" (click)="goToHomeScreen()">Home</a>
         </li>
-        <li class="nav-item"><a class="nav-link" (click)="goToGameListScreen()">GAMES</a>
+        <li class="nav-item"><a class="nav-link" (click)="goToGameListScreen()">Games</a>
         </li>
-        <li class="nav-item"><a class="nav-link" (click)="goToContactUs()">CONTACT</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="goToContactUs()">Contact</a></li>
       </ul>
 
       <form class="form-inline my-2 my-lg-0">
@@ -35,8 +35,8 @@
             </li>
           </ng-container>
           <ng-container *ngIf="!isUserLoggedIn">
-            <li class="nav-item"><a class="nav-link" (click)="goToRegisterScreen()">REGISTER</a></li>
-            <li class="nav-item"><a class="nav-link" (click)="goToLoginScreen()">SIGN IN</a></li>
+            <li class="nav-item"><a class="nav-link" (click)="goToRegisterScreen()">Register</a></li>
+            <li class="nav-item"><a class="nav-link" (click)="goToLoginScreen()">Sign in</a></li>
           </ng-container>
         </ul>
       </form>

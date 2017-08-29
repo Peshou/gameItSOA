@@ -65,6 +65,8 @@ export class UserDetailsComponent implements OnInit {
       });
   }
 
+
+
   cancelEditUserChanges() {
     this.userEditMode = false;
     this.editUserCopy = null;

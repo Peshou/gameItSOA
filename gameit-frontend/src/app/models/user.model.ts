@@ -29,4 +29,10 @@ export class User extends Deserialization {
 
     return userCopy;
   }
+
+  printAuthorities() {
+    return `Authorities:${this.authorities.map((authority: Authority) => {
+      return " " + authority.name;
+    })}`;
+  }
 }
