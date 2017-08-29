@@ -34,18 +34,14 @@ export class UserDetailsOrdersComponent implements OnInit {
     this.getAllOrders();
   }
 
-  getAllOrders(pageNumber: number = 0) {
+  getAllOrders(pageNumber: number = 1) {
     if (!this.isOrdersRequestSent) {
       this.isOrdersRequestSent = true;
-      this._orderService.getUserOrders(this.user.id, pageNumber, UserGameOrder.PAGE_SIZE)
+      this._orderService.getUserOrders(this.user.id, pageNumber - 1, UserGameOrder.PAGE_SIZE)
         .subscribe((userOrdersList: PaginatedResource<UserGameOrder>) => {
-          if (this.userOrdersList) {
-            this.userOrdersList.append(userOrdersList);
-          } else {
-            this.userOrdersList = userOrdersList;
-          }
+          this.userOrdersList = userOrdersList;
 
-          this.updatePaginationConfig(userOrdersList.page.number, userOrdersList.page.totalElements);
+          this.updatePaginationConfig(userOrdersList.page.number + 1, userOrdersList.page.totalElements);
           this.isOrdersRequestSent = false;
         }, (error: any) => {
           this.isOrdersRequestSent = false;
