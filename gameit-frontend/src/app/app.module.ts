@@ -28,6 +28,7 @@ import {FileUploadModule} from "ng2-file-upload";
 import {TruncateModule} from "ng2-truncate";
 import {MaterialModule, MdTabsModule} from "@angular/material";
 import {NgxPaginationModule} from "ngx-pagination";
+import {UserDetailsOrdersComponent} from "./components/user-details/user-details-orders/user-details-orders.component";
 
 const appRoutes: Routes = [
   {path: RoutesPaths.login, component: LoginComponent},
@@ -75,7 +76,8 @@ const appRoutes: Routes = [
     UserDetailsComponent,
     ShoppingCartComponent,
     SellGameComponent,
-    EditGameComponent
+    EditGameComponent,
+    UserDetailsOrdersComponent
   ],
   imports: [
     BrowserModule,

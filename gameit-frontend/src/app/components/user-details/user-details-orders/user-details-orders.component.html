@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12"><h1 class="page-header text-center">User Orders</h1>
+      <table class="orders-table table table-bordered table-hover">
+        <thead class="thead-inverse">
+        <tr>
+          <th>#</th>
+          <th>Game name</th>
+          <th>Game price</th>
+          <th>Charge id</th>
+          <th>Date purchased</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngIf="!isOrdersRequestSent && !userOrdersList?.items.length">
+          <td colspan="5" class="text-center">
+            <button type="button" class="btn btn-outline-primary"
+                    (click)="getAllOrders(userOrdersPaginationConfig.currentPage)">Retry request
+            </button>
+          </td>
+        </tr>
+        <tr *ngFor="let i = index; let order of userOrdersList?.items | paginate: userOrdersPaginationConfig">
+          <td>{{calculateIndexForTable(i)}}</td>
+          <td>{{order.game.name}}</td>
+          <td>{{order.game.getPriceWithDiscount() | currency:'USD':true:'1.2-2'}}</td>
+          <td>{{order.paymentProcessorChargeId}}</td>
+          <td>{{order.createdAt * 1000 | date:'yMMMdjms'}}</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr *ngIf="isOrdersRequestSent">
+          <td colspan="5">
+            <loading [coverWholeScreen]="false"
+                     [useBiggerFontAwesomeSpinner]="false"
+                     [whiteBackground]="true"
+                     [useFontAwesomeSpinner]="true"></loading>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5">
+            <pagination-controls (pageChange)="getAllOrders($event)"
+                                 [id]="userOrdersPaginationConfig.id"
+                                 [directionLinks]="true"
+                                 class="text-center">
+            </pagination-controls>
+          </td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
