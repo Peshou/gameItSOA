@@ -93,6 +93,7 @@ export class NavigationService {
   }
 
   goToSellGames() {
-    this._router.navigate(['/' + RoutesPaths.games, 'sell']);
+    window.open('/' + RoutesPaths.games + '/sell-game');
+    // this._router.navigate(['/' + RoutesPaths.games, 'sell-game']);
   }
 }

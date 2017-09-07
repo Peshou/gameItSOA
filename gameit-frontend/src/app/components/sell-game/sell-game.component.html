@@ -1,7 +1,38 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
+      <form [formGroup]="sellNewGameForm" novalidate (submit)="sellNewGame()">
+        <div class="form-group">
+          <label for="gameName">Game name</label>
+          <input formControlName="name" type="text" class="form-control" id="gameName" name="gameName"
+                 aria-describedby="emailHelp" placeholder="Enter the game name">
+        </div>
+        <div class="form-group">
+          <label for="gamePrice">Game price</label>
+          <input formControlName="price" type="text" class="form-control" id="gamePrice" placeholder="$$">
+        </div>
+        <div class="form-group">
+          <label for="gameDiscountPercent">Discount percent</label>
+          <input formControlName="discountPercent" type="text" class="form-control" id="gameDiscountPercent"
+                 placeholder="(from 1 to 100)">
+        </div>
+        <div class="form-group">
+          <label for="gameReleaseYear">Game release year</label>
+          <input formControlName="releaseYear" type="text" class="form-control" digits id="gameReleaseYear"
+                 placeholder="(2010)">
+        </div>
+        <div class="form-group">
+          <label for="gameCategory">Game category</label>
+          <input formControlName="category" type="text" class="form-control" id="gameCategory" placeholder="MMORPG">
+        </div>
+        <div class="form-group">
+          <label for="gameDescription">Game description</label>
+          <textarea formControlName="description" class="form-control" placeholder="Enter the game's description"
+                    style="resize: vertical" id="gameDescription" rows="3"></textarea>
+        </div>
 
+        <button [disabled]="!sellNewGameForm.valid" type="submit" class="btn btn-primary">Submit</button>
+      </form>
     </div>
   </div>
 </div>

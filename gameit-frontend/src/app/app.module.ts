@@ -48,7 +48,7 @@ const appRoutes: Routes = [
           ]
           },
 
-          {path: 'sell', component: SellGameComponent}
+          {path: 'sell-game', component: SellGameComponent}
         ]
       },
       {path: RoutesPaths.contactUs, component: ContactComponent},
