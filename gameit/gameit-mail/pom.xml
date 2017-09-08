@@ -162,8 +162,8 @@
 					<dockerDirectory>src/main/docker</dockerDirectory>
 
                     <!--Used only for windows-->
-					<dockerHost>https://192.168.99.100:2376</dockerHost>
-					<dockerCertPath>C:/Users/Stefan/.docker/machine/machines/default</dockerCertPath>
+					<!--<dockerHost>https://192.168.99.100:2376</dockerHost>-->
+					<!--<dockerCertPath>C:/Users/Stefan/.docker/machine/machines/default</dockerCertPath>-->
 					<!--Delete this if docker:build does not work-->
 
                     <resources>
