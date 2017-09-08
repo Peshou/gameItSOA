@@ -39,6 +39,11 @@ export class GameService extends BaseService {
       });
   }
 
+  sellGame(game: Game) {
+    const endpoint = 'my-gateway/games';
+    return this.post(endpoint, game.serialize());
+  }
+
   updateGame(game: Game) {
     const endpoint = 'my-gateway/games/' + game.id;
     return this.put(endpoint, game.serialize())

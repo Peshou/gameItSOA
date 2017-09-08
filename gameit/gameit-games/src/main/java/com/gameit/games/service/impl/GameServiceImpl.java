@@ -63,7 +63,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     @Transactional
-    public Game create(Game game) {
+    public Game create(Game game) throws Exception {
         EurekaDiscoveryClient.EurekaServiceInstance authService = getService("my-auth");
 
         HttpHeaders headers = new HttpHeaders();
@@ -87,7 +87,7 @@ public class GameServiceImpl implements GameService {
             return game;
         }
 
-        return null;
+        throw new Exception();
     }
 
     @Override

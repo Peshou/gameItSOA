@@ -7,7 +7,9 @@ import com.gameit.games.security.Authorities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,12 +36,12 @@ public class User extends AbstractBaseEntity {
     @Column(updatable = false, nullable = false, unique = true)
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_authority",
-            joinColumns = @JoinColumn(name = "username"),
-            inverseJoinColumns = @JoinColumn(name = "authority"))
-    private Set<Authority> authorities;
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "user_authority",
+//            joinColumns = @JoinColumn(name = "username"),
+//            inverseJoinColumns = @JoinColumn(name = "authority"))
+    private ArrayList<Authority> authorities;
 
     @JsonIgnore
     @OneToMany(mappedBy = "userSeller", cascade = CascadeType.ALL)
@@ -66,11 +68,11 @@ public class User extends AbstractBaseEntity {
         this.email = email;
     }
 
-    public Set<Authority> getAuthorities() {
+    public List<Authority> getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(Set<Authority> authorities) {
+    public void setAuthorities(ArrayList<Authority> authorities) {
         this.authorities = authorities;
     }
 

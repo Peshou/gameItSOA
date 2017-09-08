@@ -13,8 +13,8 @@
             Cancel
           </button>
         </h1>
-        <div>
-          <img class="img-fluid" [src]="game.getPreviewImage()"/>
+        <div class="text-center">
+          <img style="height: 40vh" [src]="game.getPreviewImage()"/>
         </div>
         <div>
           <div ng2FileDrop
@@ -22,7 +22,8 @@
                (fileOver)="fileOverBase($event)"
                [uploader]="uploader"
                class="well my-drop-zone">
-            Base drop zone
+            Drop a new image here
+            <input type="file" class="align-middle" ng2FileSelect [uploader]="uploader"/>
           </div>
           <div class="col-md-12" style="margin-bottom: 40px">
             <table class="table">

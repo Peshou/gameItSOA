@@ -1,37 +1,104 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
+      <loading *ngIf="isCreateGameRequestSent" [coverWholeScreen]="true" [useBiggerFontAwesomeSpinner]="true"
+               [useFontAwesomeSpinner]="true" [whiteBackground]="false"></loading>
+      <h1>Sell game</h1>
       <form [formGroup]="sellNewGameForm" novalidate (submit)="sellNewGame()">
         <div class="form-group">
           <label for="gameName">Game name</label>
           <input formControlName="name" type="text" class="form-control" id="gameName" name="gameName"
                  aria-describedby="emailHelp" placeholder="Enter the game name">
+          <div *ngIf="name.invalid && (name.dirty || name.touched)"
+               class="alert alert-danger">
+            <div *ngIf="name.errors.required">
+              Name is required.
+            </div>
+          </div>
         </div>
         <div class="form-group">
-          <label for="gamePrice">Game price</label>
-          <input formControlName="price" type="text" class="form-control" id="gamePrice" placeholder="$$">
+          <label for="price">Game price</label>
+          <input formControlName="gamePrice" type="text" class="form-control" id="price" placeholder="$$">
+          <div *ngIf="gamePrice.invalid && (gamePrice.dirty || gamePrice.touched)"
+               class="alert alert-danger">
+
+            <div *ngIf="gamePrice.errors.required">
+              Price is required.
+            </div>
+            <div *ngIf="gamePrice.errors.digits">
+              Only digits are allowed.
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label for="gameDiscountPercent">Discount percent</label>
           <input formControlName="discountPercent" type="text" class="form-control" id="gameDiscountPercent"
                  placeholder="(from 1 to 100)">
+          <div *ngIf="discountPercent.invalid && (discountPercent.dirty || discountPercent.touched)"
+               class="alert alert-danger">
+
+            <div *ngIf="discountPercent.errors.required">
+              Discount percent is required.
+            </div>
+            <div *ngIf="discountPercent.errors.digits">
+              Only digits are allowed.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="itemsLeft">Items left</label>
+          <input formControlName="itemsLeft" type="number" class="form-control" id="itemsLeft">
+          <div *ngIf="itemsLeft.invalid && (itemsLeft.dirty || itemsLeft.touched)"
+               class="alert alert-danger">
+
+            <div *ngIf="itemsLeft.errors.required">
+              Items left is required.
+            </div>
+            <div *ngIf="itemsLeft.errors.min">
+              Minimum 1 item left is required
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label for="gameReleaseYear">Game release year</label>
-          <input formControlName="releaseYear" type="text" class="form-control" digits id="gameReleaseYear"
+          <input formControlName="releaseYear" type="text" class="form-control" id="gameReleaseYear"
                  placeholder="(2010)">
+          <div *ngIf="releaseYear.invalid && (releaseYear.dirty || releaseYear.touched)"
+               class="alert alert-danger">
+
+            <div *ngIf="releaseYear.errors.required">
+              Release year is required.
+            </div>
+            <div *ngIf="releaseYear.errors.digits">
+              Minimum 1 item left is required
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label for="gameCategory">Game category</label>
           <input formControlName="category" type="text" class="form-control" id="gameCategory" placeholder="MMORPG">
+          <div *ngIf="category.invalid && (category.dirty || category.touched)"
+               class="alert alert-danger">
+
+            <div *ngIf="category.errors.required">
+              Category is required.
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label for="gameDescription">Game description</label>
           <textarea formControlName="description" class="form-control" placeholder="Enter the game's description"
                     style="resize: vertical" id="gameDescription" rows="3"></textarea>
+          <div *ngIf="description.invalid && (description.dirty || description.touched)"
+               class="alert alert-danger">
+
+            <div *ngIf="description.errors.required">
+              Description is required.
+            </div>
+          </div>
         </div>
 
-        <button [disabled]="!sellNewGameForm.valid" type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
   </div>

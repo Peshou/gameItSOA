@@ -19,7 +19,7 @@ export class Game extends Deserialization {
   @autoserialize itemsLeft: number;
   @autoserialize discountPercent: number;
   @autoserialize userGameOrders: any;
-  @deserializeAs(User) userSeller: User;
+  @autoserializeAs(User) userSeller: User;
 
   quantity: number = 1;
 

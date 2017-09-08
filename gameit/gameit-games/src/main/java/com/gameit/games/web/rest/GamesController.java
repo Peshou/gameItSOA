@@ -10,7 +10,10 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.xml.ws.Response;
 import java.net.URISyntaxException;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 @RepositoryRestController
 public class GamesController {
@@ -35,6 +38,17 @@ public class GamesController {
     public Game updateGame(@PathVariable String gameId, @RequestBody Game game) {
         return gameService.update(game);
     }
+
+
+//    @RequestMapping(value = "/games", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseBody
+//    public ResponseEntity<Game> createGame(@RequestBody Game game) {
+//        try{
+//            return ResponseEntity.ok(gameService.create(game));
+//        }catch(Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
 
 //    @GetMapping("/games/{id}")
 //    @ResponseBody

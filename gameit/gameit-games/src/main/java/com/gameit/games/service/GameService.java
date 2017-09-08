@@ -13,7 +13,7 @@ public interface GameService {
 
     Page<Game> findAll(Pageable pageable);
 
-    Game create(Game game);
+    Game create(Game game) throws Exception;
 
     Game update(Game game);
 

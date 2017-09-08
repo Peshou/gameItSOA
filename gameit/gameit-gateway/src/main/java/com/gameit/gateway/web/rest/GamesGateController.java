@@ -88,6 +88,20 @@ public class GamesGateController {
        return responseEntity.getBody();
     }
 
+    @RequestMapping(value = "/games", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Game sellGame(@RequestBody Game game) {
+        EurekaDiscoveryClient.EurekaServiceInstance gameService = getService("my-games");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Game> entity = new HttpEntity<Game>(game, headers);
+
+        ResponseEntity<Game> responseEntity =
+                this.restTemplate.exchange("http://" + gameService.getInstanceInfo().getIPAddr() + ":8080/games", HttpMethod.POST, entity, Game.class);
+
+        return responseEntity.getBody();
+    }
+
     private EurekaDiscoveryClient.EurekaServiceInstance getService(String serviceName) {
         Random rnd = new Random();
         List<ServiceInstance> services = discoveryClient.getInstances(serviceName);

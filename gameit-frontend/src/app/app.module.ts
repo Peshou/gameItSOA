@@ -22,13 +22,13 @@ import {UserDetailsComponent} from "./components/user-details/user-details.compo
 import {ShoppingCartComponent} from "./components/shopping-cart/shopping-cart.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
-import {SellGameComponent} from "./components/sell-game/sell-game.component";
 import {EditGameComponent} from "./components/game-list/edit-game/edit-game.component";
 import {FileUploadModule} from "ng2-file-upload";
 import {TruncateModule} from "ng2-truncate";
 import {MaterialModule, MdTabsModule} from "@angular/material";
 import {NgxPaginationModule} from "ngx-pagination";
 import {UserDetailsOrdersComponent} from "./components/user-details/user-details-orders/user-details-orders.component";
+import {SellGameComponent} from "./components/sell-game/sell-game.component";
 
 const appRoutes: Routes = [
   {path: RoutesPaths.login, component: LoginComponent},
@@ -41,19 +41,18 @@ const appRoutes: Routes = [
         path: RoutesPaths.games,
         children: [
           {path: '', component: GameListComponent},
+          {path: 'sell-game', component: SellGameComponent},
           {
             path: ':id', children: [
             {path: '', component: GameDetailsComponent},
             {path: 'edit', component: EditGameComponent},
           ]
-          },
-
-          {path: 'sell-game', component: SellGameComponent}
-        ]
+          }
+          ]
       },
-      {path: RoutesPaths.contactUs, component: ContactComponent},
       {path: RoutesPaths.userDetails, component: UserDetailsComponent},
       {path: RoutesPaths.shoppingCart, component: ShoppingCartComponent},
+      {path: RoutesPaths.contactUs, component: ContactComponent},
       {path: RoutesPaths.home, component: HomeComponent},
       {path: '', redirectTo: '/' + RoutesPaths.home, pathMatch: 'full'},
     ]
